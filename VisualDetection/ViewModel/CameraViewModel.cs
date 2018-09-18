@@ -2,43 +2,37 @@
 using Emgu.CV.Structure;
 using System;
 using System.Drawing;
-using System.Drawing.Imaging;
-using System.IO;
 using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
+using VisualDetection.Model;
 
 namespace VisualDetection.ViewModel
 {
     public class CameraViewModel : ViewModelBase
     {
+
+        #region Constructors
         public CameraViewModel()
         {
-            // Define parameters used to create the BitmapSource.
-            System.Windows.Media.PixelFormat pf = PixelFormats.Bgr32;
-            int width = 200;
-            int height = 200;
-            int rawStride = (width * pf.BitsPerPixel + 7) / 8;
-            byte[] rawImage = new byte[rawStride * height];
-
-            // Initialize the image with data.
-            Random value = new Random();
-            value.NextBytes(rawImage);
-
-            // Create a BitmapSource.
-            CurrentFrame = BitmapSource.Create(width, height,
-                96, 96, pf, null,
-                rawImage, rawStride);
             StartVideo();
         }
+        #endregion
 
-        private DispatcherTimer Timer { get; set; }
-
-        private VideoCapture Capture { get; set; }
-
+        #region Private Properties
         private BitmapSource currentFrame;
+        #endregion
+
+
+        #region Public Fields
+        private DispatcherTimer Timer { get; set; }
+        private VideoCapture Capture { get; set; }
+        #endregion
+
+
+        #region Public Properties
         public BitmapSource CurrentFrame
         {
             get { return currentFrame; }
@@ -46,32 +40,36 @@ namespace VisualDetection.ViewModel
             {
                 if (currentFrame != value)
                 {
-                    currentFrame = value;
                     SetProperty(ref currentFrame, value);
                 }
             }
         }
+        #endregion
 
+
+        #region Private Methods
         private void StartVideo()
         {
-            //CurrentFrame = new BitmapImage(new Uri("C:\\Users\\Johannes\\Pictures\\Camera Roll\\asdf.bmp")) as BitmapSource;
             Capture = new VideoCapture();
             Timer = new DispatcherTimer();
-            //framerate of 1fps
-            int i = 0;
-            Timer.Interval = TimeSpan.FromMilliseconds(1000);
+            Timer.Interval = TimeSpan.FromMilliseconds(10);
             Timer.Tick += new EventHandler((object s, EventArgs a) =>
             {
                 //draw the image obtained from camera
-                var frame = Capture.QueryFrame().ToImage<Bgr, Byte>();
-                CurrentFrame = ToBitmapSource(frame);
+                var frame = Capture.QueryFrame();
+                CurrentFrame = MatToBitmapSource(frame);
             });
             Timer.Start();
         }
+        #endregion
 
-        public static BitmapSource ToBitmapSource(IImage image)
+        #region Public Methods
+        /// <summary>
+        /// Get BitmapSource from image matrix for GUI
+        /// </summary>
+        public static BitmapSource MatToBitmapSource(Mat image)
         {
-            using (System.Drawing.Bitmap source = image.Bitmap)
+            using (Bitmap source = image.Bitmap)
             {
                 IntPtr ptr = source.GetHbitmap(); //obtain the Hbitmap
                 BitmapSource bs = System.Windows.Interop.Imaging.CreateBitmapSourceFromHBitmap(ptr, IntPtr.Zero, Int32Rect.Empty, BitmapSizeOptions.FromEmptyOptions());
@@ -79,12 +77,14 @@ namespace VisualDetection.ViewModel
                 return bs;
             }
         }
+        #endregion
 
+        #region DLL
         /// <summary>
         /// Delete a GDI object
         /// </summary>
         [DllImport("gdi32")]
         private static extern int DeleteObject(IntPtr o);
-
+        #endregion
     }
 }
