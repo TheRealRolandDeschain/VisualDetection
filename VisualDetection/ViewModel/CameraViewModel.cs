@@ -34,7 +34,7 @@ namespace VisualDetection.ViewModel
 
         #region Public Properties
         /// <summary>
-        /// The output Image of the Original Frame
+        /// The output Image of the Original gFrame
         /// </summary>
         public BitmapSource CurrentFrameOriginal
         {

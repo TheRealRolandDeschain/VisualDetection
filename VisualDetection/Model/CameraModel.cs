@@ -1,6 +1,4 @@
 ﻿using Emgu.CV;
-using Emgu.CV.CvEnum;
-using Emgu.CV.Structure;
 using System;
 using System.Drawing;
 using System.Runtime.InteropServices;
@@ -63,13 +61,6 @@ namespace VisualDetection.Model
                 DeleteObject(ptr); //release the HBitmap
                 return bs;
             }
-        }
-
-        public Mat MatToGrayscale(Mat imageMat)
-        {
-            var imageGray = new Mat();
-            CvInvoke.CvtColor(imageMat, imageGray, ColorConversion.Bgr2Gray);
-            return imageGray;
         }
         #endregion
 
