@@ -1,8 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Emgu.CV;
+using Emgu.CV.CvEnum;
+using Emgu.CV.Structure;
+using System;
+using System.Drawing;
+using System.Runtime.InteropServices;
+using System.Windows;
+using System.Windows.Media.Imaging;
 
 namespace VisualDetection.Model
 {
@@ -40,13 +43,43 @@ namespace VisualDetection.Model
         #endregion
 
         #region Public Properties
+        public Mat CameraViewMat { get; set; }
+        public Mat CamerViewGrayScaleMat { get; set; }
         #endregion
 
         #region Private Methods
         #endregion
 
         #region Public Methods
+        /// <summary>
+        /// Get BitmapSource from image matrix
+        /// </summary>
+        public BitmapSource MatToBitmapSource(Mat image)
+        {
+            using (Bitmap source = image.Bitmap)
+            {
+                IntPtr ptr = source.GetHbitmap(); //obtain the Hbitmap
+                BitmapSource bs = System.Windows.Interop.Imaging.CreateBitmapSourceFromHBitmap(ptr, IntPtr.Zero, Int32Rect.Empty, BitmapSizeOptions.FromEmptyOptions());
+                DeleteObject(ptr); //release the HBitmap
+                return bs;
+            }
+        }
+
+        public Mat MatToGrayscale(Mat imageMat)
+        {
+            var imageGray = new Mat();
+            CvInvoke.CvtColor(imageMat, imageGray, ColorConversion.Bgr2Gray);
+            return imageGray;
+        }
         #endregion
 
+
+        #region DLL
+        /// <summary>
+        /// Delete a GDI object
+        /// </summary>
+        [DllImport("gdi32")]
+        private static extern int DeleteObject(IntPtr o);
+        #endregion
     }
 }

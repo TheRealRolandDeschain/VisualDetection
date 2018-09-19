@@ -1,10 +1,6 @@
 ﻿using Emgu.CV;
-using Emgu.CV.Structure;
+using Emgu.CV.CvEnum;
 using System;
-using System.Drawing;
-using System.Runtime.InteropServices;
-using System.Windows;
-using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
 using VisualDetection.Model;
@@ -22,25 +18,47 @@ namespace VisualDetection.ViewModel
         #endregion
 
         #region Private Properties
-        private BitmapSource currentFrame;
+        private BitmapSource currentFrameOriginal;
+        private BitmapSource currentFrameGray;
         #endregion
 
 
-        #region Public Fields
+        #region Private Fields
         private DispatcherTimer Timer { get; set; }
         private VideoCapture Capture { get; set; }
         #endregion
 
+        #region Public Fields
+        #endregion
+
 
         #region Public Properties
-        public BitmapSource CurrentFrame
+        /// <summary>
+        /// The output Image of the Original Frame
+        /// </summary>
+        public BitmapSource CurrentFrameOriginal
         {
-            get { return currentFrame; }
+            get { return currentFrameOriginal; }
             set
             {
-                if (currentFrame != value)
+                if (currentFrameOriginal != value)
                 {
-                    SetProperty(ref currentFrame, value);
+                    SetProperty(ref currentFrameOriginal, value);
+                }
+            }
+        }
+
+        /// <summary>
+        /// The output Image of the GrayScale Frame
+        /// </summary>
+        public BitmapSource CurrentFrameGray
+        {
+            get { return currentFrameGray; }
+            set
+            {
+                if (currentFrameGray != value)
+                {
+                    SetProperty(ref currentFrameGray, value);
                 }
             }
         }
@@ -48,43 +66,32 @@ namespace VisualDetection.ViewModel
 
 
         #region Private Methods
+        /// <summary>
+        /// 
+        /// </summary>
         private void StartVideo()
         {
-            Capture = new VideoCapture();
             Timer = new DispatcherTimer();
             Timer.Interval = TimeSpan.FromMilliseconds(10);
+            var usedCamera = new CaptureType();
+            Capture = new VideoCapture(usedCamera);
             Timer.Tick += new EventHandler((object s, EventArgs a) =>
             {
-                //draw the image obtained from camera
-                var frame = Capture.QueryFrame();
-                CurrentFrame = MatToBitmapSource(frame);
+                CaptureCameraFrame(Capture);
             });
             Timer.Start();
+        }
+
+        private void CaptureCameraFrame(VideoCapture camera)
+        {
+            var cModel = CameraModel.Instance;
+
+            cModel.CameraViewMat = Capture.QueryFrame();
+            CurrentFrameOriginal = cModel.MatToBitmapSource(cModel.CameraViewMat);
         }
         #endregion
 
         #region Public Methods
-        /// <summary>
-        /// Get BitmapSource from image matrix for GUI
-        /// </summary>
-        public static BitmapSource MatToBitmapSource(Mat image)
-        {
-            using (Bitmap source = image.Bitmap)
-            {
-                IntPtr ptr = source.GetHbitmap(); //obtain the Hbitmap
-                BitmapSource bs = System.Windows.Interop.Imaging.CreateBitmapSourceFromHBitmap(ptr, IntPtr.Zero, Int32Rect.Empty, BitmapSizeOptions.FromEmptyOptions());
-                DeleteObject(ptr); //release the HBitmap
-                return bs;
-            }
-        }
-        #endregion
-
-        #region DLL
-        /// <summary>
-        /// Delete a GDI object
-        /// </summary>
-        [DllImport("gdi32")]
-        private static extern int DeleteObject(IntPtr o);
         #endregion
     }
 }
