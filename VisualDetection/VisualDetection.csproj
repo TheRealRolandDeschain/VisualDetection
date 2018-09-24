@@ -72,6 +72,7 @@
     <Compile Include="Model\CameraModel.cs" />
     <Compile Include="Util\GeneralDefines.cs" />
     <Compile Include="Util\MiscMethods.cs" />
+    <Compile Include="Util\RelayCommand.cs" />
     <Compile Include="ViewModel\CameraViewModel.cs" />
     <Compile Include="ViewModel\ViewModelBase.cs" />
     <Page Include="View\CameraView.xaml">

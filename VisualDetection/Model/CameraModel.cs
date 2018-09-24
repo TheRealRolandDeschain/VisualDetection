@@ -12,7 +12,8 @@ namespace VisualDetection.Model
         #region Constructors
         private CameraModel()
         {
-
+            CameraViewMat = new Mat();
+            CameraViewGrayScaleMat = new Mat();
         }
         #endregion
 
@@ -42,35 +43,16 @@ namespace VisualDetection.Model
 
         #region Public Properties
         public Mat CameraViewMat { get; set; }
-        public Mat CamerViewGrayScaleMat { get; set; }
+        public Mat CameraViewGrayScaleMat { get; set; }
         #endregion
 
         #region Private Methods
         #endregion
 
         #region Public Methods
-        /// <summary>
-        /// Get BitmapSource from image matrix
-        /// </summary>
-        public BitmapSource MatToBitmapSource(Mat image)
-        {
-            using (Bitmap source = image.Bitmap)
-            {
-                IntPtr ptr = source.GetHbitmap(); //obtain the Hbitmap
-                BitmapSource bs = System.Windows.Interop.Imaging.CreateBitmapSourceFromHBitmap(ptr, IntPtr.Zero, Int32Rect.Empty, BitmapSizeOptions.FromEmptyOptions());
-                DeleteObject(ptr); //release the HBitmap
-                return bs;
-            }
-        }
-        #endregion
 
+        // TODO: Make CameraModel a class containing all camera information (resolution, name, etc) as properties!
 
-        #region DLL
-        /// <summary>
-        /// Delete a GDI object
-        /// </summary>
-        [DllImport("gdi32")]
-        private static extern int DeleteObject(IntPtr o);
         #endregion
     }
 }

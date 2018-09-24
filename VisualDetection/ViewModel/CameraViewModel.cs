@@ -1,9 +1,11 @@
 ﻿using Emgu.CV;
 using Emgu.CV.CvEnum;
 using System;
+using System.Windows.Input;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
 using VisualDetection.Model;
+using VisualDetection.Util;
 
 namespace VisualDetection.ViewModel
 {
@@ -13,13 +15,15 @@ namespace VisualDetection.ViewModel
         #region Constructors
         public CameraViewModel()
         {
-            StartVideo();
+            StartStopCaptureButtonContent = GenDefString.StartCaptureButtonString;
         }
         #endregion
 
         #region Private Properties
         private BitmapSource currentFrameOriginal;
         private BitmapSource currentFrameGray;
+        private RelayCommand startStopCaptureButtonClicked;
+        private string startStopCaptureButtonContent;
         #endregion
 
 
@@ -34,7 +38,7 @@ namespace VisualDetection.ViewModel
 
         #region Public Properties
         /// <summary>
-        /// The output Image of the Original gFrame
+        /// The output Image of the original frame
         /// </summary>
         public BitmapSource CurrentFrameOriginal
         {
@@ -49,7 +53,7 @@ namespace VisualDetection.ViewModel
         }
 
         /// <summary>
-        /// The output Image of the GrayScale Frame
+        /// The output Image of the grayScale frame
         /// </summary>
         public BitmapSource CurrentFrameGray
         {
@@ -62,32 +66,62 @@ namespace VisualDetection.ViewModel
                 }
             }
         }
+
+        /// <summary>
+        /// The StartStopCapturebutton was clicked
+        /// </summary>
+        public ICommand StartStopCaptureButtonClicked
+        {
+            get
+            {
+                return startStopCaptureButtonClicked ?? (startStopCaptureButtonClicked = new RelayCommand(command => StartStopCapture()));
+            }
+        }
+
+        /// <summary>
+        /// The Content of the StartStopCaptureButton
+        /// </summary>
+        public string StartStopCaptureButtonContent
+        {
+            get { return startStopCaptureButtonContent; }
+            set
+            {
+                if (startStopCaptureButtonContent != value)
+                {
+                    SetProperty(ref startStopCaptureButtonContent, value);
+                }
+            }
+        }
         #endregion
 
 
         #region Private Methods
         /// <summary>
-        /// 
+        /// start capture and processing with the selected settings
         /// </summary>
-        private void StartVideo()
+        private void StartStopCapture()
         {
-            Timer = new DispatcherTimer();
-            Timer.Interval = TimeSpan.FromMilliseconds(10);
-            var usedCamera = new CaptureType();
-            Capture = new VideoCapture(usedCamera);
-            Timer.Tick += new EventHandler((object s, EventArgs a) =>
+            switch(StartStopCaptureButtonContent)
             {
-                CaptureCameraFrame(Capture);
-            });
-            Timer.Start();
+                case GenDefString.StartCaptureButtonString:
+                StartStopCaptureButtonContent = GenDefString.StopCaptureButtonString;
+                break;
+                case GenDefString.StopCaptureButtonString:
+                StartStopCaptureButtonContent = GenDefString.StartCaptureButtonString;
+                break;
+            }
         }
 
+        /// <summary>
+        /// Capture current frame from selected camera and save it to cameramodel
+        /// </summary>
+        /// <param name="camera"></param>
         private void CaptureCameraFrame(VideoCapture camera)
         {
             var cModel = CameraModel.Instance;
 
             cModel.CameraViewMat = Capture.QueryFrame();
-            CurrentFrameOriginal = cModel.MatToBitmapSource(cModel.CameraViewMat);
+            CurrentFrameOriginal = MiscMethods.MatToBitmapSource(cModel.CameraViewMat);
         }
         #endregion
 
