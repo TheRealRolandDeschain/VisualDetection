@@ -10,16 +10,23 @@ namespace VisualDetection.Model
     public sealed class CameraModel
     {
         #region Constructors
+        /// <summary>
+        /// default constructor
+        /// </summary>
         private CameraModel()
         {
             CameraViewMat = new Mat();
             CameraViewGrayScaleMat = new Mat();
+            CameraViewDetectedFeaturesMat = new Mat();
         }
         #endregion
 
         #region Singleton
         private static volatile CameraModel instance;
         private static object syncRoot = new object();
+        /// <summary>
+        /// threadsave singleton
+        /// </summary>
         public static CameraModel Instance
         {
             get
@@ -44,6 +51,7 @@ namespace VisualDetection.Model
         #region Public Properties
         public Mat CameraViewMat { get; set; }
         public Mat CameraViewGrayScaleMat { get; set; }
+        public Mat CameraViewDetectedFeaturesMat { get; set; }
         #endregion
 
         #region Private Methods
@@ -51,7 +59,6 @@ namespace VisualDetection.Model
 
         #region Public Methods
 
-        // TODO: Make CameraModel a class containing all camera information (resolution, name, etc) as properties!
 
         #endregion
     }

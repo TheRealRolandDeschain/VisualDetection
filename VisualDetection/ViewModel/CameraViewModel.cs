@@ -20,8 +20,7 @@ namespace VisualDetection.ViewModel
         #endregion
 
         #region Private Properties
-        private BitmapSource currentFrameOriginal;
-        private BitmapSource currentFrameGray;
+        private BitmapSource currentFrame;
         private RelayCommand startStopCaptureButtonClicked;
         private string startStopCaptureButtonContent;
         #endregion
@@ -38,31 +37,16 @@ namespace VisualDetection.ViewModel
 
         #region Public Properties
         /// <summary>
-        /// The output Image of the original frame
+        /// The output Image
         /// </summary>
-        public BitmapSource CurrentFrameOriginal
+        public BitmapSource CurrentFrame
         {
-            get { return currentFrameOriginal; }
+            get { return currentFrame; }
             set
             {
-                if (currentFrameOriginal != value)
+                if (currentFrame != value)
                 {
-                    SetProperty(ref currentFrameOriginal, value);
-                }
-            }
-        }
-
-        /// <summary>
-        /// The output Image of the grayScale frame
-        /// </summary>
-        public BitmapSource CurrentFrameGray
-        {
-            get { return currentFrameGray; }
-            set
-            {
-                if (currentFrameGray != value)
-                {
-                    SetProperty(ref currentFrameGray, value);
+                    SetProperty(ref currentFrame, value);
                 }
             }
         }
@@ -115,13 +99,14 @@ namespace VisualDetection.ViewModel
         /// <summary>
         /// Capture current frame from selected camera and save it to cameramodel
         /// </summary>
-        /// <param name="camera"></param>
-        private void CaptureCameraFrame(VideoCapture camera)
+        private void CaptureCameraFrame()
         {
             var cModel = CameraModel.Instance;
-
-            cModel.CameraViewMat = Capture.QueryFrame();
-            CurrentFrameOriginal = MiscMethods.MatToBitmapSource(cModel.CameraViewMat);
+            Capture = new VideoCapture();
+            using (cModel.CameraViewMat = Capture.QueryFrame())
+            {
+                cModel.CameraViewGrayScaleMat = MiscMethods.MatToGrayscale(cModel.CameraViewMat);
+            }
         }
         #endregion
 
