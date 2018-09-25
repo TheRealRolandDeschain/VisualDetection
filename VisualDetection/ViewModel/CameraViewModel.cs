@@ -8,6 +8,9 @@ using VisualDetection.Model;
 using VisualDetection.Util;
 using VisualDetection.Detectors;
 using System.Threading.Tasks;
+using System.Windows.Controls;
+using System.Linq.Expressions;
+using System.Reflection;
 
 namespace VisualDetection.ViewModel
 {
@@ -33,7 +36,6 @@ namespace VisualDetection.ViewModel
 
 
         #region Private Fields
-        private DispatcherTimer Timer { get; set; }
         private VideoCapture Capture { get; set; }
         #endregion
 
@@ -157,39 +159,30 @@ namespace VisualDetection.ViewModel
         /// </summary>
         private void StartStopCapture()
         {
+            Capture = new VideoCapture();
+            Task capturetask = new Task(CaptureCameraFrame);
             if (StartStopCaptureButtonContent == GenDefString.StartCaptureButtonString)
             {
                 StartStopCaptureButtonContent = GenDefString.StopCaptureButtonString;
-                CaptureCameraFrame();
+                capturetask.Start();
             }
             else
             {
                 StartStopCaptureButtonContent = GenDefString.StartCaptureButtonString;
+                CurrentFrame = new BitmapImage(new Uri("..\\Icons\\DefaultImage.png", UriKind.Relative));
+                Capture.Dispose();
             }
-                
-            switch (RadioButtonSelected)
-            {
-                case CameraViewRadioButtons.OriginalImage:
-                    CurrentFrame = MiscMethods.MatToBitmapSource(CameraModel.Instance.CameraViewMat);
-                    break;
-                case CameraViewRadioButtons.GrayScaleImage:
-                    CurrentFrame = MiscMethods.MatToBitmapSource(CameraModel.Instance.CameraViewGrayScaleMat);
-                    break;
-                case CameraViewRadioButtons.ImageWithDetectedFeaturess:
-                    CurrentFrame = MiscMethods.MatToBitmapSource(CameraModel.Instance.CameraViewDetectedFeaturesMat);
-                    break;
-            }               
         }
 
         /// <summary>
         /// Capture current frame from selected camera and save it to cameramodel
         /// </summary>
-        private void CaptureCameraFrame()
+        public void CaptureCameraFrame()
         {
-            Capture = new VideoCapture();
             CameraModel.Instance.CameraViewMat = Capture.QueryFrame();
             CameraModel.Instance.CameraViewGrayScaleMat = MiscMethods.MatToGrayscale(CameraModel.Instance.CameraViewMat);
             SURFDetector.CalculateSURFFeatures();
+            CaptureCameraFrame();
         }
         #endregion
 
