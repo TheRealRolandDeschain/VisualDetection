@@ -1,5 +1,4 @@
 ﻿using Emgu.CV;
-using Emgu.CV.CvEnum;
 using System;
 using System.Drawing;
 using System.Runtime.InteropServices;
@@ -12,18 +11,6 @@ namespace VisualDetection.Util
     {
 
         #region Public Methods
-        /// <summary>
-        /// Converts a Bgr Mat into a Grayscale Mat
-        /// </summary>
-        /// <param name="imageMat"></param>
-        /// <returns></returns>
-        public static Mat MatToGrayscale(Mat imageMat)
-        {
-            var imageGray = new Mat();
-            CvInvoke.CvtColor(imageMat, imageGray, ColorConversion.Bgr2Gray);
-            return imageGray;
-        }
-
         /// <summary>
         /// Get BitmapSource from image matrix
         /// </summary>

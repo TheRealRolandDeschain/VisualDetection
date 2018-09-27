@@ -15,17 +15,20 @@ namespace VisualDetection.Detectors
 {
     public static class SURFDetector
     {
+
+        //int k = 2;
+        //double uniquenessThreshold = 0.8;
+        private static double hessianThresh = 300;
+        private static VectorOfKeyPoint modelKeyPoints = new VectorOfKeyPoint();
+        private static VectorOfKeyPoint observedKeyPoints = new VectorOfKeyPoint();
+        private static SURF Surf = new SURF(hessianThresh);
+        private static Bgr color = new Bgr(255, 255, 255);
+
         #region Public Methods
         public static void CalculateSURFFeatures()
         {
-            //int k = 2;
-            //double uniquenessThreshold = 0.8;
-            double hessianThresh = 300;
-            VectorOfKeyPoint modelKeyPoints = new VectorOfKeyPoint();
-            VectorOfKeyPoint observedKeyPoints = new VectorOfKeyPoint();
-            SURF SURFDetector = new SURF(hessianThresh);
-            SURFDetector.DetectAndCompute(CameraModel.Instance.CameraViewGrayScaleMat, null, modelKeyPoints, CameraModel.Instance.CameraViewDetectedFeaturesMat, false);
-            Features2DToolbox.DrawKeypoints(CameraModel.Instance.CameraViewMat, modelKeyPoints, CameraModel.Instance.CameraViewDetectedFeaturesMat, new Bgr(255,255,255));
+            Surf.DetectAndCompute(CameraModel.Instance.CameraViewGrayScaleMat, null, modelKeyPoints, CameraModel.Instance.CameraViewDetectedFeaturesMat, false);
+            Features2DToolbox.DrawKeypoints(CameraModel.Instance.CameraViewMat, modelKeyPoints, CameraModel.Instance.CameraViewDetectedFeaturesMat, color);
         }
         #endregion
     }

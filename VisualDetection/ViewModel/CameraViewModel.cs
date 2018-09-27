@@ -1,5 +1,7 @@
 ﻿using Emgu.CV;
+using Emgu.CV.CvEnum;
 using System;
+using System.Reflection.Emit;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
@@ -18,7 +20,6 @@ namespace VisualDetection.ViewModel
         {
             StartStopCaptureButtonContent = GenDefString.StartCaptureButtonString;
             RadioButtonSelected = CameraViewRadioButtons.OriginalImage;
-            Capture = new VideoCapture();
         }
         #endregion
 
@@ -156,16 +157,20 @@ namespace VisualDetection.ViewModel
         /// start capture and processing with the selected settings
         /// </summary>
         private void StartStopCapture()
-        { 
+        {
             Task captureTask = new Task(CaptureCameraFrame);
             if (StartStopCaptureButtonContent == GenDefString.StopCaptureButtonString)
             {
+                Capture.Stop();
+                Capture.Dispose();
                 StartStopCaptureButtonContent = GenDefString.StartCaptureButtonString;
             }
             else
             {
-                StartStopCaptureButtonContent = GenDefString.StopCaptureButtonString;
+                Capture = new VideoCapture();
+                Capture.Start();
                 captureTask.Start();
+                StartStopCaptureButtonContent = GenDefString.StopCaptureButtonString;
             }
         }
 
@@ -177,8 +182,8 @@ namespace VisualDetection.ViewModel
         /// </summary>
         private void CaptureCameraFrame()
         {
-            CameraModel.Instance.CameraViewMat = Capture.QueryFrame();
-            CameraModel.Instance.CameraViewGrayScaleMat = MiscMethods.MatToGrayscale(CameraModel.Instance.CameraViewMat);
+            if(Capture.Grab()) Capture.Retrieve(CameraModel.Instance.CameraViewMat);
+            CvInvoke.CvtColor(CameraModel.Instance.CameraViewMat, CameraModel.Instance.CameraViewGrayScaleMat, ColorConversion.Bgr2Gray);
             SURFDetector.CalculateSURFFeatures();
             dispatcher.Invoke(() => SetCameraOutputToCapturedFrame(), DispatcherPriority.Normal);
             if (StartStopCaptureButtonContent == GenDefString.StopCaptureButtonString)
