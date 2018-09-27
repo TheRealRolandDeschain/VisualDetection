@@ -1,16 +1,12 @@
 ﻿using Emgu.CV;
-using Emgu.CV.CvEnum;
 using System;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
+using VisualDetection.Detectors;
 using VisualDetection.Model;
 using VisualDetection.Util;
-using VisualDetection.Detectors;
-using System.Threading.Tasks;
-using System.Windows.Controls;
-using System.Linq.Expressions;
-using System.Reflection;
 
 namespace VisualDetection.ViewModel
 {
@@ -22,6 +18,7 @@ namespace VisualDetection.ViewModel
         {
             StartStopCaptureButtonContent = GenDefString.StartCaptureButtonString;
             RadioButtonSelected = CameraViewRadioButtons.OriginalImage;
+            Capture = new VideoCapture();
         }
         #endregion
 
@@ -37,6 +34,7 @@ namespace VisualDetection.ViewModel
 
         #region Private Fields
         private VideoCapture Capture { get; set; }
+        private Dispatcher dispatcher = App.Current.Dispatcher;
         #endregion
 
         #region Public Fields
@@ -158,35 +156,79 @@ namespace VisualDetection.ViewModel
         /// start capture and processing with the selected settings
         /// </summary>
         private void StartStopCapture()
-        {
-            Capture = new VideoCapture();
-            Task capturetask = new Task(CaptureCameraFrame);
-            if (StartStopCaptureButtonContent == GenDefString.StartCaptureButtonString)
+        { 
+            Task captureTask = new Task(CaptureCameraFrame);
+            if (StartStopCaptureButtonContent == GenDefString.StopCaptureButtonString)
             {
-                StartStopCaptureButtonContent = GenDefString.StopCaptureButtonString;
-                capturetask.Start();
+                StartStopCaptureButtonContent = GenDefString.StartCaptureButtonString;
             }
             else
             {
-                StartStopCaptureButtonContent = GenDefString.StartCaptureButtonString;
-                CurrentFrame = new BitmapImage(new Uri("..\\Icons\\DefaultImage.png", UriKind.Relative));
-                Capture.Dispose();
+                StartStopCaptureButtonContent = GenDefString.StopCaptureButtonString;
+                captureTask.Start();
             }
         }
+
+        
+
 
         /// <summary>
         /// Capture current frame from selected camera and save it to cameramodel
         /// </summary>
-        public void CaptureCameraFrame()
+        private void CaptureCameraFrame()
         {
             CameraModel.Instance.CameraViewMat = Capture.QueryFrame();
             CameraModel.Instance.CameraViewGrayScaleMat = MiscMethods.MatToGrayscale(CameraModel.Instance.CameraViewMat);
             SURFDetector.CalculateSURFFeatures();
-            CaptureCameraFrame();
+            dispatcher.Invoke(() => SetCameraOutputToCapturedFrame(), DispatcherPriority.Normal);
+            if (StartStopCaptureButtonContent == GenDefString.StopCaptureButtonString)
+            {
+                CaptureCameraFrame();
+            }
+            else
+            {
+                dispatcher.Invoke(() => SetDefaultImageToCameraOutput(), DispatcherPriority.Normal);
+            }
         }
         #endregion
 
         #region Public Methods
+        /// <summary>
+        /// Sets the image output corresponding to the selected RadioButton
+        /// </summary>
+        /// <param name="source"></param>
+        /// <param name="e"></param>
+        public void SetCameraOutputToCapturedFrame()
+        {
+
+            switch(RadioButtonSelected)
+            {
+                case CameraViewRadioButtons.OriginalImage:
+                    CurrentFrame = MiscMethods.MatToBitmapSource(CameraModel.Instance.CameraViewMat);
+                    break;
+                case CameraViewRadioButtons.GrayScaleImage:
+                    CurrentFrame = MiscMethods.MatToBitmapSource(CameraModel.Instance.CameraViewGrayScaleMat);
+                    break;
+                case CameraViewRadioButtons.ImageWithDetectedFeaturess:
+                    CurrentFrame = MiscMethods.MatToBitmapSource(CameraModel.Instance.CameraViewDetectedFeaturesMat);
+                    break;
+            }
+        }
+
+
+        /// <summary>
+        /// sets the default image to the image output
+        /// </summary>
+        public void SetDefaultImageToCameraOutput()
+        {
+            CurrentFrame = new BitmapImage(new Uri("..\\Icons\\DefaultImage.png", UriKind.Relative));
+        }
+        #endregion
+
+        #region Protected Methods
+        #endregion
+
+        #region Eventhandlers and Delegates
         #endregion
     }
 }
