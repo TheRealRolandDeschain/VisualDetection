@@ -184,7 +184,8 @@ namespace VisualDetection.ViewModel
         {
             if(Capture.Grab()) Capture.Retrieve(CameraModel.Instance.CameraViewMat);
             CvInvoke.CvtColor(CameraModel.Instance.CameraViewMat, CameraModel.Instance.CameraViewGrayScaleMat, ColorConversion.Bgr2Gray);
-            SURFDetector.CalculateSURFFeatures();
+            //SURFDetector.CalculateSURFFeatures();
+            CascadeClassifierClass.Detect();
             dispatcher.Invoke(() => SetCameraOutputToCapturedFrame(), DispatcherPriority.Normal);
             if (StartStopCaptureButtonContent == GenDefString.StopCaptureButtonString)
             {
@@ -237,3 +238,4 @@ namespace VisualDetection.ViewModel
         #endregion
     }
 }
+ 
