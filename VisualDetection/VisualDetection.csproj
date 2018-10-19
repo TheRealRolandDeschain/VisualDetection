@@ -79,8 +79,23 @@
     <Compile Include="Util\MiscMethods.cs" />
     <Compile Include="Util\RelayCommand.cs" />
     <Compile Include="ViewModel\CameraViewModel.cs" />
+    <Compile Include="ViewModel\CascadeDetectorOptionsViewModel.cs" />
+    <Compile Include="ViewModel\GeneralOptionsViewModel.cs" />
+    <Compile Include="ViewModel\InputOptionsViewModel.cs" />
     <Compile Include="ViewModel\ViewModelBase.cs" />
     <Page Include="View\CameraView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\CascadeDetectorOptionsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\GeneralOptionsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\InputOptionsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -94,6 +109,15 @@
     </Compile>
     <Compile Include="View\CameraView.xaml.cs">
       <DependentUpon>CameraView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\CascadeDetectorOptionsView.xaml.cs">
+      <DependentUpon>CascadeDetectorOptionsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\GeneralOptionsView.xaml.cs">
+      <DependentUpon>GeneralOptionsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\InputOptionsView.xaml.cs">
+      <DependentUpon>InputOptionsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
@@ -118,6 +142,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="!diary.xlsx" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

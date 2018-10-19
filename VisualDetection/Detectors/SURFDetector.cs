@@ -13,6 +13,8 @@ using VisualDetection.Model;
 
 namespace VisualDetection.Detectors
 {
+    //SURF Detector is not used for face detection, but for feature detection/matching
+    //We leave it in the project for possible later use
     public static class SURFDetector
     {
 

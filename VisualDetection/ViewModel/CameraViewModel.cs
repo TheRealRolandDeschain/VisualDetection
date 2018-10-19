@@ -167,7 +167,7 @@ namespace VisualDetection.ViewModel
             }
             else
             {
-                Capture = new VideoCapture();
+                Capture = new VideoCapture(0);
                 Capture.Start();
                 captureTask.Start();
                 StartStopCaptureButtonContent = GenDefString.StopCaptureButtonString;
@@ -182,9 +182,8 @@ namespace VisualDetection.ViewModel
         /// </summary>
         private void CaptureCameraFrame()
         {
-            if(Capture.Grab()) Capture.Retrieve(CameraModel.Instance.CameraViewMat);
+            if (Capture.Grab()) Capture.Retrieve(CameraModel.Instance.CameraViewMat);
             CvInvoke.CvtColor(CameraModel.Instance.CameraViewMat, CameraModel.Instance.CameraViewGrayScaleMat, ColorConversion.Bgr2Gray);
-            //SURFDetector.CalculateSURFFeatures();
             CascadeClassifierClass.Detect();
             dispatcher.Invoke(() => SetCameraOutputToCapturedFrame(), DispatcherPriority.Normal);
             if (StartStopCaptureButtonContent == GenDefString.StopCaptureButtonString)
