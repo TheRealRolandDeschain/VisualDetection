@@ -30,17 +30,9 @@ namespace VisualDetection.ViewModel
         private bool radioButtonOriginalImageViewChecked;
         private bool radioButtonGrayScaleImageViewChecked;
         private bool radioButtonDetectedFeaturesImageViewChecked;
-        #endregion
-
-
-        #region Private Fields
         private VideoCapture Capture { get; set; }
         private Dispatcher dispatcher = App.Current.Dispatcher;
         #endregion
-
-        #region Public Fields
-        #endregion
-
 
         #region Public Properties
         /// <summary>
@@ -151,7 +143,6 @@ namespace VisualDetection.ViewModel
         }
         #endregion
 
-
         #region Private Methods
         /// <summary>
         /// start capture and processing with the selected settings
@@ -167,7 +158,7 @@ namespace VisualDetection.ViewModel
             }
             else
             {
-                Capture = new VideoCapture(0);
+                Capture = new VideoCapture();
                 Capture.Start();
                 captureTask.Start();
                 StartStopCaptureButtonContent = GenDefString.StopCaptureButtonString;
@@ -205,7 +196,6 @@ namespace VisualDetection.ViewModel
         /// <param name="e"></param>
         public void SetCameraOutputToCapturedFrame()
         {
-
             switch(RadioButtonSelected)
             {
                 case CameraViewRadioButtons.OriginalImage:
@@ -226,7 +216,7 @@ namespace VisualDetection.ViewModel
         /// </summary>
         public void SetDefaultImageToCameraOutput()
         {
-            CurrentFrame = new BitmapImage(new Uri("..\\Icons\\DefaultImage.png", UriKind.Relative));
+            CurrentFrame = new BitmapImage(new Uri(GenDefString.DefaultImagePathString, UriKind.Relative));
         }
         #endregion
 

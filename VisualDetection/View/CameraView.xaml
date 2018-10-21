@@ -23,7 +23,7 @@
             <RowDefinition Height="25"/>
         </Grid.RowDefinitions>
 
-        <Button Content="{Binding StartStopCaptureButtonContent}" Command="{Binding StartStopCaptureButtonClicked}" Style="{StaticResource StdButtonStyle}" HorizontalAlignment="Right"
+        <Button Content="{Binding StartStopCaptureButtonContent}" Command="{Binding StartStopCaptureButtonClicked}" HorizontalAlignment="Right"
                 VerticalAlignment="Stretch" Grid.Column="0" Grid.ColumnSpan="1" Grid.Row="0" Grid.RowSpan="1" Template="{DynamicResource ButtonBaseControlTemplate1}"/>
         <Image  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="0" Grid.ColumnSpan="1" Grid.Row="1" Grid.RowSpan="1">
             <Image.Source >
