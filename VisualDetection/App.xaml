@@ -119,6 +119,21 @@
                 </ControlTemplate.Triggers>
             </ControlTemplate>
 
+            <ControlTemplate x:Key="StdTextBox" TargetType="{x:Type TextBoxBase}">
+                <Border x:Name="border" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" SnapsToDevicePixels="True">
+                    <ScrollViewer x:Name="PART_ContentHost" Focusable="False" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden"/>
+                </Border>
+                <ControlTemplate.Triggers>
+                    <Trigger Property="IsMouseOver" Value="True">
+                        <Setter Property="BorderBrush" TargetName="border" Value="#CCFFFFFF"/>
+                    </Trigger>
+                    <Trigger Property="IsKeyboardFocused" Value="True">
+                        <Setter Property="Background" Value="#14FFFFFF"/>
+                        <Setter Property="BorderBrush" TargetName="border" Value="#CCFFFFFF"/>
+                    </Trigger>
+                </ControlTemplate.Triggers>
+            </ControlTemplate>
+
             <!-- STYLES -->
 
             <!-- Focus Visual -->
@@ -275,6 +290,15 @@
                         </ControlTemplate>
                     </Setter.Value>
                 </Setter>
+            </Style>
+            
+            <!-- Textbox -->
+            <Style TargetType="{x:Type TextBox}">
+                <Setter Property="Background" Value="Transparent"/>
+                <Setter Property="BorderBrush" Value="White"/>
+                <Setter Property="BorderThickness" Value="1"/>
+                <Setter Property="Foreground" Value="White"/>
+                <Setter Property="Template" Value="{DynamicResource StdTextBox}"/>
             </Style>
 
         </ResourceDictionary>
