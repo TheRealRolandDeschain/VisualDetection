@@ -23,6 +23,30 @@ namespace VisualDetection.ViewModel
         }
         #endregion
 
+        #region Singleton
+        private static volatile CameraViewModel instance;
+        private static object syncRoot = new object();
+        /// <summary>
+        /// threadsave singleton
+        /// </summary>
+        public static CameraViewModel Instance
+        {
+            get
+            {
+                if (instance == null)
+                {
+                    lock (syncRoot)
+                    {
+                        if (instance == null)
+                            instance = new CameraViewModel();
+                    }
+                }
+
+                return instance;
+            }
+        }
+        #endregion
+
         #region Private Properties
         private BitmapSource currentFrame;
         private RelayCommand startStopCaptureButtonClicked;
@@ -158,7 +182,7 @@ namespace VisualDetection.ViewModel
             }
             else
             {
-                Capture = new VideoCapture();
+                Capture = new VideoCapture(GeneralOptionsViewModel.Instance.SelectedCameraIndex);
                 Capture.Start();
                 captureTask.Start();
                 StartStopCaptureButtonContent = GenDefString.StopCaptureButtonString;
@@ -175,7 +199,9 @@ namespace VisualDetection.ViewModel
         {
             if (Capture.Grab()) Capture.Retrieve(CameraModel.Instance.CameraViewMat);
             CvInvoke.CvtColor(CameraModel.Instance.CameraViewMat, CameraModel.Instance.CameraViewGrayScaleMat, ColorConversion.Bgr2Gray);
+            // Detects faces and eyes TODO: make detection optional
             CascadeClassifierClass.Detect();
+            //
             dispatcher.Invoke(() => SetCameraOutputToCapturedFrame(), DispatcherPriority.Normal);
             if (StartStopCaptureButtonContent == GenDefString.StopCaptureButtonString)
             {
