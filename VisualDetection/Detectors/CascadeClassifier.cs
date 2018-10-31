@@ -14,61 +14,57 @@ namespace VisualDetection.Detectors
 {
     public static class CascadeClassifierClass
     {
-        public static void Detect()
+        public static void Detect(CascadeClassifier eye, CascadeClassifier face = null)
         {
             List<Rectangle> faces = new List<Rectangle>();
             List<Rectangle> eyes = new List<Rectangle>();
             CameraModel.Instance.CameraViewDetectedFeaturesMat = CameraModel.Instance.CameraViewMat.Clone();
-            string facepath = Path.GetFullPath(@"../../XMLCascades/haarcascade_frontalface_default.xml");
-            string eyepath = Path.GetFullPath(@"../../XMLCascades/haarcascade_eye.xml");
             MCvScalar faceRectColor = new MCvScalar(0, 0, 255);
             MCvScalar eyeRectColor = new MCvScalar(255, 0, 0);
-            using (CascadeClassifier face = new CascadeClassifier(facepath))
-            using (CascadeClassifier eye = new CascadeClassifier(eyepath))
+
+            //normalizes brightness and increases contrast of the image
+            CvInvoke.EqualizeHist(CameraModel.Instance.CameraViewGrayScaleMat, CameraModel.Instance.CameraViewGrayScaleMat);
+
+            //Detect the faces from the gray scale image and store the locations as rectangle
+            //The first dimensional is the channel
+            //The second dimension is the index of the rectangle in the specific channel
+            Rectangle[] facesDetected = face.DetectMultiScale(
+                CameraModel.Instance.CameraViewGrayScaleMat,
+                1.1,
+                10,
+                new Size(20, 20));
+
+            faces.AddRange(facesDetected);
+
+            foreach (Rectangle f in facesDetected)
             {
-                //normalizes brightness and increases contrast of the image
-                CvInvoke.EqualizeHist(CameraModel.Instance.CameraViewGrayScaleMat, CameraModel.Instance.CameraViewGrayScaleMat);
-
-                //Detect the faces from the gray scale image and store the locations as rectangle
-                //The first dimensional is the channel
-                //The second dimension is the index of the rectangle in the specific channel
-                Rectangle[] facesDetected = face.DetectMultiScale(
-                    CameraModel.Instance.CameraViewGrayScaleMat,
-                    1.1,
-                    10,
-                    new Size(20, 20));
-
-                faces.AddRange(facesDetected);
-
-                foreach (Rectangle f in facesDetected)
+                //Get the region of interest on the faces
+                using (Mat faceRegion = new Mat(CameraModel.Instance.CameraViewGrayScaleMat, f))
                 {
-                    //Get the region of interest on the faces
-                    using (Mat faceRegion = new Mat(CameraModel.Instance.CameraViewGrayScaleMat, f))
-                    {
-                        Rectangle[] eyesDetected = eye.DetectMultiScale(
-                            faceRegion,
-                            1.1,
-                            10,
-                            new Size(20, 20));
+                    Rectangle[] eyesDetected = eye.DetectMultiScale(
+                        faceRegion,
+                        1.1,
+                        10,
+                        new Size(20, 20));
 
-                        foreach (Rectangle e in eyesDetected)
-                        {
-                            Rectangle eyeRect = e;
-                            eyeRect.Offset(f.X, f.Y);
-                            eyes.Add(eyeRect);
-                        }
+                    foreach (Rectangle e in eyesDetected)
+                    {
+                        Rectangle eyeRect = e;
+                        eyeRect.Offset(f.X, f.Y);
+                        eyes.Add(eyeRect);
                     }
                 }
-
-                foreach(var foundface in faces)
-                {
-                    CvInvoke.Rectangle(CameraModel.Instance.CameraViewDetectedFeaturesMat, foundface, faceRectColor);
-                }
-                foreach(var foundeye in eyes)
-                {
-                    CvInvoke.Rectangle(CameraModel.Instance.CameraViewDetectedFeaturesMat, foundeye, eyeRectColor);
-                }
             }
+
+            foreach(var foundface in faces)
+            {
+                CvInvoke.Rectangle(CameraModel.Instance.CameraViewDetectedFeaturesMat, foundface, faceRectColor);
+            }
+            foreach(var foundeye in eyes)
+            {
+                CvInvoke.Rectangle(CameraModel.Instance.CameraViewDetectedFeaturesMat, foundeye, eyeRectColor);
+            }
+
         }
     }
 }

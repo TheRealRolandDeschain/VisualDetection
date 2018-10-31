@@ -6,7 +6,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using System.Windows;
 using VisualDetection.Util;
+using VisualDetection.Model;
+using Emgu.CV;
 
 namespace VisualDetection.ViewModel
 {
@@ -20,6 +23,9 @@ namespace VisualDetection.ViewModel
         {
             HaarCascadeFacePathString = GenDefString.HaarCascadePathStringEmpty;
             HaarCascadeEyePathString = GenDefString.HaarCascadePathStringEmpty;
+            face = new CascadeClassifier();
+            eye = new CascadeClassifier();
+            CameraModel.Instance.cascadeOptions = this;
         }
         #endregion
 
@@ -28,9 +34,15 @@ namespace VisualDetection.ViewModel
         private RelayCommand loadHaarCascadeEyeClicked;
         private string haarCascadeFacePathString;
         private string haarCascadeEyePathString;
+        private bool validFaceClassifierLoaded;
+        private bool validEyeClassifierLoaded;
         #endregion
 
         #region Public Properties
+        public CascadeClassifier face { get; set; }
+        public CascadeClassifier eye { get; set; }
+
+
         /// <summary>
         /// The button to load a HaarCascade for face detection was clicked
         /// </summary>
@@ -90,14 +102,28 @@ namespace VisualDetection.ViewModel
         /// </summary>
         private void LoadHaarCascadeFace()
         {
-            OpenFileDialog ofd = new OpenFileDialog();
-            ofd.Title = "Please select a valid XML file!";
-            ofd.DefaultExt = "xml";
-            ofd.Filter = "XML Files|*.xml";
-            ofd.Multiselect = false;
+            OpenFileDialog ofd = new OpenFileDialog
+            {
+                Title = GenDefString.HaarCascadeOfdTitle,
+                DefaultExt = GenDefString.HaarCascadeOfdDefaultExt,
+                Filter = GenDefString.HaarCascadeOfdFilter,
+                Multiselect = false
+            };
             if (ofd.ShowDialog() == true)
             {
-                HaarCascadeFacePathString = Path.GetFullPath(ofd.FileName);
+                try
+                {
+                    HaarCascadeFacePathString = Path.GetFullPath(ofd.FileName);
+                    FileStorage fs = new FileStorage(HaarCascadeFacePathString, FileStorage.Mode.Read);
+                    FileNode fn = fs.GetFirstTopLevelNode();
+                    validFaceClassifierLoaded = face.Read(fn);
+                }
+                catch (Exception e)
+                {
+                    HaarCascadeFacePathString = GenDefString.HaarCascadePathStringEmpty;
+                    validFaceClassifierLoaded = false;
+                    MessageBox.Show(GenDefString.InvalidCascadeClassifierXMLLoaded + "\n error: " + e.Message);
+                }
             }
         }
 
@@ -106,14 +132,28 @@ namespace VisualDetection.ViewModel
         /// </summary>
         private void LoadHaarCascadeEye()
         {
-            OpenFileDialog ofd = new OpenFileDialog();
-            ofd.Title = "Please select a valid XML file!";
-            ofd.DefaultExt = "xml";
-            ofd.Filter = "XML Files|*.xml";
-            ofd.Multiselect = false;
+            OpenFileDialog ofd = new OpenFileDialog
+            {
+                Title = GenDefString.HaarCascadeOfdTitle,
+                DefaultExt = GenDefString.HaarCascadeOfdDefaultExt,
+                Filter = GenDefString.HaarCascadeOfdFilter,
+                Multiselect = false
+            };
             if (ofd.ShowDialog() == true)
             {
-                HaarCascadeEyePathString = Path.GetFullPath(ofd.FileName);
+                try
+                {
+                    HaarCascadeEyePathString = Path.GetFullPath(ofd.FileName);
+                    FileStorage fs = new FileStorage(HaarCascadeEyePathString, FileStorage.Mode.Read);
+                    FileNode fn = fs.GetFirstTopLevelNode();
+                    validEyeClassifierLoaded = face.Read(fn);
+                }
+                catch (Exception e)
+                {
+                    HaarCascadeEyePathString = GenDefString.HaarCascadePathStringEmpty;
+                    validEyeClassifierLoaded = false;
+                    MessageBox.Show(GenDefString.InvalidCascadeClassifierXMLLoaded + "\n error: " + e.Message);
+                }
             }
         }
         #endregion

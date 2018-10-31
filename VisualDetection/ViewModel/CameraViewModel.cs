@@ -1,7 +1,6 @@
 ﻿using Emgu.CV;
 using Emgu.CV.CvEnum;
 using System;
-using System.Reflection.Emit;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
@@ -200,7 +199,7 @@ namespace VisualDetection.ViewModel
             if (Capture.Grab()) Capture.Retrieve(CameraModel.Instance.CameraViewMat);
             CvInvoke.CvtColor(CameraModel.Instance.CameraViewMat, CameraModel.Instance.CameraViewGrayScaleMat, ColorConversion.Bgr2Gray);
             // Detects faces and eyes TODO: make detection optional
-            CascadeClassifierClass.Detect();
+            CascadeClassifierClass.Detect(CameraModel.Instance.cascadeOptions.eye, CameraModel.Instance.cascadeOptions.face);
             //
             dispatcher.Invoke(() => SetCameraOutputToCapturedFrame(), DispatcherPriority.Normal);
             if (StartStopCaptureButtonContent == GenDefString.StopCaptureButtonString)
