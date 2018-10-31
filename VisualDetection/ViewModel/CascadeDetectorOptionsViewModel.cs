@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using System.Windows;
+using System.Drawing;
 using VisualDetection.Util;
 using VisualDetection.Model;
 using Emgu.CV;
@@ -23,9 +23,10 @@ namespace VisualDetection.ViewModel
         {
             HaarCascadeFacePathString = GenDefString.HaarCascadePathStringEmpty;
             HaarCascadeEyePathString = GenDefString.HaarCascadePathStringEmpty;
-            face = new CascadeClassifier();
-            eye = new CascadeClassifier();
+            Face = new CascadeClassifier();
+            Eye = new CascadeClassifier();
             CameraModel.Instance.cascadeOptions = this;
+            LoadDefaultValues();
         }
         #endregion
 
@@ -36,11 +37,23 @@ namespace VisualDetection.ViewModel
         private string haarCascadeEyePathString;
         private bool validFaceClassifierLoaded;
         private bool validEyeClassifierLoaded;
+        private double faceScale;
+        private int faceMinNeigbours;
+        private double eyesScale;
+        private int eyesMinNeigbours;
+        private int faceMinSizeValue;
+        private int faceMaxSizeValue;
+        private int eyesMinSizeValue;
+        private int eyesMaxSizeValue;
         #endregion
 
         #region Public Properties
-        public CascadeClassifier face { get; set; }
-        public CascadeClassifier eye { get; set; }
+        public CascadeClassifier Face { get; set; }
+        public CascadeClassifier Eye { get; set; }
+        public Size FaceMinSize { get; set; }
+        public Size FaceMaxSize { get; set; }
+        public Size EyesMinSize { get; set; }
+        public Size EyesMaxSize { get; set; }
 
 
         /// <summary>
@@ -94,6 +107,140 @@ namespace VisualDetection.ViewModel
                 }
             }
         }
+
+        /// <summary>
+        /// The value of the scale used of the face detection
+        /// </summary>
+        public double FaceScale
+        {
+            get { return faceScale; }
+            set
+            {
+                if (value > 5 || value <= 1)
+                {
+                    System.Windows.MessageBox.Show(GenDefString.ValueMustBeBetweenOneAndFive);
+                    return;
+                }
+                if (faceScale != value)
+                {
+                    SetProperty(ref faceScale, value);
+                }
+            }
+        }
+
+        /// <summary>
+        /// The value of the minimum neighbours for face detection
+        /// </summary>
+        public int FaceMinNeigbours
+        {
+            get { return faceMinNeigbours; }
+            set
+            {
+                if (faceMinNeigbours != value)
+                {
+                    SetProperty(ref faceMinNeigbours, value);
+                }
+            }
+        }
+
+        /// <summary>
+        /// The value of the scale used of the eyes detection
+        /// </summary>
+        public double EyesScale
+        {
+            get { return eyesScale; }
+            set
+            {
+                if (value > 5 || value <= 1)
+                {
+                    System.Windows.MessageBox.Show(GenDefString.ValueMustBeBetweenOneAndFive);
+                    return;
+                }
+                if (eyesScale != value)
+                {
+                    SetProperty(ref eyesScale, value);
+                }
+            }
+        }
+
+        /// <summary>
+        /// The content of the textbox for the path of eye detection cascade
+        /// </summary>
+        public int EyesMinNeigbours
+        {
+            get { return eyesMinNeigbours; }
+            set
+            {
+                if (eyesMinNeigbours != value)
+                {
+                    SetProperty(ref eyesMinNeigbours, value);
+                }
+            }
+        }
+
+        /// <summary>
+        /// The value of the minimum size of the detected rectangle for face detection
+        /// </summary>
+        public int FaceMinSizeValue
+        {
+            get { return faceMinSizeValue; }
+            set
+            {
+                if (faceMinSizeValue != value)
+                {
+                    FaceMinSize = new Size(value, value);
+                    SetProperty(ref faceMinSizeValue, value);
+                }
+            }
+        }
+
+        /// <summary>
+        /// The value of the maximum size of the detected rectangle for face detection
+        /// </summary>
+        public int FaceMaxSizeValue
+        {
+            get { return faceMaxSizeValue; }
+            set
+            {
+                if (faceMaxSizeValue != value)
+                {
+                    FaceMaxSize = new Size(value, value);
+                    SetProperty(ref faceMaxSizeValue, value);
+                }
+            }
+        }
+
+        /// <summary>
+        /// The value of the minimum size of the detected rectangle for eyes detection
+        /// </summary>
+        public int EyesMinSizeValue
+        {
+            get { return eyesMinSizeValue; }
+            set
+            {
+                if (eyesMinSizeValue != value)
+                {
+                    EyesMinSize = new Size(value, value);
+                    SetProperty(ref eyesMinSizeValue, value);
+                }
+            }
+        }
+
+        /// <summary>
+        /// The value of the maximum size of the detected rectangle for eyes detection
+        /// </summary>
+        public int EyesMaxSizeValue
+        {
+            get { return eyesMaxSizeValue; }
+            set
+            {
+                if (eyesMaxSizeValue != value)
+                {
+                    EyesMaxSize = new Size(value, value);
+                    SetProperty(ref eyesMaxSizeValue, value);
+                }
+            }
+        }
         #endregion
 
         #region Private Methods
@@ -116,13 +263,13 @@ namespace VisualDetection.ViewModel
                     HaarCascadeFacePathString = Path.GetFullPath(ofd.FileName);
                     FileStorage fs = new FileStorage(HaarCascadeFacePathString, FileStorage.Mode.Read);
                     FileNode fn = fs.GetFirstTopLevelNode();
-                    validFaceClassifierLoaded = face.Read(fn);
+                    validFaceClassifierLoaded = Face.Read(fn);
                 }
                 catch (Exception e)
                 {
                     HaarCascadeFacePathString = GenDefString.HaarCascadePathStringEmpty;
                     validFaceClassifierLoaded = false;
-                    MessageBox.Show(GenDefString.InvalidCascadeClassifierXMLLoaded + "\n error: " + e.Message);
+                    System.Windows.MessageBox.Show(GenDefString.InvalidCascadeClassifierXMLLoaded + "\n error: " + e.Message);
                 }
             }
         }
@@ -146,15 +293,36 @@ namespace VisualDetection.ViewModel
                     HaarCascadeEyePathString = Path.GetFullPath(ofd.FileName);
                     FileStorage fs = new FileStorage(HaarCascadeEyePathString, FileStorage.Mode.Read);
                     FileNode fn = fs.GetFirstTopLevelNode();
-                    validEyeClassifierLoaded = face.Read(fn);
+                    validEyeClassifierLoaded = Eye.Read(fn);
                 }
                 catch (Exception e)
                 {
                     HaarCascadeEyePathString = GenDefString.HaarCascadePathStringEmpty;
                     validEyeClassifierLoaded = false;
-                    MessageBox.Show(GenDefString.InvalidCascadeClassifierXMLLoaded + "\n error: " + e.Message);
+                    System.Windows.MessageBox.Show(GenDefString.InvalidCascadeClassifierXMLLoaded + "\n error: " + e.Message);
                 }
             }
+        }
+
+        /// <summary>
+        /// Loads the default values for the cascade classifier
+        /// </summary>
+        private void LoadDefaultValues()
+        {
+            validFaceClassifierLoaded = false;
+            validEyeClassifierLoaded = false;
+            FaceScale = GenDefDouble.FaceScaleDefault;
+            FaceMinNeigbours = GenDefInt.FaceMinNeigboursDefault;
+            EyesScale = GenDefDouble.EyesScaleDefault;
+            EyesMinNeigbours = GenDefInt.EyesMinNeigboursDefault;
+            FaceMinSizeValue = GenDefInt.FaceMinSizeValue;
+            FaceMaxSizeValue = GenDefInt.FaceMaxSizeValue;
+            EyesMinSizeValue = GenDefInt.EyesMinSizeValue;
+            EyesMaxSizeValue = GenDefInt.EyesMaxSizeValue;
+            FaceMinSize = new Size(FaceMinSizeValue, FaceMinSizeValue);
+            FaceMaxSize = new Size(FaceMaxSizeValue, FaceMaxSizeValue);
+            EyesMinSize = new Size(EyesMinSizeValue, EyesMinSizeValue);
+            EyesMaxSize = new Size(EyesMaxSizeValue, EyesMaxSizeValue);
         }
         #endregion
 

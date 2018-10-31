@@ -18,7 +18,6 @@ namespace VisualDetection.Model
         {
             CameraViewMat = new Mat();
             CameraViewGrayScaleMat = new Mat();
-            CameraViewDetectedFeaturesMat = new Mat();
         }
         #endregion
 
@@ -52,7 +51,6 @@ namespace VisualDetection.Model
         #region Public Properties
         public Mat CameraViewMat { get; set; }
         public Mat CameraViewGrayScaleMat { get; set; }
-        public Mat CameraViewDetectedFeaturesMat { get; set; }
         public CascadeDetectorOptionsViewModel cascadeOptions { get; set; }
         #endregion
 

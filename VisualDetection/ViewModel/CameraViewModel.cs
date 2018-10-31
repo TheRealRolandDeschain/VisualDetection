@@ -13,7 +13,6 @@ namespace VisualDetection.ViewModel
 {
     public class CameraViewModel : ViewModelBase
     {
-
         #region Constructors
         public CameraViewModel()
         {
@@ -198,8 +197,13 @@ namespace VisualDetection.ViewModel
         {
             if (Capture.Grab()) Capture.Retrieve(CameraModel.Instance.CameraViewMat);
             CvInvoke.CvtColor(CameraModel.Instance.CameraViewMat, CameraModel.Instance.CameraViewGrayScaleMat, ColorConversion.Bgr2Gray);
+            CvInvoke.EqualizeHist(CameraModel.Instance.CameraViewGrayScaleMat, CameraModel.Instance.CameraViewGrayScaleMat);
             // Detects faces and eyes TODO: make detection optional
-            CascadeClassifierClass.Detect(CameraModel.Instance.cascadeOptions.eye, CameraModel.Instance.cascadeOptions.face);
+            CascadeClassifierClass.Detect(RadioButtonDetectedFeaturesImageViewChecked, CameraModel.Instance.cascadeOptions.FaceScale,
+                CameraModel.Instance.cascadeOptions.FaceMinNeigbours, CameraModel.Instance.cascadeOptions.FaceMinSize, CameraModel.Instance.cascadeOptions.FaceMaxSize,
+                CameraModel.Instance.cascadeOptions.EyesScale, CameraModel.Instance.cascadeOptions.EyesMinNeigbours, CameraModel.Instance.cascadeOptions.EyesMinSize,
+                CameraModel.Instance.cascadeOptions.EyesMaxSize, CameraModel.Instance.cascadeOptions.Eye, CameraModel.Instance.cascadeOptions.Face, 
+                GeneralOptionsViewModel.Instance.FaceRectColorScalar, GeneralOptionsViewModel.Instance.EyesRectColorScalar);
             //
             dispatcher.Invoke(() => SetCameraOutputToCapturedFrame(), DispatcherPriority.Normal);
             if (StartStopCaptureButtonContent == GenDefString.StopCaptureButtonString)
@@ -221,17 +225,13 @@ namespace VisualDetection.ViewModel
         /// <param name="e"></param>
         public void SetCameraOutputToCapturedFrame()
         {
-            switch(RadioButtonSelected)
+            if (RadioButtonSelected == CameraViewRadioButtons.OriginalImage || RadioButtonSelected == CameraViewRadioButtons.ImageWithDetectedFeaturess)
             {
-                case CameraViewRadioButtons.OriginalImage:
-                    CurrentFrame = MiscMethods.MatToBitmapSource(CameraModel.Instance.CameraViewMat);
-                    break;
-                case CameraViewRadioButtons.GrayScaleImage:
-                    CurrentFrame = MiscMethods.MatToBitmapSource(CameraModel.Instance.CameraViewGrayScaleMat);
-                    break;
-                case CameraViewRadioButtons.ImageWithDetectedFeaturess:
-                    CurrentFrame = MiscMethods.MatToBitmapSource(CameraModel.Instance.CameraViewDetectedFeaturesMat);
-                    break;
+                CurrentFrame = MiscMethods.MatToBitmapSource(CameraModel.Instance.CameraViewMat);
+            }
+            else
+            { 
+                CurrentFrame = MiscMethods.MatToBitmapSource(CameraModel.Instance.CameraViewGrayScaleMat);
             }
         }
 

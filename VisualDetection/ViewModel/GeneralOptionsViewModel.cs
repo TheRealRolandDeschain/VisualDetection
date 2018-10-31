@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Management;
-using VisualDetection.Model;
+using System.Windows.Media;
+using Emgu.CV.Structure;
 
 
 namespace VisualDetection.ViewModel
@@ -46,6 +47,16 @@ namespace VisualDetection.ViewModel
         private int selectedCameraIndex;
         private int idleAfterFrameCalculationMS;
         private int selectedDetectorTypeIndex;
+        private Color faceRectColor;
+        private Color eyesRectColor;
+        #endregion
+
+        #region Public Fields
+        /// <summary>
+        /// Actually used Color Format for calculation
+        /// </summary>
+        public MCvScalar FaceRectColorScalar;
+        public MCvScalar EyesRectColorScalar;
         #endregion
 
         #region Public Prooperties
@@ -70,8 +81,11 @@ namespace VisualDetection.ViewModel
             }
             set
             {
-                selectedCameraIndex = value;
-                SetProperty(ref selectedCameraIndex, value);
+                if (selectedCameraIndex != value)
+                {
+                    selectedCameraIndex = value;
+                    SetProperty(ref selectedCameraIndex, value);
+                }
             }
         }
 
@@ -86,8 +100,11 @@ namespace VisualDetection.ViewModel
             }
             set
             {
-                selectedDetectorTypeIndex = value;
-                SetProperty(ref selectedDetectorTypeIndex, value);
+                if (selectedDetectorTypeIndex != value)
+                {
+                    selectedDetectorTypeIndex = value;
+                    SetProperty(ref selectedDetectorTypeIndex, value);
+                }
             }
         }
 
@@ -102,8 +119,51 @@ namespace VisualDetection.ViewModel
             }
             set
             {
-                idleAfterFrameCalculationMS = value;
-                SetProperty(ref idleAfterFrameCalculationMS, value);
+                if (idleAfterFrameCalculationMS != value)
+                {
+                    idleAfterFrameCalculationMS = value;
+                    SetProperty(ref idleAfterFrameCalculationMS, value);
+                }
+            }
+        }
+
+        /// <summary>
+        /// The color for the detected face
+        /// </summary>
+        public Color FaceRectColor
+        {
+            get
+            {
+                return faceRectColor;
+            }
+            set
+            {
+                if (faceRectColor != value)
+                {
+                    faceRectColor = value;
+                    FaceRectColorScalar = new MCvScalar(value.B, value.R, value.G, value.A);
+                    SetProperty(ref faceRectColor, value);
+                }
+            }
+        }
+
+        /// <summary>
+        /// The color for the detected eyes
+        /// </summary>
+        public Color EyesRectColor
+        {
+            get
+            {
+                return eyesRectColor;
+            }
+            set
+            {
+                if (eyesRectColor != value)
+                {
+                    eyesRectColor = value;
+                    EyesRectColorScalar = new MCvScalar(value.B, value.R, value.G, value.A);
+                    SetProperty(ref eyesRectColor, value);
+                }
             }
         }
         #endregion

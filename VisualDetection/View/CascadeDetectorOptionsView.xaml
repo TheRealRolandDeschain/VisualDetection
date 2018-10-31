@@ -17,10 +17,10 @@
 
         <Grid.RowDefinitions>
             <RowDefinition Height="60"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="50"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
@@ -36,12 +36,45 @@
                 <TextBox Text="{Binding HaarCascadeFacePathString}" TextWrapping="NoWrap" IsEnabled="False"/>
             </DockPanel>
         </StackPanel>
+        <StackPanel Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="1" Grid.RowSpan="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="10, 0">
+            <Label Content="Select the Scale Value for Face Detection: " Style="{StaticResource OptionsTitleLabel}"/>
+            <TextBox Text="{Binding FaceScale}" TextWrapping="NoWrap"/>
+        </StackPanel>
+        <StackPanel Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="1" Grid.RowSpan="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="10, 0">
+            <Label Content="Select the Number of Minimum Neighbours for Face Detection: " Style="{StaticResource OptionsTitleLabel}"/>
+            <TextBox Text="{Binding FaceMinNeigbours}" TextWrapping="NoWrap"/>
+        </StackPanel>
+        <StackPanel Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="1" Grid.RowSpan="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="10, 0">
+            <Label Content="Select Minimum Rectangle Size for Face Detection: " Style="{StaticResource OptionsTitleLabel}"/>
+            <TextBox Text="{Binding FaceMinSizeValue}" TextWrapping="NoWrap" />
+        </StackPanel>
+        <StackPanel Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="1" Grid.RowSpan="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="10, 0">
+            <Label Content="Select Maximum Rectangle Size for Face Detection: " Style="{StaticResource OptionsTitleLabel}"/>
+            <TextBox Text="{Binding FaceMaxSizeValue}" TextWrapping="NoWrap"/>
+        </StackPanel>
+
         <StackPanel Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="1" Grid.RowSpan="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="10, 0">
             <Label Content="Select Haar Classifier for eye detection: " Style="{StaticResource OptionsTitleLabel}"/>
             <DockPanel FlowDirection="LeftToRight" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                 <Button Content="Load" Command="{Binding LoadHaarCascadeEyeClicked}" Margin="0,0, 10, 0" VerticalAlignment="Stretch" Template="{DynamicResource ButtonBaseControlTemplate1}"/>
                 <TextBox Text="{Binding HaarCascadeEyePathString}" TextWrapping="NoWrap" IsEnabled="False"/>
             </DockPanel>
+        </StackPanel>
+        <StackPanel Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="1" Grid.RowSpan="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="10, 0">
+            <Label Content="Select the Scale Value for Eye Detection:  " Style="{StaticResource OptionsTitleLabel}"/>
+            <TextBox Text="{Binding EyesScale}" TextWrapping="NoWrap"/>
+        </StackPanel>
+        <StackPanel Grid.Column="1" Grid.Row="2" Grid.ColumnSpan="1" Grid.RowSpan="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="10, 0">
+            <Label Content="Select the Number of Minimum Neighbours for Eye Detection: " Style="{StaticResource OptionsTitleLabel}"/>
+            <TextBox Text="{Binding EyesMinNeigbours}" TextWrapping="NoWrap"/>
+        </StackPanel>
+        <StackPanel Grid.Column="1" Grid.Row="3" Grid.ColumnSpan="1" Grid.RowSpan="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="10, 0">
+            <Label Content="Select Minimum Rectangle Size for Eye Detection:  " Style="{StaticResource OptionsTitleLabel}"/>
+            <TextBox Text="{Binding EyesMinSizeValue}" TextWrapping="NoWrap"/>
+        </StackPanel>
+        <StackPanel Grid.Column="1" Grid.Row="4" Grid.ColumnSpan="1" Grid.RowSpan="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="10, 0">
+            <Label Content="Select Maximum Rectangle Size for Eye Detection: " Style="{StaticResource OptionsTitleLabel}"/>
+            <TextBox Text="{Binding EyesMaxSizeValue}" TextWrapping="NoWrap"/>
         </StackPanel>
     </Grid>
 </UserControl>
