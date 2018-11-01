@@ -21,30 +21,6 @@ namespace VisualDetection.ViewModel
         }
         #endregion
 
-        #region Singleton
-        private static volatile CameraViewModel instance;
-        private static object syncRoot = new object();
-        /// <summary>
-        /// threadsave singleton
-        /// </summary>
-        public static CameraViewModel Instance
-        {
-            get
-            {
-                if (instance == null)
-                {
-                    lock (syncRoot)
-                    {
-                        if (instance == null)
-                            instance = new CameraViewModel();
-                    }
-                }
-
-                return instance;
-            }
-        }
-        #endregion
-
         #region Private Properties
         private BitmapSource currentFrame;
         private RelayCommand startStopCaptureButtonClicked;
@@ -180,15 +156,12 @@ namespace VisualDetection.ViewModel
             }
             else
             {
-                Capture = new VideoCapture(GeneralOptionsViewModel.Instance.SelectedCameraIndex);
+                Capture = new VideoCapture(CameraModel.Instance.generalOptions.SelectedCameraIndex);
                 Capture.Start();
                 captureTask.Start();
                 StartStopCaptureButtonContent = GenDefString.StopCaptureButtonString;
             }
         }
-
-        
-
 
         /// <summary>
         /// Capture current frame from selected camera and save it to cameramodel
@@ -202,8 +175,8 @@ namespace VisualDetection.ViewModel
             CascadeClassifierClass.Detect(RadioButtonDetectedFeaturesImageViewChecked, CameraModel.Instance.cascadeOptions.FaceScale,
                 CameraModel.Instance.cascadeOptions.FaceMinNeigbours, CameraModel.Instance.cascadeOptions.FaceMinSize, CameraModel.Instance.cascadeOptions.FaceMaxSize,
                 CameraModel.Instance.cascadeOptions.EyesScale, CameraModel.Instance.cascadeOptions.EyesMinNeigbours, CameraModel.Instance.cascadeOptions.EyesMinSize,
-                CameraModel.Instance.cascadeOptions.EyesMaxSize, CameraModel.Instance.cascadeOptions.Eye, CameraModel.Instance.cascadeOptions.Face, 
-                GeneralOptionsViewModel.Instance.FaceRectColorScalar, GeneralOptionsViewModel.Instance.EyesRectColorScalar);
+                CameraModel.Instance.cascadeOptions.EyesMaxSize, CameraModel.Instance.cascadeOptions.Eye, CameraModel.Instance.cascadeOptions.Face,
+                CameraModel.Instance.generalOptions.FaceRectColorScalar, CameraModel.Instance.generalOptions.EyesRectColorScalar);
             //
             dispatcher.Invoke(() => SetCameraOutputToCapturedFrame(), DispatcherPriority.Normal);
             if (StartStopCaptureButtonContent == GenDefString.StopCaptureButtonString)

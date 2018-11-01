@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Management;
 using System.Windows.Media;
 using Emgu.CV.Structure;
+using VisualDetection.Model;
 
 
 namespace VisualDetection.ViewModel
@@ -15,34 +16,11 @@ namespace VisualDetection.ViewModel
             GetAvailableCameraList();
             DetectorTypeList = new List<string>() { "Cascade Detector" };
             SelectedDetectorTypeIndex = 0;
+            CameraModel.Instance.generalOptions = this;
         }
 
         #endregion
 
-        #region Singleton
-        private static volatile GeneralOptionsViewModel instance;
-        private static object syncRoot = new object();
-        /// <summary>
-        /// threadsave singleton
-        /// </summary>
-        public static GeneralOptionsViewModel Instance
-        {
-            get
-            {
-                if (instance == null)
-                {
-                    lock (syncRoot)
-                    {
-                        if (instance == null)
-                            instance = new GeneralOptionsViewModel();
-                    }
-                }
-
-                return instance;
-            }
-        }
-
-        #endregion
         #region Private Properties
         private int selectedCameraIndex;
         private int idleAfterFrameCalculationMS;

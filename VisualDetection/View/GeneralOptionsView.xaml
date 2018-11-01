@@ -44,9 +44,9 @@
             <Label Content="Detected Feature Colors:" Style="{StaticResource OptionsTitleLabel}"/>
             <DockPanel FlowDirection="LeftToRight" HorizontalAlignment="Left" VerticalAlignment="Stretch">
                 <Label Content="Face:" Style="{StaticResource OptionsTitleLabel}" FontSize="12" Margin="5,0"/>
-                <xctk:PropertyGridEditorColorPicker Background="Transparent" Name="face" Margin="5,0" Width="50" BorderBrush="#32FFFFFF" BorderThickness="1" SelectedColor="{Binding FaceRectColor, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                <xctk:PropertyGridEditorColorPicker Background="Transparent" Name="face" Margin="5,0" Width="50" BorderBrush="#32FFFFFF" BorderThickness="1" SelectedColor="{Binding FaceRectColor, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}"/>
                 <Label Content="Eyes:" Style="{StaticResource OptionsTitleLabel}" FontSize="12" Margin="5,0"/>
-                <xctk:PropertyGridEditorColorPicker Background="Transparent" Name="eye" Margin="5,0" Width="50" BorderBrush="#32FFFFFF" BorderThickness="1" SelectedColor="{Binding EyesRectColor, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                <xctk:PropertyGridEditorColorPicker Background="Transparent" Name="eye" Margin="5,0" Width="50" BorderBrush="#32FFFFFF" BorderThickness="1" SelectedColor="{Binding EyesRectColor, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}"/>
             </DockPanel>
         </StackPanel>
     </Grid>
