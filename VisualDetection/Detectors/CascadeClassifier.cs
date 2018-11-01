@@ -15,7 +15,7 @@ namespace VisualDetection.Detectors
 {
     public static class CascadeClassifierClass
     {
-        public static Point[] Detect(bool showFeatures, double faceScale, int faceMinNeigbours, Size faceMinSize, Size faceMaxSize,
+        public static double? Detect(bool showFeatures, double faceScale, int faceMinNeigbours, Size faceMinSize, Size faceMaxSize,
             double eyesScale, int eyesMinNeigbours, Size eyesMinSize, Size eyesMaxSize,
             CascadeClassifier eye, CascadeClassifier face, MCvScalar faceRectColor, MCvScalar eyeRectColor)
         {
@@ -44,8 +44,8 @@ namespace VisualDetection.Detectors
                 eyesDetected[0].Offset(facesDetected[0].X, facesDetected[0].Y);
                 eyesDetected[1].Offset(facesDetected[0].X, facesDetected[0].Y);
             }
-            Point[] eyesDetectedPoint = { new Point((eyesDetected[0].X + eyesDetected[0].Width / 2), (eyesDetected[0].Y + eyesDetected[0].Height / 2)),
-                new Point((eyesDetected[0].X + eyesDetected[0].Width / 2), (eyesDetected[0].Y + eyesDetected[0].Height / 2))};
+            Point[] eyesDetectedPoints = { new Point((eyesDetected[0].X + eyesDetected[0].Width / 2), (eyesDetected[0].Y + eyesDetected[0].Height / 2)),
+                new Point((eyesDetected[1].X + eyesDetected[1].Width / 2), (eyesDetected[1].Y + eyesDetected[1].Height / 2))};
 
             if (showFeatures)
             {
@@ -53,7 +53,18 @@ namespace VisualDetection.Detectors
                 CvInvoke.Rectangle(CameraModel.Instance.CameraViewMat, eyesDetected[0], eyeRectColor, 4);
                 CvInvoke.Rectangle(CameraModel.Instance.CameraViewMat, eyesDetected[1], eyeRectColor, 4);
             }
-            return eyesDetectedPoint;
+            return CalcAngle(eyesDetectedPoints);
+        }
+
+
+        /// <summary>
+        /// calculates the angle between the eyes in deg
+        /// </summary>
+        /// <param name="eyesDetectedPoints"></param>
+        /// <returns></returns>
+        public static double? CalcAngle(Point[] eyesDetectedPoints)
+        {
+            return Math.Atan((double)(eyesDetectedPoints[1].Y - eyesDetectedPoints[0].Y) / (double)(eyesDetectedPoints[1].X - eyesDetectedPoints[0].X)) * 180 / Math.PI;
         }
     }
 }

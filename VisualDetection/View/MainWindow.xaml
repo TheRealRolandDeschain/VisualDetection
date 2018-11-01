@@ -63,8 +63,9 @@
                 <RowDefinition Height="40"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
-
+            
             <Label Grid.Row="0" Content="Info:" Style="{StaticResource SectionTitleStyle}"/>
+            <controls:OutputView Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>
         </Grid>
 
 

@@ -13,9 +13,7 @@ namespace VisualDetection.ViewModel
         #region Constructors
         public GeneralOptionsViewModel()
         {
-            GetAvailableCameraList();
-            DetectorTypeList = new List<string>() { "Cascade Detector" };
-            SelectedDetectorTypeIndex = 0;
+            LoadDefaultValues();
             CameraModel.Instance.generalOptions = this;
         }
 
@@ -166,6 +164,18 @@ namespace VisualDetection.ViewModel
                     }
             }
             SelectedCameraIndex = 0;
+        }
+
+        /// <summary>
+        /// Loads the default values for this class
+        /// </summary>
+        private void LoadDefaultValues()
+        {
+            GetAvailableCameraList();
+            DetectorTypeList = new List<string>() { "Cascade Detector" };
+            SelectedDetectorTypeIndex = 0;
+            FaceRectColor = Colors.Red;
+            EyesRectColor = Colors.Blue;
         }
         #endregion
 
