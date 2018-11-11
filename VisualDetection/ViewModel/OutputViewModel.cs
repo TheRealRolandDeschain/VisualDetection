@@ -23,6 +23,7 @@ namespace VisualDetection.ViewModel
         #region Private Properties
         private double? eyeAngle;
         private int frameCalculationTime;
+        private int matSize;
         #endregion
 
         #region Public Properties

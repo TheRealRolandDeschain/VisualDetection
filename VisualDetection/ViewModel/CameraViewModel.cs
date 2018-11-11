@@ -3,6 +3,7 @@ using Emgu.CV.CvEnum;
 using System;
 using System.Diagnostics;
 using System.Drawing;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
@@ -162,7 +163,7 @@ namespace VisualDetection.ViewModel
             }
             else
             {
-                Capture = new VideoCapture(CameraModel.Instance.generalOptions.SelectedCameraIndex);
+                Capture = new VideoCapture(cm.generalOptions.SelectedCameraIndex);
                 Capture.Start();
                 captureTask.Start();
                 StartStopCaptureButtonContent = GenDefString.StopCaptureButtonString;
@@ -174,21 +175,20 @@ namespace VisualDetection.ViewModel
         /// </summary>
         private void CaptureCameraFrame()
         {
-            if (Capture.Grab()) Capture.Retrieve(CameraModel.Instance.CameraViewMat);
+            if (Capture.Grab()) Capture.Retrieve(cm.CameraViewMat);
             timer.Restart();
-            CvInvoke.CvtColor(CameraModel.Instance.CameraViewMat, CameraModel.Instance.CameraViewGrayScaleMat, ColorConversion.Bgr2Gray);
+            CvInvoke.CvtColor(cm.CameraViewMat, cm.CameraViewGrayScaleMat, ColorConversion.Bgr2Gray);
 
-            CvInvoke.EqualizeHist(CameraModel.Instance.CameraViewGrayScaleMat, CameraModel.Instance.CameraViewGrayScaleMat);
+            CvInvoke.EqualizeHist(cm.CameraViewGrayScaleMat, cm.CameraViewGrayScaleMat);
             
             eyeAngle = CascadeClassifierClass.Detect(RadioButtonDetectedFeaturesImageViewChecked);
 
-
-            dispatcher.Invoke(() => SetOutputFromCapturedFrame(), DispatcherPriority.Normal);
-
             timer.Stop();
-
+            dispatcher.Invoke(() => SetOutputFromCapturedFrame(), DispatcherPriority.Normal);
+            
             if (StartStopCaptureButtonContent == GenDefString.StopCaptureButtonString)
             {
+                Thread.Sleep(cm.generalOptions.IdleAfterFrameCalculationMS);
                 CaptureCameraFrame();
             }
             else
@@ -208,11 +208,11 @@ namespace VisualDetection.ViewModel
         {
             if (RadioButtonSelected == CameraViewRadioButtons.OriginalImage || RadioButtonSelected == CameraViewRadioButtons.ImageWithDetectedFeaturess)
             {
-                CurrentFrame = MiscMethods.MatToBitmapSource(CameraModel.Instance.CameraViewMat);
+                CurrentFrame = MiscMethods.MatToBitmapSource(cm.CameraViewMat);
             }
             else
             { 
-                CurrentFrame = MiscMethods.MatToBitmapSource(CameraModel.Instance.CameraViewGrayScaleMat);
+                CurrentFrame = MiscMethods.MatToBitmapSource(cm.CameraViewGrayScaleMat);
             }
             cm.output.EyeAngle = eyeAngle;
             cm.output.FrameCalculationTime = (int)timer.ElapsedMilliseconds;
