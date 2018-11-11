@@ -23,6 +23,8 @@ namespace VisualDetection.ViewModel
 
         #region Private Properties
         private int availableOptionsListSelectedIndex;
+        private double triggerAngle;
+        private int numberOfPositiveFramesNeeded;
         #endregion
 
         #region Public Properties
@@ -46,6 +48,44 @@ namespace VisualDetection.ViewModel
                 {
                     availableOptionsListSelectedIndex = value;
                     SetProperty(ref availableOptionsListSelectedIndex, value);
+                }
+            }
+        }
+
+        /// <summary>
+        /// The index of the currently selected output option
+        /// </summary>
+        public double TriggerAngle
+        {
+            get
+            {
+                return triggerAngle;
+            }
+            set
+            {
+                if (triggerAngle != value)
+                {
+                    triggerAngle = value;
+                    SetProperty(ref triggerAngle, value);
+                }
+            }
+        }
+
+        /// <summary>
+        /// The index of the currently selected output option
+        /// </summary>
+        public int NumberOfPositiveFramesNeeded
+        {
+            get
+            {
+                return numberOfPositiveFramesNeeded;
+            }
+            set
+            {
+                if (numberOfPositiveFramesNeeded != value)
+                {
+                    numberOfPositiveFramesNeeded = value;
+                    SetProperty(ref numberOfPositiveFramesNeeded, value);
                 }
             }
         }

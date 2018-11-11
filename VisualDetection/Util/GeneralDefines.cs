@@ -37,11 +37,11 @@
     public static class GenDefList
     {
         public static readonly string[] StandardOutputOptionsList = { 
-                "Simulate Mouse Buttons",
-                "Simulate Key Press",
-                "Simulate Key Press Sequence",
-                "Open Software",
-                "Call Windows Standard Function"
+                "Simulate Mouse Buttons...",
+                "Simulate Key Press...",
+                "Simulate Key Press Sequence...",
+                "Open Software...",
+                "Call Windows Standard Function..."
             };
     }
 }
