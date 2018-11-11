@@ -176,11 +176,7 @@ namespace VisualDetection.ViewModel
             CvInvoke.CvtColor(CameraModel.Instance.CameraViewMat, CameraModel.Instance.CameraViewGrayScaleMat, ColorConversion.Bgr2Gray);
             CvInvoke.EqualizeHist(CameraModel.Instance.CameraViewGrayScaleMat, CameraModel.Instance.CameraViewGrayScaleMat);
             
-            eyeAngle = CascadeClassifierClass.Detect(RadioButtonDetectedFeaturesImageViewChecked, CameraModel.Instance.cascadeOptions.FaceScale,
-                CameraModel.Instance.cascadeOptions.FaceMinNeigbours, CameraModel.Instance.cascadeOptions.FaceMinSize, CameraModel.Instance.cascadeOptions.FaceMaxSize,
-                CameraModel.Instance.cascadeOptions.EyesScale, CameraModel.Instance.cascadeOptions.EyesMinNeigbours, CameraModel.Instance.cascadeOptions.EyesMinSize,
-                CameraModel.Instance.cascadeOptions.EyesMaxSize, CameraModel.Instance.cascadeOptions.Eye, CameraModel.Instance.cascadeOptions.Face,
-                CameraModel.Instance.generalOptions.FaceRectColorScalar, CameraModel.Instance.generalOptions.EyesRectColorScalar);
+            eyeAngle = CascadeClassifierClass.Detect(RadioButtonDetectedFeaturesImageViewChecked);
 
 
             dispatcher.Invoke(() => SetOutputFromCapturedFrame(), DispatcherPriority.Normal);

@@ -15,30 +15,31 @@ namespace VisualDetection.Detectors
 {
     public static class CascadeClassifierClass
     {
-        public static double? Detect(bool showFeatures, double faceScale, int faceMinNeigbours, Size faceMinSize, Size faceMaxSize,
-            double eyesScale, int eyesMinNeigbours, Size eyesMinSize, Size eyesMaxSize,
-            CascadeClassifier eye, CascadeClassifier face, MCvScalar faceRectColor, MCvScalar eyeRectColor)
+
+        public static double? Detect(bool showFeatures)
         {
+            CameraModel cm = CameraModel.Instance;
+
             Rectangle[] eyesDetected;
             
 
-            Rectangle[] facesDetected = face.DetectMultiScale(
+            Rectangle[] facesDetected = cm.cascadeOptions.Face.DetectMultiScale(
                 CameraModel.Instance.CameraViewGrayScaleMat,
-                faceScale,
-                faceMinNeigbours,
-                faceMinSize, 
-                faceMaxSize
+                cm.cascadeOptions.FaceScale,
+                cm.cascadeOptions.FaceMinNeigbours,
+                cm.cascadeOptions.FaceMinSize, 
+                cm.cascadeOptions.FaceMaxSize
                 );
             if (facesDetected.Length < 1) return null;
 
             using (Mat faceRegion = new Mat(CameraModel.Instance.CameraViewGrayScaleMat, facesDetected[0]))
             {
-                eyesDetected = eye.DetectMultiScale(
+                eyesDetected = cm.cascadeOptions.Eye.DetectMultiScale(
                     faceRegion,
-                    eyesScale,
-                    eyesMinNeigbours,
-                    eyesMinSize,
-                    eyesMaxSize
+                    cm.cascadeOptions.EyesScale,
+                    cm.cascadeOptions.EyesMinNeigbours,
+                    cm.cascadeOptions.EyesMinSize,
+                    cm.cascadeOptions.EyesMaxSize
                     );
                 if (eyesDetected.Length != 2) return null;
                 eyesDetected[0].Offset(facesDetected[0].X, facesDetected[0].Y);
@@ -49,9 +50,9 @@ namespace VisualDetection.Detectors
 
             if (showFeatures)
             {
-                CvInvoke.Rectangle(CameraModel.Instance.CameraViewMat, facesDetected[0], faceRectColor, 4);
-                CvInvoke.Rectangle(CameraModel.Instance.CameraViewMat, eyesDetected[0], eyeRectColor, 4);
-                CvInvoke.Rectangle(CameraModel.Instance.CameraViewMat, eyesDetected[1], eyeRectColor, 4);
+                CvInvoke.Rectangle(CameraModel.Instance.CameraViewMat, facesDetected[0], cm.generalOptions.FaceRectColorScalar, 4);
+                CvInvoke.Rectangle(CameraModel.Instance.CameraViewMat, eyesDetected[0], cm.generalOptions.EyesRectColorScalar, 4);
+                CvInvoke.Rectangle(CameraModel.Instance.CameraViewMat, eyesDetected[1], cm.generalOptions.EyesRectColorScalar, 4);
             }
             return CalcAngle(eyesDetectedPoints);
         }
