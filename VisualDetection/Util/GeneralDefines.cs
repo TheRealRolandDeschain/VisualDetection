@@ -19,7 +19,7 @@
     {
         public const int FaceMinNeigboursDefault = 10;
         public const int EyesMinNeigboursDefault = 10;
-        public const int FaceMinSizeValue = 20;
+        public const int FaceMinSizeValue = 200;
         public const int FaceMaxSizeValue = 500;
         public const int EyesMinSizeValue = 10;
         public const int EyesMaxSizeValue = 250;

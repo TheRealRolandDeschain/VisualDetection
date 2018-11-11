@@ -22,6 +22,7 @@ namespace VisualDetection.ViewModel
 
         #region Private Properties
         private double? eyeAngle;
+        private int frameCalculationTime;
         #endregion
 
         #region Public Properties
@@ -37,6 +38,21 @@ namespace VisualDetection.ViewModel
                 if (eyeAngle != value)
                 {
                     SetProperty(ref eyeAngle, value);
+                }
+            }
+        }
+
+        /// <summary>
+        /// The time needed for the calculation of the last frame
+        /// </summary>
+        public int FrameCalculationTime
+        {
+            get { return frameCalculationTime; }
+            set
+            {
+                if (frameCalculationTime != value)
+                {
+                    SetProperty(ref frameCalculationTime, value);
                 }
             }
         }

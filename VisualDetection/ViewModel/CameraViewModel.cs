@@ -1,6 +1,7 @@
 ﻿using Emgu.CV;
 using Emgu.CV.CvEnum;
 using System;
+using System.Diagnostics;
 using System.Drawing;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -19,7 +20,7 @@ namespace VisualDetection.ViewModel
         {
             StartStopCaptureButtonContent = GenDefString.StartCaptureButtonString;
             RadioButtonSelected = CameraViewRadioButtons.OriginalImage;
-            
+            timer = new Stopwatch();
         }
         #endregion
 
@@ -33,6 +34,7 @@ namespace VisualDetection.ViewModel
         private VideoCapture Capture { get; set; }
         private Dispatcher dispatcher = App.Current.Dispatcher;
         private CameraModel cm = CameraModel.Instance;
+        private Stopwatch timer;
         private double? eyeAngle;
         #endregion
 
@@ -173,13 +175,18 @@ namespace VisualDetection.ViewModel
         private void CaptureCameraFrame()
         {
             if (Capture.Grab()) Capture.Retrieve(CameraModel.Instance.CameraViewMat);
+            timer.Restart();
             CvInvoke.CvtColor(CameraModel.Instance.CameraViewMat, CameraModel.Instance.CameraViewGrayScaleMat, ColorConversion.Bgr2Gray);
+
             CvInvoke.EqualizeHist(CameraModel.Instance.CameraViewGrayScaleMat, CameraModel.Instance.CameraViewGrayScaleMat);
             
             eyeAngle = CascadeClassifierClass.Detect(RadioButtonDetectedFeaturesImageViewChecked);
 
 
             dispatcher.Invoke(() => SetOutputFromCapturedFrame(), DispatcherPriority.Normal);
+
+            timer.Stop();
+
             if (StartStopCaptureButtonContent == GenDefString.StopCaptureButtonString)
             {
                 CaptureCameraFrame();
@@ -208,6 +215,7 @@ namespace VisualDetection.ViewModel
                 CurrentFrame = MiscMethods.MatToBitmapSource(CameraModel.Instance.CameraViewGrayScaleMat);
             }
             cm.output.EyeAngle = eyeAngle;
+            cm.output.FrameCalculationTime = (int)timer.ElapsedMilliseconds;
         }
 
 

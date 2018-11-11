@@ -117,7 +117,7 @@ namespace VisualDetection.ViewModel
                 if (faceRectColor != value)
                 {
                     faceRectColor = value;
-                    FaceRectColorScalar = new MCvScalar(value.B, value.R, value.G, value.A);
+                    FaceRectColorScalar = new MCvScalar(value.B, value.G, value.R, value.A);
                     SetProperty(ref faceRectColor, value);
                 }
             }
@@ -137,7 +137,7 @@ namespace VisualDetection.ViewModel
                 if (eyesRectColor != value)
                 {
                     eyesRectColor = value;
-                    EyesRectColorScalar = new MCvScalar(value.B, value.R, value.G, value.A);
+                    EyesRectColorScalar = new MCvScalar(value.B, value.G, value.R, value.A);
                     SetProperty(ref eyesRectColor, value);
                 }
             }

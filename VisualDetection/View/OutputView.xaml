@@ -29,12 +29,15 @@
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
-        <StackPanel Grid.Column="0" Grid.Row="0">
+        <StackPanel Grid.Column="0" Grid.Row="0" Margin="10, 0">
             <Label Content="Calculated Angle: " Style="{StaticResource OptionsTitleLabel}"/>
             <TextBox Text="{Binding EyeAngle, TargetNullValue=NaN.}" TextWrapping="NoWrap" IsEnabled="False"/>
+        </StackPanel>
+        <StackPanel Grid.Column="1" Grid.Row="0" Margin="10, 0">
+            <Label Content="Frame Calculation time [ms]: " Style="{StaticResource OptionsTitleLabel}"/>
+            <TextBox Text="{Binding FrameCalculationTime}" TextWrapping="NoWrap" IsEnabled="False"/>
         </StackPanel>
     </Grid>
 </UserControl>
