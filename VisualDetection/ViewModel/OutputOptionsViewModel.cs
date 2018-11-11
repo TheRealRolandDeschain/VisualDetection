@@ -1,0 +1,60 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using VisualDetection.Model;
+using VisualDetection.Util;
+
+namespace VisualDetection.ViewModel
+{
+    public class OutputOptionsViewModel : ViewModelBase
+    {
+
+        #region Constructors
+        public OutputOptionsViewModel()
+        {
+            CameraModel.Instance.outputOptions = this;
+            AvailableOptionsList = GenDefList.StandardOutputOptionsList.ToList();
+            AvailableOptionsListSelectedIndex = GenDefInt.DefaultOutpuOptionSelectedIndex;
+
+        }
+        #endregion
+
+        #region Private Properties
+        private int availableOptionsListSelectedIndex;
+        #endregion
+
+        #region Public Properties
+        /// <summary>
+        /// The list of available output options
+        /// </summary>
+        public List<string> AvailableOptionsList { get; set; }
+
+        /// <summary>
+        /// The index of the currently selected output option
+        /// </summary>
+        public int AvailableOptionsListSelectedIndex
+        {
+            get
+            {
+                return availableOptionsListSelectedIndex;
+            }
+            set
+            {
+                if (availableOptionsListSelectedIndex != value)
+                {
+                    availableOptionsListSelectedIndex = value;
+                    SetProperty(ref availableOptionsListSelectedIndex, value);
+                }
+            }
+        }
+        #endregion
+
+        #region Private Methods
+        #endregion
+
+        #region Public Methods
+        #endregion
+    }
+}

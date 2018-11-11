@@ -23,6 +23,8 @@
         public const int FaceMaxSizeValue = 500;
         public const int EyesMinSizeValue = 10;
         public const int EyesMaxSizeValue = 250;
+
+        public const int DefaultOutpuOptionSelectedIndex = 0;
     }
 
     public static class GenDefDouble
@@ -31,8 +33,15 @@
         public const double EyesScaleDefault = 1.1;
 
     }
-        public static class GenDefList
-    {
 
+    public static class GenDefList
+    {
+        public static readonly string[] StandardOutputOptionsList = { 
+                "Simulate Mouse Buttons",
+                "Simulate Key Press",
+                "Simulate Key Press Sequence",
+                "Open Software",
+                "Call Windows Standard Function"
+            };
     }
 }

@@ -54,14 +54,13 @@ namespace VisualDetection.Model
         public CascadeDetectorOptionsViewModel cascadeOptions { get; set; }
         public GeneralOptionsViewModel generalOptions { get; set; }
         public OutputViewModel output { get; set; }
+        public OutputOptionsViewModel outputOptions { get; set; }
         #endregion
 
         #region Private Methods
         #endregion
 
         #region Public Methods
-
-
         #endregion
     }
 }

@@ -98,8 +98,12 @@
     <Compile Include="ViewModel\CascadeDetectorOptionsViewModel.cs" />
     <Compile Include="ViewModel\GeneralOptionsViewModel.cs" />
     <Compile Include="ViewModel\InputOptionsViewModel.cs" />
+    <Compile Include="ViewModel\OutputOptionsViewModel.cs" />
     <Compile Include="ViewModel\OutputViewModel.cs" />
     <Compile Include="ViewModel\ViewModelBase.cs" />
+    <Compile Include="View\OutputOptionsView.xaml.cs">
+      <DependentUpon>OutputOptionsView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\OutputView.xaml.cs">
       <DependentUpon>OutputView.xaml</DependentUpon>
     </Compile>
@@ -143,6 +147,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="View\OutputOptionsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\OutputView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

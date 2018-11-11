@@ -39,19 +39,19 @@
             </StackPanel>
             <StackPanel Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="1" Grid.RowSpan="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="10, 0">
                 <Label Content="Select the Scale Value for Face Detection: " Style="{StaticResource OptionsTitleLabel}"/>
-                <TextBox Text="{Binding FaceScale}" TextWrapping="NoWrap"/>
+                <TextBox Text="{Binding FaceScale, UpdateSourceTrigger=PropertyChanged}" TextWrapping="NoWrap"/>
             </StackPanel>
             <StackPanel Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="1" Grid.RowSpan="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="10, 0">
                 <Label Content="Select the Number of Minimum Neighbours for Face Detection: " Style="{StaticResource OptionsTitleLabel}"/>
-                <TextBox Text="{Binding FaceMinNeigbours}" TextWrapping="NoWrap"/>
+                <TextBox Text="{Binding FaceMinNeigbours, UpdateSourceTrigger=PropertyChanged}" TextWrapping="NoWrap"/>
             </StackPanel>
             <StackPanel Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="1" Grid.RowSpan="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="10, 0">
                 <Label Content="Select Minimum Rectangle Size for Face Detection: " Style="{StaticResource OptionsTitleLabel}"/>
-                <TextBox Text="{Binding FaceMinSizeValue}" TextWrapping="NoWrap" />
+                <TextBox Text="{Binding FaceMinSizeValue, UpdateSourceTrigger=PropertyChanged}" TextWrapping="NoWrap" />
             </StackPanel>
             <StackPanel Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="1" Grid.RowSpan="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="10, 0">
                 <Label Content="Select Maximum Rectangle Size for Face Detection: " Style="{StaticResource OptionsTitleLabel}"/>
-                <TextBox Text="{Binding FaceMaxSizeValue}" TextWrapping="NoWrap"/>
+                <TextBox Text="{Binding FaceMaxSizeValue, UpdateSourceTrigger=PropertyChanged}" TextWrapping="NoWrap"/>
             </StackPanel>
 
             <StackPanel Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="1" Grid.RowSpan="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="10, 0">
@@ -63,19 +63,19 @@
             </StackPanel>
             <StackPanel Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="1" Grid.RowSpan="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="10, 0">
                 <Label Content="Select the Scale Value for Eye Detection:  " Style="{StaticResource OptionsTitleLabel}"/>
-                <TextBox Text="{Binding EyesScale}" TextWrapping="NoWrap"/>
+                <TextBox Text="{Binding EyesScale, UpdateSourceTrigger=PropertyChanged}" TextWrapping="NoWrap"/>
             </StackPanel>
             <StackPanel Grid.Column="1" Grid.Row="2" Grid.ColumnSpan="1" Grid.RowSpan="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="10, 0">
                 <Label Content="Select the Number of Minimum Neighbours for Eye Detection: " Style="{StaticResource OptionsTitleLabel}"/>
-                <TextBox Text="{Binding EyesMinNeigbours}" TextWrapping="NoWrap"/>
+                <TextBox Text="{Binding EyesMinNeigbours, UpdateSourceTrigger=PropertyChanged}" TextWrapping="NoWrap"/>
             </StackPanel>
             <StackPanel Grid.Column="1" Grid.Row="3" Grid.ColumnSpan="1" Grid.RowSpan="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="10, 0">
                 <Label Content="Select Minimum Rectangle Size for Eye Detection:  " Style="{StaticResource OptionsTitleLabel}"/>
-                <TextBox Text="{Binding EyesMinSizeValue}" TextWrapping="NoWrap"/>
+                <TextBox Text="{Binding EyesMinSizeValue, UpdateSourceTrigger=PropertyChanged}" TextWrapping="NoWrap"/>
             </StackPanel>
             <StackPanel Grid.Column="1" Grid.Row="4" Grid.ColumnSpan="1" Grid.RowSpan="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="10, 0">
                 <Label Content="Select Maximum Rectangle Size for Eye Detection: " Style="{StaticResource OptionsTitleLabel}"/>
-                <TextBox Text="{Binding EyesMaxSizeValue}" TextWrapping="NoWrap"/>
+                <TextBox Text="{Binding EyesMaxSizeValue, UpdateSourceTrigger=PropertyChanged}" TextWrapping="NoWrap"/>
             </StackPanel>
 
         </Grid>
