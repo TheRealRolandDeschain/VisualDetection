@@ -120,7 +120,8 @@
             </ControlTemplate>
 
             <ControlTemplate x:Key="StdTextBox" TargetType="{x:Type TextBoxBase}">
-                <Border x:Name="border" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" SnapsToDevicePixels="True">
+                <Border x:Name="border" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" 
+                        SnapsToDevicePixels="True">
                     <ScrollViewer x:Name="PART_ContentHost" Focusable="False" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden"/>
                 </Border>
                 <ControlTemplate.Triggers>
@@ -221,7 +222,7 @@
                 <Setter Property="FocusVisualStyle" Value="{StaticResource FocusVisual}"/>
                 <Setter Property="Background" Value="Transparent"/>
                 <Setter Property="BorderBrush" Value="White"/>
-                <Setter Property="Foreground" Value="DarkGray"/>
+                <Setter Property="Foreground" Value="White"/>
                 <Setter Property="BorderThickness" Value="1"/>
                 <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto"/>
                 <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto"/>

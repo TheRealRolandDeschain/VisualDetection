@@ -101,12 +101,31 @@
     <Compile Include="ViewModel\OutputOptionsViewModel.cs" />
     <Compile Include="ViewModel\OutputViewModel.cs" />
     <Compile Include="ViewModel\ViewModelBase.cs" />
+    <Compile Include="View\CallWindowsStandardFunctionsOptionsView.xaml.cs">
+      <DependentUpon>CallWindowsStandardFunctionsOptionsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\OpenSoftwareOptionsview.xaml.cs">
+      <DependentUpon>OpenSoftwareOptionsview.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\OutputOptionsView.xaml.cs">
       <DependentUpon>OutputOptionsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\OutputView.xaml.cs">
       <DependentUpon>OutputView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\SimulateKeyPressOptionsView.xaml.cs">
+      <DependentUpon>SimulateKeyPressOptionsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\SimulateKeyPressSequenceOptionsView.xaml.cs">
+      <DependentUpon>SimulateKeyPressSequenceOptionsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\SimulateMouseButtonsOptionsView.xaml.cs">
+      <DependentUpon>SimulateMouseButtonsOptionsView.xaml</DependentUpon>
+    </Compile>
+    <Page Include="View\CallWindowsStandardFunctionsOptionsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\CameraView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -147,11 +166,27 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="View\OpenSoftwareOptionsview.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\OutputOptionsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\OutputView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\SimulateKeyPressOptionsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\SimulateKeyPressSequenceOptionsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\SimulateMouseButtonsOptionsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

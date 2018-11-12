@@ -4,12 +4,33 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:VisualDetection.ViewModel"
+             xmlns:views="clr-namespace:VisualDetection.View"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
 
     <UserControl.Resources>
         <ResourceDictionary>
             <local:OutputOptionsViewModel x:Key="vm" />
+
+            <DataTemplate x:Key="SimulateMouseButtonsOptions" DataType="{x:Type views:SimulateMouseButtonsOptionsView}">
+                <views:SimulateMouseButtonsOptionsView />
+            </DataTemplate>
+
+            <DataTemplate x:Key="SimulateKeyPressOptions" DataType="{x:Type views:SimulateKeyPressOptionsView}">
+                <views:SimulateKeyPressOptionsView />
+            </DataTemplate>
+
+            <DataTemplate x:Key="SimulateKeyPressSequenceOptions" DataType="{x:Type views:SimulateKeyPressSequenceOptionsView}">
+                <views:SimulateKeyPressSequenceOptionsView />
+            </DataTemplate>
+
+            <DataTemplate x:Key="OpenSoftwareOption" DataType="{x:Type views:OpenSoftwareOptionsview}">
+                <views:OpenSoftwareOptionsview />
+            </DataTemplate>
+
+            <DataTemplate x:Key="CallWindowsStandardFunctionsOption" DataType="{x:Type views:CallWindowsStandardFunctionsOptionsView}">
+                <views:CallWindowsStandardFunctionsOptionsView />
+            </DataTemplate>
         </ResourceDictionary>
     </UserControl.Resources>
 
@@ -29,7 +50,7 @@
 
         <StackPanel Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="1" Grid.RowSpan="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="10, 0">
             <Label Content="Select the Action you want to trigger: " Style="{StaticResource OptionsTitleLabel}"/>
-            <ComboBox Name="SelectCameraCombobox" ItemsSource="{Binding AvailableOptionsList}" SelectedIndex="{Binding AvailableOptionsListSelectedIndex}"/>
+            <ComboBox Name="AvailableOptionsListComboBox" ItemsSource="{Binding AvailableOptionsList}" SelectedIndex="{Binding AvailableOptionsListSelectedIndex, UpdateSourceTrigger=PropertyChanged}"/>
         </StackPanel>
         <StackPanel Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="1" Grid.RowSpan="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="10, 0">
             <Label Content="Select the trigger angle: " Style="{StaticResource OptionsTitleLabel}"/>
@@ -40,5 +61,26 @@
             <TextBox Text="{Binding NumberOfPositiveFramesNeeded, UpdateSourceTrigger=PropertyChanged}" TextWrapping="NoWrap"/>
         </StackPanel>
 
+        <ContentControl Name="OutputOptionsContentControl" Content="{Binding}" Grid.Row="0" Grid.Column="1" Grid.RowSpan="5">
+            <ContentControl.Style>
+                <Style TargetType="{x:Type ContentControl}">
+                    <Setter Property="ContentTemplate" Value="{StaticResource SimulateMouseButtonsOptions}" />
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding ElementName=AvailableOptionsListComboBox, Path=SelectedIndex}" Value="1">
+                            <Setter Property="ContentTemplate" Value="{StaticResource SimulateKeyPressOptions}" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding ElementName=AvailableOptionsListComboBox, Path=SelectedIndex}" Value="2">
+                            <Setter Property="ContentTemplate" Value="{StaticResource SimulateKeyPressSequenceOptions}" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding ElementName=AvailableOptionsListComboBox, Path=SelectedIndex}" Value="3">
+                            <Setter Property="ContentTemplate" Value="{StaticResource OpenSoftwareOption}" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding ElementName=AvailableOptionsListComboBox, Path=SelectedIndex}" Value="4">
+                            <Setter Property="ContentTemplate" Value="{StaticResource CallWindowsStandardFunctionsOption}" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </ContentControl.Style>
+        </ContentControl>
     </Grid>
 </UserControl>
