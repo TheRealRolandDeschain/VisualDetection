@@ -27,14 +27,19 @@
 
             <Label Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" Content="Options for Mouse Button Simulations: " Style="{StaticResource OutputOptionsTitleLabel}"/>
             <StackPanel Grid.Row="1" Grid.Column="0" Margin="5">
-                <CheckBox Content="Invert Left-Right"/>
-                <CheckBox Content="Use as Toggle Switch" Name="UseAsSwitch"/>
-                <CheckBox Content="Use Middle Mouse Button"/>
-                <CheckBox Content="User MouseWheel" Name="MousewheelEnabled"/>
-                <CheckBox Content="Invert Up-Down" Margin="20,0" IsEnabled="{Binding ElementName=MousewheelEnabled, Path=IsChecked}"/>
+                <CheckBox Content="Only Use Right MB" IsChecked="{Binding OnlyUseRightMB}"/>
+                <CheckBox Content="Only Use Left MB" IsChecked="{Binding OnlyUseLeftMB}"/>
+                <CheckBox Content="Invert Left-Right" IsChecked="{Binding InverLeftRightEnabled}"/>
+                <CheckBox Content="Use as Toggle Switch" IsChecked="{Binding UseAsToggleSwitchEnabled}"/>
+                <CheckBox Content="Use Middle Mouse Button" IsChecked="{Binding UseMiddleMouseButtonEnabled}"/>
+                <CheckBox Content="Use instead of Right MB" Margin="20, 5" IsEnabled="{Binding UseMiddleMouseButtonEnabled}" IsChecked="{Binding UseInsteadOfRight}"/>
+                <CheckBox Content="Use instead of Left MB" Margin="20, 5" IsEnabled="{Binding UseMiddleMouseButtonEnabled}" IsChecked="{Binding UseInsteadOfLeft}"/>
+                <CheckBox Content="Use instead of Both MB" Margin="20, 5" IsEnabled="{Binding UseMiddleMouseButtonEnabled}" IsChecked="{Binding UseInsteadOfBoth}"/>
+                <CheckBox Content="Use MouseWheel" IsChecked="{Binding UseMouseWheelEnabled}"/>
+                <CheckBox Content="Invert Up-Down" Margin="20,0" IsEnabled="{Binding UseMouseWheelEnabled}" IsChecked="{Binding InvertUpDownEnabled}"/>
             </StackPanel>
             <StackPanel Grid.Row="1" Grid.Column="1" Margin="5">
-                <Label Content="Select how long the button press should be: " Style="{StaticResource OptionsTitleLabel}"/>
+                <Label Content="Select length of Button Press [ms]: " Style="{StaticResource OptionsTitleLabel}"/>
                 <TextBox Text="{Binding ButtonPressTime, UpdateSourceTrigger=PropertyChanged}" TextWrapping="NoWrap"/>
             </StackPanel>
 

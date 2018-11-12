@@ -1,4 +1,7 @@
-﻿namespace VisualDetection.Util
+﻿using System.Collections.Generic;
+using System.Windows.Media;
+
+namespace VisualDetection.Util
 {
     public static class GenDefString
     {
@@ -17,17 +20,24 @@
 
     public static class GenDefInt
     {
+        //GeneraloptionsDefault
+        public const int DefaultDetectorTypeIndex = 0;
+        public const int DefaultIdleAfterFrameCalculation = 0;
+
         //CascadeClassifierOptionsDefault
         public const int FaceMinNeigboursDefault = 10;
         public const int EyesMinNeigboursDefault = 10;
         public const int FaceMinSizeValue = 200;
         public const int FaceMaxSizeValue = 500;
-        public const int EyesMinSizeValue = 10;
+        public const int EyesMinSizeValue = 5;
         public const int EyesMaxSizeValue = 250;
 
-        //OutputOptionsDefuault
+        //OutputOptionsDefault
         public const int DefaultOutpuOptionSelectedIndex = 0;
-        public const int DefaultTriggerAngle = 10;
+        public const int DefaultTriggerAngle = 5;
+        public const int DefaultNrOfPositiveFramesNeeded = 5;
+        public const int DefaultNrOfUndefinedFramesAllowed = 3;
+        public const int DefaultButtonPressTime = 100;
     }
 
     public static class GenDefDouble
@@ -39,12 +49,27 @@
 
     public static class GenDefList
     {
-        public static readonly string[] StandardOutputOptionsList = { 
+        public static readonly List<string> StandardOutputOptionsList = new List<string>(){
                 "Simulate Mouse Buttons...",
                 "Simulate Key Press...",
                 "Simulate Key Press Sequence...",
                 "Open External Software...",
                 "Call Windows Standard Function..."
             };
+        public static readonly List<string> AvailableDetecorTypes = new List<string>(){
+                "Cascade Detector"
+            };
+    }
+
+    public static class GenDefBool
+    {
+        public const bool DefaultUseEqualizeHist = true;
+    }
+
+    public static class GenDefColors
+    {
+        public static readonly Color DefaultFaceColor = Colors.Red;
+        public static readonly Color DefaultEyeColor = Colors.Blue;
+
     }
 }

@@ -195,6 +195,7 @@ namespace VisualDetection.ViewModel
             else
             {
                 dispatcher.Invoke(() => SetDefaultImageToCameraOutput(), DispatcherPriority.Normal);
+                cm.output.SetDefaultOutputValues();
             }
         }
         #endregion

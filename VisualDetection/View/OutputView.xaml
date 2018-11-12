@@ -27,21 +27,27 @@
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="2*"/>
             </Grid.ColumnDefinitions>
 
-            <StackPanel Grid.Column="0" Grid.Row="0" Margin="10, 0" Orientation="Horizontal">
-                <Border Height="10" Width="10" Background="{Binding FaceDetectedIndicator}" VerticalAlignment="Center" Margin="5"/>
-                <Label Content="Face Detected" Style="{StaticResource OptionsTitleLabel}" VerticalAlignment="Center"/>
-            </StackPanel>
-            <StackPanel Grid.Column="0" Grid.Row="1" Margin="10, 0" Orientation="Horizontal">
-                <Border Height="10" Width="10" Background="{Binding TriggerActiveIndicator}" VerticalAlignment="Center" Margin="5"/>
-                <Label Content="Trigger activated" Style="{StaticResource OptionsTitleLabel}" VerticalAlignment="Center"/>
+            <StackPanel Grid.Column="0" Grid.Row="0" Grid.RowSpan="2" Margin="10, 0">
+                <StackPanel Margin="10, 0" Orientation="Horizontal">
+                    <Border Height="10" Width="10" Background="{Binding FaceDetectedIndicator}" VerticalAlignment="Center" Margin="5"/>
+                    <Label Content="Face Detected" Style="{StaticResource OptionsTitleLabel}" VerticalAlignment="Center"/>
+                </StackPanel>
+                <StackPanel Margin="10, 0" Orientation="Horizontal">
+                    <Border Height="10" Width="10" Background="{Binding LeftTriggerActiveIndicator}" VerticalAlignment="Center" Margin="5"/>
+                    <Label Content="Left Trigger activated" Style="{StaticResource OptionsTitleLabel}" VerticalAlignment="Center"/>
+                </StackPanel>
+                <StackPanel Margin="10, 0" Orientation="Horizontal">
+                    <Border Height="10" Width="10" Background="{Binding RightTriggerActiveIndicator}" VerticalAlignment="Center" Margin="5"/>
+                    <Label Content="Right Trigger activated" Style="{StaticResource OptionsTitleLabel}" VerticalAlignment="Center"/>
+                </StackPanel>
             </StackPanel>
             <StackPanel Grid.Column="1" Grid.Row="0" Margin="10, 0">
                 <Label Content="Calculated Angle: " Style="{StaticResource OptionsTitleLabel}"/>
-                <TextBox Text="{Binding EyeAngle, TargetNullValue=NaN.}" TextWrapping="NoWrap" IsEnabled="False"/>
+                <TextBox Text="{Binding EyeAngle}" TextWrapping="NoWrap" IsEnabled="False"/>
             </StackPanel>
             <StackPanel Grid.Column="2" Grid.Row="0" Margin="10, 0">
                 <Label Content="Frame Calculation time [ms]: " Style="{StaticResource OptionsTitleLabel}"/>
@@ -50,6 +56,10 @@
             <StackPanel Grid.Column="1" Grid.Row="1" Margin="10, 0">
                 <Label Content="Number of Positive Frames: " Style="{StaticResource OptionsTitleLabel}"/>
                 <TextBox Text="{Binding PositiveFrames}" TextWrapping="NoWrap" IsEnabled="False"/>
+            </StackPanel>
+            <StackPanel Grid.Column="2" Grid.Row="1" Margin="10, 0">
+                <Label Content="Number of Frames without a face deteced: " Style="{StaticResource OptionsTitleLabel}"/>
+                <TextBox Text="{Binding NumberOfFramesWithNoFace}" TextWrapping="NoWrap" IsEnabled="False"/>
             </StackPanel>
         </Grid>
     </ScrollViewer>

@@ -4,6 +4,7 @@ using System.Management;
 using System.Windows.Media;
 using Emgu.CV.Structure;
 using VisualDetection.Model;
+using VisualDetection.Util;
 
 
 namespace VisualDetection.ViewModel
@@ -60,7 +61,6 @@ namespace VisualDetection.ViewModel
             {
                 if (selectedCameraIndex != value)
                 {
-                    selectedCameraIndex = value;
                     SetProperty(ref selectedCameraIndex, value);
                 }
             }
@@ -79,7 +79,6 @@ namespace VisualDetection.ViewModel
             {
                 if (selectedDetectorTypeIndex != value)
                 {
-                    selectedDetectorTypeIndex = value;
                     SetProperty(ref selectedDetectorTypeIndex, value);
                 }
             }
@@ -98,7 +97,6 @@ namespace VisualDetection.ViewModel
             {
                 if (idleAfterFrameCalculationMS != value)
                 {
-                    idleAfterFrameCalculationMS = value;
                     SetProperty(ref idleAfterFrameCalculationMS, value);
                 }
             }
@@ -117,7 +115,6 @@ namespace VisualDetection.ViewModel
             {
                 if (faceRectColor != value)
                 {
-                    faceRectColor = value;
                     FaceRectColorScalar = new MCvScalar(value.B, value.G, value.R, value.A);
                     SetProperty(ref faceRectColor, value);
                 }
@@ -137,7 +134,6 @@ namespace VisualDetection.ViewModel
             {
                 if (eyesRectColor != value)
                 {
-                    eyesRectColor = value;
                     EyesRectColorScalar = new MCvScalar(value.B, value.G, value.R, value.A);
                     SetProperty(ref eyesRectColor, value);
                 }
@@ -173,10 +169,12 @@ namespace VisualDetection.ViewModel
         private void LoadDefaultValues()
         {
             GetAvailableCameraList();
-            DetectorTypeList = new List<string>() { "Cascade Detector" };
-            SelectedDetectorTypeIndex = 0;
-            FaceRectColor = Colors.Red;
-            EyesRectColor = Colors.Blue;
+            DetectorTypeList = GenDefList.AvailableDetecorTypes;
+            SelectedDetectorTypeIndex = GenDefInt.DefaultDetectorTypeIndex;
+            FaceRectColor = GenDefColors.DefaultFaceColor;
+            EyesRectColor = GenDefColors.DefaultEyeColor;
+            UseEqualizeHist = GenDefBool.DefaultUseEqualizeHist;
+            IdleAfterFrameCalculationMS = GenDefInt.DefaultIdleAfterFrameCalculation;
         }
         #endregion
 

@@ -60,23 +60,27 @@
             <Label Content="Select Nr. of needed positive frames: " Style="{StaticResource OptionsTitleLabel}"/>
             <TextBox Text="{Binding NumberOfPositiveFramesNeeded, UpdateSourceTrigger=PropertyChanged}" TextWrapping="NoWrap"/>
         </StackPanel>
+        <StackPanel Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="1" Grid.RowSpan="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="10, 0">
+            <Label Content="Select Nr. allowed undefined frames" Style="{StaticResource OptionsTitleLabel}"/>
+            <TextBox Text="{Binding NumberOfAllowedUndefinedFrames, UpdateSourceTrigger=PropertyChanged}" TextWrapping="NoWrap"/>
+        </StackPanel>
 
-        <Border Grid.Row="0" Grid.Column="1" Grid.RowSpan="5" BorderBrush="White" BorderThickness="1">
+        <Border Grid.Row="0" Grid.Column="1" Grid.RowSpan="5" BorderBrush="White" BorderThickness="1, 0, 0, 0">
             <ContentControl Name="OutputOptionsContentControl" Content="{Binding}" >
                 <ContentControl.Style>
                     <Style TargetType="{x:Type ContentControl}">
                         <Setter Property="ContentTemplate" Value="{StaticResource SimulateMouseButtonsOptions}" />
                         <Style.Triggers>
-                            <DataTrigger Binding="{Binding ElementName=AvailableOptionsListComboBox, Path=SelectedIndex}" Value="1">
+                            <DataTrigger Binding="{Binding AvailableOptionsListSelectedIndex}" Value="1">
                                 <Setter Property="ContentTemplate" Value="{StaticResource SimulateKeyPressOptions}" />
                             </DataTrigger>
-                            <DataTrigger Binding="{Binding ElementName=AvailableOptionsListComboBox, Path=SelectedIndex}" Value="2">
+                            <DataTrigger Binding="{Binding AvailableOptionsListSelectedIndex}" Value="2">
                                 <Setter Property="ContentTemplate" Value="{StaticResource SimulateKeyPressSequenceOptions}" />
                             </DataTrigger>
-                            <DataTrigger Binding="{Binding ElementName=AvailableOptionsListComboBox, Path=SelectedIndex}" Value="3">
+                            <DataTrigger Binding="{Binding AvailableOptionsListSelectedIndex}" Value="3">
                                 <Setter Property="ContentTemplate" Value="{StaticResource OpenSoftwareOption}" />
                             </DataTrigger>
-                            <DataTrigger Binding="{Binding ElementName=AvailableOptionsListComboBox, Path=SelectedIndex}" Value="4">
+                            <DataTrigger Binding="{Binding AvailableOptionsListSelectedIndex}" Value="4">
                                 <Setter Property="ContentTemplate" Value="{StaticResource CallWindowsStandardFunctionsOption}" />
                             </DataTrigger>
                         </Style.Triggers>

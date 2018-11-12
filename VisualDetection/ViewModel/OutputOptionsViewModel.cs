@@ -23,6 +23,7 @@ namespace VisualDetection.ViewModel
         private int availableOptionsListSelectedIndex;
         private double triggerAngle;
         private int numberOfPositiveFramesNeeded;
+        private int numberOfAllowedUndefinedFrames;
         #endregion
 
         #region Public Properties
@@ -69,7 +70,6 @@ namespace VisualDetection.ViewModel
             {
                 if (availableOptionsListSelectedIndex != value)
                 {
-                    availableOptionsListSelectedIndex = value;
                     SetProperty(ref availableOptionsListSelectedIndex, value);
                 }
             }
@@ -88,14 +88,13 @@ namespace VisualDetection.ViewModel
             {
                 if (triggerAngle != value)
                 {
-                    triggerAngle = value;
                     SetProperty(ref triggerAngle, value);
                 }
             }
         }
 
         /// <summary>
-        /// The index of the currently selected output option
+        /// The index of positive frames needed to activate the trigger 
         /// </summary>
         public int NumberOfPositiveFramesNeeded
         {
@@ -107,8 +106,25 @@ namespace VisualDetection.ViewModel
             {
                 if (numberOfPositiveFramesNeeded != value)
                 {
-                    numberOfPositiveFramesNeeded = value;
                     SetProperty(ref numberOfPositiveFramesNeeded, value);
+                }
+            }
+        }
+
+        /// <summary>
+        /// The number of allowed frames with no face detected before the number for positive frames is reset. 
+        /// </summary>
+        public int NumberOfAllowedUndefinedFrames
+        {
+            get
+            {
+                return numberOfAllowedUndefinedFrames;
+            }
+            set
+            {
+                if (numberOfAllowedUndefinedFrames != value)
+                {
+                    SetProperty(ref numberOfAllowedUndefinedFrames, value);
                 }
             }
         }
@@ -120,9 +136,11 @@ namespace VisualDetection.ViewModel
         /// </summary>
         private void InitializeOutputOptions()
         {
-            AvailableOptionsList = GenDefList.StandardOutputOptionsList.ToList();
+            AvailableOptionsList = GenDefList.StandardOutputOptionsList;
             AvailableOptionsListSelectedIndex = GenDefInt.DefaultOutpuOptionSelectedIndex;
             TriggerAngle = GenDefInt.DefaultTriggerAngle;
+            NumberOfPositiveFramesNeeded = GenDefInt.DefaultNrOfPositiveFramesNeeded;
+            NumberOfAllowedUndefinedFrames = GenDefInt.DefaultNrOfUndefinedFramesAllowed;
 
             SimulateMouseButtonsOptions = new SimulateMouseButtonsOptionsViewModel();
             SimulateKeyPressOptions = new SimulateKeyPressOptionsViewModel();

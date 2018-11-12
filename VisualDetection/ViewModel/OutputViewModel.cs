@@ -19,19 +19,22 @@ namespace VisualDetection.ViewModel
         public OutputViewModel()
         {
             CameraModel.Instance.output = this;
-            FaceDetectedIndicator = Brushes.Red;
-            TriggerActiveIndicator = Brushes.Red;
+            SetDefaultOutputValues();
+
         }
         #endregion
 
         #region Private Properties
-        private double? eyeAngle;
+        private double eyeAngle;
         private int frameCalculationTime;
         private int positiveFrames;
+        private int numberOfFramesWithNoFace;
         private bool faceDetected;
-        private bool triggerActive;
+        private bool leftTriggerActive;
+        private bool rightTriggerActive;
         private Brush faceDetectedIndicator;
-        private Brush triggerActiveIndicator;
+        private Brush leftTriggerActiveIndicator;
+        private Brush rightTriggerActiveIndicator;
         private CameraModel cm = CameraModel.Instance;
         #endregion
 
@@ -40,7 +43,7 @@ namespace VisualDetection.ViewModel
         /// <summary>
         /// The angle between the eyes showing the tilt of the head
         /// </summary>
-        public double? EyeAngle
+        public double EyeAngle
         {
             get { return eyeAngle; }
             set
@@ -83,6 +86,21 @@ namespace VisualDetection.ViewModel
         }
 
         /// <summary>
+        /// Shows how many frames there have been without detecting a face. Detecting a face will reset the value. 
+        /// </summary>
+        public int NumberOfFramesWithNoFace
+        {
+            get { return numberOfFramesWithNoFace; }
+            set
+            {
+                if (numberOfFramesWithNoFace != value)
+                {
+                    SetProperty(ref numberOfFramesWithNoFace, value);
+                }
+            }
+        }
+
+        /// <summary>
         /// Shows if a face is currently detected
         /// </summary>
         public bool FaceDetected
@@ -99,17 +117,33 @@ namespace VisualDetection.ViewModel
         }
 
         /// <summary>
-        /// Shows if a the trigger was activated
+        /// Shows if a the left trigger was activated
         /// </summary>
-        public bool TriggerActive
+        public bool LeftTriggerActive
         {
-            get { return triggerActive; }
+            get { return leftTriggerActive; }
             set
             {
-                if (triggerActive != value)
+                if (leftTriggerActive != value)
                 {
-                    TriggerActiveIndicator = UpdateIndicator(value);
-                    SetProperty(ref triggerActive, value);
+                    LeftTriggerActiveIndicator = UpdateIndicator(value);
+                    SetProperty(ref leftTriggerActive, value);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Shows if a the right trigger was activated
+        /// </summary>
+        public bool RightTriggerActive
+        {
+            get { return rightTriggerActive; }
+            set
+            {
+                if (rightTriggerActive != value)
+                {
+                    RightTriggerActiveIndicator = UpdateIndicator(value);
+                    SetProperty(ref rightTriggerActive, value);
                 }
             }
         }
@@ -130,16 +164,31 @@ namespace VisualDetection.ViewModel
         }
 
         /// <summary>
-        /// Shows if a the trigger was activated
+        /// Shows if a the left trigger was activated
         /// </summary>
-        public Brush TriggerActiveIndicator
+        public Brush LeftTriggerActiveIndicator
         {
-            get { return triggerActiveIndicator; }
+            get { return leftTriggerActiveIndicator; }
             set
             {
-                if (triggerActiveIndicator != value)
+                if (leftTriggerActiveIndicator != value)
                 {
-                    SetProperty(ref triggerActiveIndicator, value);
+                    SetProperty(ref leftTriggerActiveIndicator, value);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Shows if a the Right trigger was activated
+        /// </summary>
+        public Brush RightTriggerActiveIndicator
+        {
+            get { return rightTriggerActiveIndicator; }
+            set
+            {
+                if (rightTriggerActiveIndicator != value)
+                {
+                    SetProperty(ref rightTriggerActiveIndicator, value);
                 }
             }
         }
@@ -156,14 +205,58 @@ namespace VisualDetection.ViewModel
             else return Brushes.Red;
         }
 
-        private bool CheckTriggerActivation()
+        /// <summary>
+        /// Checks if the Trigger should be activated based on the calculated frames
+        /// </summary>
+        /// <returns></returns>
+        private void CheckTriggerActivation()
         {
-            if (PositiveFrames >= cm.outputOptions.NumberOfPositiveFramesNeeded) return true;
-            else return false;
+            if (NumberOfFramesWithNoFace > cm.outputOptions.NumberOfAllowedUndefinedFrames)
+            {
+                PositiveFrames = 0;
+            }
+            else
+            {
+                if (Math.Abs(EyeAngle) > cm.outputOptions.TriggerAngle)
+                {
+                    PositiveFrames++;
+                    if((EyeAngle > 0) && (PositiveFrames > cm.outputOptions.NumberOfPositiveFramesNeeded))
+                    {
+                        LeftTriggerActive = true;
+                    }
+                    else if ((EyeAngle < 0) && (PositiveFrames > cm.outputOptions.NumberOfPositiveFramesNeeded))
+                    {
+                        RightTriggerActive = true;
+                    }
+                }
+                else
+                {
+                    LeftTriggerActive = false;
+                    RightTriggerActive = false;
+                    PositiveFrames = 0;
+                }
+            }
         }
         #endregion
 
         #region Public Methods
+        /// <summary>
+        /// Sets all displayed values back to default
+        /// </summary>
+        public void SetDefaultOutputValues()
+        {
+            FaceDetectedIndicator = Brushes.Red;
+            LeftTriggerActiveIndicator = Brushes.Red;
+            RightTriggerActiveIndicator = Brushes.Red;
+            EyeAngle = 0;
+            FrameCalculationTime = 0;
+            PositiveFrames = 0;
+            NumberOfFramesWithNoFace = 0;
+            FaceDetected = false;
+            LeftTriggerActive = false;
+            RightTriggerActive = false;
+        }
+
         /// <summary>
         /// Updates the output values calculated from the current frame
         /// </summary>
@@ -172,24 +265,17 @@ namespace VisualDetection.ViewModel
             FrameCalculationTime = calculationTime;
             if (eyeAngle == null)
             {
-                EyeAngle = eyeAngle;
+                EyeAngle = 0;
                 FaceDetected = false;
-                PositiveFrames = 0;
+                NumberOfFramesWithNoFace++;
             }
             else
             {
                 FaceDetected = true;
                 EyeAngle = Math.Round((double)eyeAngle, 2);
-                if(Math.Abs((double)EyeAngle) > cm.outputOptions.TriggerAngle)
-                {
-                    PositiveFrames++;
-                }
-                else
-                {
-                    PositiveFrames = 0;
-                }
+                NumberOfFramesWithNoFace = 0;
             }
-            TriggerActive = CheckTriggerActivation();
+            CheckTriggerActivation();
         }
         #endregion
     }
