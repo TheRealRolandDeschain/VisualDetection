@@ -178,9 +178,10 @@ namespace VisualDetection.ViewModel
             if (Capture.Grab()) Capture.Retrieve(cm.CameraViewMat);
             timer.Restart();
             CvInvoke.CvtColor(cm.CameraViewMat, cm.CameraViewGrayScaleMat, ColorConversion.Bgr2Gray);
-
-            CvInvoke.EqualizeHist(cm.CameraViewGrayScaleMat, cm.CameraViewGrayScaleMat);
-            
+            if (cm.generalOptions.UseEqualizeHist)
+            {
+                CvInvoke.EqualizeHist(cm.CameraViewGrayScaleMat, cm.CameraViewGrayScaleMat);
+            }
             eyeAngle = CascadeClassifierClass.Detect(RadioButtonDetectedFeaturesImageViewChecked);
 
             timer.Stop();
@@ -214,8 +215,8 @@ namespace VisualDetection.ViewModel
             { 
                 CurrentFrame = MiscMethods.MatToBitmapSource(cm.CameraViewGrayScaleMat);
             }
-            cm.output.EyeAngle = eyeAngle;
-            cm.output.FrameCalculationTime = (int)timer.ElapsedMilliseconds;
+
+            cm.output.UpdateOutputValues(eyeAngle, (int)timer.ElapsedMilliseconds);
         }
 
 

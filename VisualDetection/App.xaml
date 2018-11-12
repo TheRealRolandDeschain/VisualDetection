@@ -182,6 +182,16 @@
                 <Setter Property="FontWeight" Value="Bold"/>
             </Style>
 
+            <Style x:Key="OutputOptionsTitleLabel" TargetType="{x:Type Label}" BasedOn="{StaticResource SectionTitleStyle}">
+                <Setter Property="FontSize" Value="14"/>
+                <Setter Property="FontStyle" Value="Normal"/>
+                <Setter Property="Height" Value="25"/>
+                <Setter Property="Width" Value="auto"/>
+                <Setter Property="Margin" Value="5, 10"/>
+                <Setter Property="Padding" Value="0"/>
+                <Setter Property="FontWeight" Value="Bold"/>
+            </Style>
+
             <!-- TabControls -->
             <Style x:Key="StdTabControlStyle" TargetType="{x:Type TabControl}">
                 <Setter Property="Foreground" Value="White"/>
@@ -249,7 +259,7 @@
                     </Setter.Value>
                 </Setter>
             </Style>
-            
+
             <Style x:Key="{x:Type ComboBoxItem}" TargetType="{x:Type ComboBoxItem}">
                 <Setter Property="SnapsToDevicePixels" Value="true" />
                 <Setter Property="OverridesDefaultStyle" Value="true" />
@@ -292,7 +302,7 @@
                     </Setter.Value>
                 </Setter>
             </Style>
-            
+
             <!-- Textbox -->
             <Style TargetType="{x:Type TextBox}">
                 <Setter Property="Background" Value="Transparent"/>
@@ -304,6 +314,20 @@
                 <Setter Property="TextAlignment" Value="Left" />
                 <Setter Property="VerticalContentAlignment" Value="Center" />
                 <Setter Property="Padding" Value="5,0"/>
+            </Style>
+
+            <!-- Checkboxes -->
+            <Style TargetType="{x:Type CheckBox}">
+                <Setter Property="Foreground" Value="White"/>
+                <Setter Property="FontSize" Value="12"/>
+                <Setter Property="Width" Value="auto"/>
+                <Setter Property="Margin" Value="5"/>
+                <Setter Property="Padding" Value="0"/>
+                <Style.Triggers>
+                    <Trigger Property="IsEnabled" Value="False">
+                        <Setter Property="Foreground" Value="DarkGray"/>
+                    </Trigger>
+                </Style.Triggers>
             </Style>
 
         </ResourceDictionary>

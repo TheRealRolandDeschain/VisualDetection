@@ -17,6 +17,7 @@
 
     public static class GenDefInt
     {
+        //CascadeClassifierOptionsDefault
         public const int FaceMinNeigboursDefault = 10;
         public const int EyesMinNeigboursDefault = 10;
         public const int FaceMinSizeValue = 200;
@@ -24,7 +25,9 @@
         public const int EyesMinSizeValue = 10;
         public const int EyesMaxSizeValue = 250;
 
+        //OutputOptionsDefuault
         public const int DefaultOutpuOptionSelectedIndex = 0;
+        public const int DefaultTriggerAngle = 10;
     }
 
     public static class GenDefDouble
@@ -40,7 +43,7 @@
                 "Simulate Mouse Buttons...",
                 "Simulate Key Press...",
                 "Simulate Key Press Sequence...",
-                "Open Software...",
+                "Open External Software...",
                 "Call Windows Standard Function..."
             };
     }

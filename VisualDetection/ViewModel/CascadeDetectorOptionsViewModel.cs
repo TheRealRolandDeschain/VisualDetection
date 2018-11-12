@@ -34,7 +34,9 @@ namespace VisualDetection.ViewModel
         private RelayCommand loadHaarCascadeFaceClicked;
         private RelayCommand loadHaarCascadeEyeClicked;
         private string haarCascadeFacePathString;
+        private string haarCascadeFaceNameString;
         private string haarCascadeEyePathString;
+        private string haarCascadeEyeNameString;
         private bool validFaceClassifierLoaded;
         private bool validEyeClassifierLoaded;
         private double faceScale;
@@ -79,7 +81,7 @@ namespace VisualDetection.ViewModel
         }
 
         /// <summary>
-        /// The content of the textbox for the path of face detection cascade
+        /// The path of face detection cascade
         /// </summary>
         public string HaarCascadeFacePathString
         {
@@ -88,7 +90,23 @@ namespace VisualDetection.ViewModel
             {
                 if (haarCascadeFacePathString != value)
                 {
+                    HaarCascadeFaceNameString = Path.GetFileName(value);
                     SetProperty(ref haarCascadeFacePathString, value);
+                }
+            }
+        }
+
+        /// <summary>
+        /// The content of the textbox for face detection cascade
+        /// </summary>
+        public string HaarCascadeFaceNameString
+        {
+            get { return haarCascadeFaceNameString; }
+            set
+            {
+                if (haarCascadeFaceNameString != value)
+                {
+                    SetProperty(ref haarCascadeFaceNameString, value);
                 }
             }
         }
@@ -103,7 +121,23 @@ namespace VisualDetection.ViewModel
             {
                 if (haarCascadeEyePathString != value)
                 {
+                    HaarCascadeEyeNameString = Path.GetFileName(value);
                     SetProperty(ref haarCascadeEyePathString, value);
+                }
+            }
+        }
+
+        /// <summary>
+        /// The content of the textbox for eye detection cascade
+        /// </summary>
+        public string HaarCascadeEyeNameString
+        {
+            get { return haarCascadeEyeNameString; }
+            set
+            {
+                if (haarCascadeEyeNameString != value)
+                {
+                    SetProperty(ref haarCascadeEyeNameString, value);
                 }
             }
         }

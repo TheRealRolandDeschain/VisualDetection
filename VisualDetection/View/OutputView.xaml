@@ -13,31 +13,44 @@
             <local:OutputViewModel x:Key="vm" />
         </ResourceDictionary>
     </UserControl.Resources>
+    <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+        <Grid DataContext="{StaticResource vm}">
 
-    <Grid DataContext="{StaticResource vm}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
 
-        <Grid.RowDefinitions>
-            <RowDefinition Height="50"/>
-            <RowDefinition Height="50"/>
-            <RowDefinition Height="50"/>
-            <RowDefinition Height="50"/>
-            <RowDefinition Height="50"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
-        </Grid.ColumnDefinitions>
-
-        <StackPanel Grid.Column="0" Grid.Row="0" Margin="10, 0">
-            <Label Content="Calculated Angle: " Style="{StaticResource OptionsTitleLabel}"/>
-            <TextBox Text="{Binding EyeAngle, TargetNullValue=NaN.}" TextWrapping="NoWrap" IsEnabled="False"/>
-        </StackPanel>
-        <StackPanel Grid.Column="1" Grid.Row="0" Margin="10, 0">
-            <Label Content="Frame Calculation time [ms]: " Style="{StaticResource OptionsTitleLabel}"/>
-            <TextBox Text="{Binding FrameCalculationTime}" TextWrapping="NoWrap" IsEnabled="False"/>
-        </StackPanel>
-    </Grid>
+            <StackPanel Grid.Column="0" Grid.Row="0" Margin="10, 0" Orientation="Horizontal">
+                <Border Height="10" Width="10" Background="{Binding FaceDetectedIndicator}" VerticalAlignment="Center" Margin="5"/>
+                <Label Content="Face Detected" Style="{StaticResource OptionsTitleLabel}" VerticalAlignment="Center"/>
+            </StackPanel>
+            <StackPanel Grid.Column="0" Grid.Row="1" Margin="10, 0" Orientation="Horizontal">
+                <Border Height="10" Width="10" Background="{Binding TriggerActiveIndicator}" VerticalAlignment="Center" Margin="5"/>
+                <Label Content="Trigger activated" Style="{StaticResource OptionsTitleLabel}" VerticalAlignment="Center"/>
+            </StackPanel>
+            <StackPanel Grid.Column="1" Grid.Row="0" Margin="10, 0">
+                <Label Content="Calculated Angle: " Style="{StaticResource OptionsTitleLabel}"/>
+                <TextBox Text="{Binding EyeAngle, TargetNullValue=NaN.}" TextWrapping="NoWrap" IsEnabled="False"/>
+            </StackPanel>
+            <StackPanel Grid.Column="2" Grid.Row="0" Margin="10, 0">
+                <Label Content="Frame Calculation time [ms]: " Style="{StaticResource OptionsTitleLabel}"/>
+                <TextBox Text="{Binding FrameCalculationTime}" TextWrapping="NoWrap" IsEnabled="False"/>
+            </StackPanel>
+            <StackPanel Grid.Column="1" Grid.Row="1" Margin="10, 0">
+                <Label Content="Number of Positive Frames: " Style="{StaticResource OptionsTitleLabel}"/>
+                <TextBox Text="{Binding PositiveFrames}" TextWrapping="NoWrap" IsEnabled="False"/>
+            </StackPanel>
+        </Grid>
+    </ScrollViewer>
 </UserControl>

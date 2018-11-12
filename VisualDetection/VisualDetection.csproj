@@ -94,12 +94,17 @@
     <Compile Include="Util\GeneralDefines.cs" />
     <Compile Include="Util\MiscMethods.cs" />
     <Compile Include="Util\RelayCommand.cs" />
+    <Compile Include="ViewModel\CallWindowsStandardFunctionsOptionsViewModel.cs" />
     <Compile Include="ViewModel\CameraViewModel.cs" />
     <Compile Include="ViewModel\CascadeDetectorOptionsViewModel.cs" />
     <Compile Include="ViewModel\GeneralOptionsViewModel.cs" />
     <Compile Include="ViewModel\InputOptionsViewModel.cs" />
+    <Compile Include="ViewModel\OpenSoftwareOptionsViewModel.cs" />
     <Compile Include="ViewModel\OutputOptionsViewModel.cs" />
     <Compile Include="ViewModel\OutputViewModel.cs" />
+    <Compile Include="ViewModel\SimulateKeyPressOptionsViewModel.cs" />
+    <Compile Include="ViewModel\SimulateKeyPressSequenceOptionsViewModel.cs" />
+    <Compile Include="ViewModel\SimulateMouseButtonsOptionsViewModel.cs" />
     <Compile Include="ViewModel\ViewModelBase.cs" />
     <Compile Include="View\CallWindowsStandardFunctionsOptionsView.xaml.cs">
       <DependentUpon>CallWindowsStandardFunctionsOptionsView.xaml</DependentUpon>

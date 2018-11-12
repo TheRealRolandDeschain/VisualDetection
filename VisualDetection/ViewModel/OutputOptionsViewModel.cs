@@ -15,9 +15,7 @@ namespace VisualDetection.ViewModel
         public OutputOptionsViewModel()
         {
             CameraModel.Instance.outputOptions = this;
-            AvailableOptionsList = GenDefList.StandardOutputOptionsList.ToList();
-            AvailableOptionsListSelectedIndex = GenDefInt.DefaultOutpuOptionSelectedIndex;
-
+            InitializeOutputOptions();
         }
         #endregion
 
@@ -28,6 +26,31 @@ namespace VisualDetection.ViewModel
         #endregion
 
         #region Public Properties
+        /// <summary>
+        /// Options for simulating left and right mouse buttons
+        /// </summary>
+        public SimulateMouseButtonsOptionsViewModel SimulateMouseButtonsOptions { get; set; }
+
+        /// <summary>
+        /// Options for simulating left and right mouse buttons
+        /// </summary>
+        public SimulateKeyPressOptionsViewModel SimulateKeyPressOptions { get; set; }
+
+        /// <summary>
+        /// Options for simulating left and right mouse buttons
+        /// </summary>
+        public SimulateKeyPressSequenceOptionsViewModel SimulateKeyPressSequenceOptions { get; set; }
+
+        /// <summary>
+        /// Options for simulating left and right mouse buttons
+        /// </summary>
+        public OpenSoftwareOptionsViewModel OpenSoftwareOptions { get; set; }
+
+        /// <summary>
+        /// Options for simulating left and right mouse buttons
+        /// </summary>
+        public CallWindowsStandardFunctionsOptionsViewModel CallWindowsStandardFunctionsOptions { get; set; }
+
         /// <summary>
         /// The list of available output options
         /// </summary>
@@ -92,6 +115,21 @@ namespace VisualDetection.ViewModel
         #endregion
 
         #region Private Methods
+        /// <summary>
+        /// Creates all necessary properties and sets their values
+        /// </summary>
+        private void InitializeOutputOptions()
+        {
+            AvailableOptionsList = GenDefList.StandardOutputOptionsList.ToList();
+            AvailableOptionsListSelectedIndex = GenDefInt.DefaultOutpuOptionSelectedIndex;
+            TriggerAngle = GenDefInt.DefaultTriggerAngle;
+
+            SimulateMouseButtonsOptions = new SimulateMouseButtonsOptionsViewModel();
+            SimulateKeyPressOptions = new SimulateKeyPressOptionsViewModel();
+            SimulateKeyPressSequenceOptions = new SimulateKeyPressSequenceOptionsViewModel();
+            OpenSoftwareOptions = new OpenSoftwareOptionsViewModel();
+            CallWindowsStandardFunctionsOptions = new CallWindowsStandardFunctionsOptionsViewModel();
+        }
         #endregion
 
         #region Public Methods

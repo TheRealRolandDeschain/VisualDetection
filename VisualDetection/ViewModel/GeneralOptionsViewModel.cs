@@ -33,6 +33,7 @@ namespace VisualDetection.ViewModel
         /// </summary>
         public MCvScalar FaceRectColorScalar;
         public MCvScalar EyesRectColorScalar;
+        public bool UseEqualizeHist { get; set; }
         #endregion
 
         #region Public Prooperties
