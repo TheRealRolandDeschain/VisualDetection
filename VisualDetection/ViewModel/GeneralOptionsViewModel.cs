@@ -15,7 +15,7 @@ namespace VisualDetection.ViewModel
         public GeneralOptionsViewModel()
         {
             LoadDefaultValues();
-            CameraModel.Instance.generalOptions = this;
+            CameraModel.Instance.GeneralOptions = this;
         }
 
         #endregion

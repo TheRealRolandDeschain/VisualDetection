@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using VisualDetection.Model;
 using VisualDetection.Util;
+using VisualDetection.Interfaces;
 
 namespace VisualDetection.ViewModel
 {
@@ -14,7 +15,7 @@ namespace VisualDetection.ViewModel
         #region Constructors
         public OutputOptionsViewModel()
         {
-            CameraModel.Instance.outputOptions = this;
+            CameraModel.Instance.OutputOptions = this;
             InitializeOutputOptions();
         }
         #endregion
@@ -28,34 +29,9 @@ namespace VisualDetection.ViewModel
 
         #region Public Properties
         /// <summary>
-        /// Options for simulating left and right mouse buttons
-        /// </summary>
-        public SimulateMouseButtonsOptionsViewModel SimulateMouseButtonsOptions { get; set; }
-
-        /// <summary>
-        /// Options for simulating left and right mouse buttons
-        /// </summary>
-        public SimulateKeyPressOptionsViewModel SimulateKeyPressOptions { get; set; }
-
-        /// <summary>
-        /// Options for simulating left and right mouse buttons
-        /// </summary>
-        public SimulateKeyPressSequenceOptionsViewModel SimulateKeyPressSequenceOptions { get; set; }
-
-        /// <summary>
-        /// Options for simulating left and right mouse buttons
-        /// </summary>
-        public OpenSoftwareOptionsViewModel OpenSoftwareOptions { get; set; }
-
-        /// <summary>
-        /// Options for simulating left and right mouse buttons
-        /// </summary>
-        public CallWindowsStandardFunctionsOptionsViewModel CallWindowsStandardFunctionsOptions { get; set; }
-
-        /// <summary>
         /// The list of available output options
         /// </summary>
-        public List<string> AvailableOptionsList { get; set; }
+        public List<IOutputOption> AvailableOptionsList { get; set; }
 
         /// <summary>
         /// The index of the currently selected output option
@@ -70,6 +46,7 @@ namespace VisualDetection.ViewModel
             {
                 if (availableOptionsListSelectedIndex != value)
                 {
+                    HandleTriggerStatusEventSubscribers();
                     SetProperty(ref availableOptionsListSelectedIndex, value);
                 }
             }
@@ -136,33 +113,40 @@ namespace VisualDetection.ViewModel
         /// </summary>
         private void InitializeOutputOptions()
         {
-            AvailableOptionsList = GenDefList.StandardOutputOptionsList;
+            AvailableOptionsList = new List<IOutputOption>()
+            {
+                new SimulateMouseButtonsOptionsViewModel(),
+                new SimulateKeyPressOptionsViewModel(),
+                new SimulateKeyPressSequenceOptionsViewModel(),
+                new OpenSoftwareOptionsViewModel(),
+                new CallWindowsStandardFunctionsOptionsViewModel()
+            };
             AvailableOptionsListSelectedIndex = GenDefInt.DefaultOutpuOptionSelectedIndex;
             TriggerAngle = GenDefInt.DefaultTriggerAngle;
             NumberOfPositiveFramesNeeded = GenDefInt.DefaultNrOfPositiveFramesNeeded;
             NumberOfAllowedUndefinedFrames = GenDefInt.DefaultNrOfUndefinedFramesAllowed;
-
-            SimulateMouseButtonsOptions = new SimulateMouseButtonsOptionsViewModel();
-            SimulateKeyPressOptions = new SimulateKeyPressOptionsViewModel();
-            SimulateKeyPressSequenceOptions = new SimulateKeyPressSequenceOptionsViewModel();
-            OpenSoftwareOptions = new OpenSoftwareOptionsViewModel();
-            CallWindowsStandardFunctionsOptions = new CallWindowsStandardFunctionsOptionsViewModel();
-        }
-
-        /// <summary>
-        /// This Method handles which one of the output options viewmodels is subscribed to 
-        /// TriggerStatusChangedEvent and thus handling which option is active
-        /// </summary>
-        private void HandleTriggerStatusEventSubscribers()
-        {
-            for(int i = 0; i < AvailableOptionsList.Count; i++)
-            {
-                if
-            }
         }
         #endregion
 
         #region Public Methods
+        /// <summary>
+        /// This Method handles which one of the output options viewmodels is subscribed to 
+        /// TriggerStatusChangedEvent and thus handling which option is active
+        /// </summary>
+        public void HandleTriggerStatusEventSubscribers()
+        {
+            for (int i = 0; i < AvailableOptionsList.Count; i++)
+            {
+                if (i == AvailableOptionsListSelectedIndex)
+                {
+                    CameraModel.Instance.Output.TriggerStatusChanged += AvailableOptionsList[i].OnTriggerOnTriggerStatusChanged;
+                }
+                else
+                {
+                    CameraModel.Instance.Output.TriggerStatusChanged -= AvailableOptionsList[i].OnTriggerOnTriggerStatusChanged;
+                }
+            }
+        }
         #endregion
     }
 }

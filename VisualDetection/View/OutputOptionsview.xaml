@@ -50,8 +50,10 @@
 
         <StackPanel Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="1" Grid.RowSpan="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="10, 0">
             <Label Content="Select the Action you want to trigger: " Style="{StaticResource OptionsTitleLabel}"/>
-            <ComboBox Name="AvailableOptionsListComboBox" ItemsSource="{Binding AvailableOptionsList}" SelectedIndex="{Binding AvailableOptionsListSelectedIndex, UpdateSourceTrigger=PropertyChanged}"/>
+            <ComboBox Name="AvailableOptionsListComboBox" ItemsSource="{Binding AvailableOptionsList}" DisplayMemberPath="OptionTitle" 
+                      SelectedIndex="{Binding AvailableOptionsListSelectedIndex, UpdateSourceTrigger=PropertyChanged}"/>
         </StackPanel>
+        
         <StackPanel Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="1" Grid.RowSpan="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="10, 0">
             <Label Content="Select the trigger angle: " Style="{StaticResource OptionsTitleLabel}"/>
             <TextBox Text="{Binding TriggerAngle, UpdateSourceTrigger=PropertyChanged}" TextWrapping="NoWrap"/>

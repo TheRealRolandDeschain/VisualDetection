@@ -51,10 +51,10 @@ namespace VisualDetection.Model
         #region Public Properties
         public Mat CameraViewMat { get; set; }
         public Mat CameraViewGrayScaleMat { get; set; }
-        public CascadeDetectorOptionsViewModel cascadeOptions { get; set; }
-        public GeneralOptionsViewModel generalOptions { get; set; }
-        public OutputViewModel output { get; set; }
-        public OutputOptionsViewModel outputOptions { get; set; }
+        public CascadeDetectorOptionsViewModel CascadeOptions { get; set; }
+        public GeneralOptionsViewModel GeneralOptions { get; set; }
+        public OutputViewModel Output { get; set; }
+        public OutputOptionsViewModel OutputOptions { get; set; }
         #endregion
 
         #region Private Methods

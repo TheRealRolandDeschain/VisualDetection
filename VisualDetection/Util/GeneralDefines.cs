@@ -16,6 +16,13 @@ namespace VisualDetection.Util
         //Warnings
         public const string ValueMustBeBetweenOneAndFive = "Invalid Value! \n The value must be bigger than 1 and lower than 5. ";
         public const string HaarCascadeOfdTitle = "Please select a valid XML file!";
+
+        //OutputOptionTitles
+        public const string SimulateMouseButtonTitle = "Simulate Mouse Buttons...";
+        public const string SimulateKeyPressTitle = "Simulate Key Press...";
+        public const string SimulateKeyPressSequenceTitle = "Simulate Key Press Sequence...";
+        public const string OpenExternalSoftwareTitle = "Open External Software...";
+        public const string CallWindowsStandardFunctionTitle = "Call Windows Standard Function...";
     }
 
     public static class GenDefInt
@@ -49,13 +56,6 @@ namespace VisualDetection.Util
 
     public static class GenDefList
     {
-        public static readonly List<string> StandardOutputOptionsList = new List<string>(){
-                "Simulate Mouse Buttons...",
-                "Simulate Key Press...",
-                "Simulate Key Press Sequence...",
-                "Open External Software...",
-                "Call Windows Standard Function..."
-            };
         public static readonly List<string> AvailableDetecorTypes = new List<string>(){
                 "Cascade Detector"
             };

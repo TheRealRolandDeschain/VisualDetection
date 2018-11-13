@@ -25,7 +25,7 @@ namespace VisualDetection.ViewModel
             HaarCascadeEyePathString = GenDefString.HaarCascadePathStringEmpty;
             Face = new CascadeClassifier();
             Eye = new CascadeClassifier();
-            CameraModel.Instance.cascadeOptions = this;
+            CameraModel.Instance.CascadeOptions = this;
             LoadDefaultValues();
         }
         #endregion

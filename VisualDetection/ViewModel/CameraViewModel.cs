@@ -163,7 +163,7 @@ namespace VisualDetection.ViewModel
             }
             else
             {
-                Capture = new VideoCapture(cm.generalOptions.SelectedCameraIndex);
+                Capture = new VideoCapture(cm.GeneralOptions.SelectedCameraIndex);
                 Capture.Start();
                 captureTask.Start();
                 StartStopCaptureButtonContent = GenDefString.StopCaptureButtonString;
@@ -178,7 +178,7 @@ namespace VisualDetection.ViewModel
             if (Capture.Grab()) Capture.Retrieve(cm.CameraViewMat);
             timer.Restart();
             CvInvoke.CvtColor(cm.CameraViewMat, cm.CameraViewGrayScaleMat, ColorConversion.Bgr2Gray);
-            if (cm.generalOptions.UseEqualizeHist)
+            if (cm.GeneralOptions.UseEqualizeHist)
             {
                 CvInvoke.EqualizeHist(cm.CameraViewGrayScaleMat, cm.CameraViewGrayScaleMat);
             }
@@ -189,13 +189,13 @@ namespace VisualDetection.ViewModel
             
             if (StartStopCaptureButtonContent == GenDefString.StopCaptureButtonString)
             {
-                Thread.Sleep(cm.generalOptions.IdleAfterFrameCalculationMS);
+                Thread.Sleep(cm.GeneralOptions.IdleAfterFrameCalculationMS);
                 CaptureCameraFrame();
             }
             else
             {
                 dispatcher.Invoke(() => SetDefaultImageToCameraOutput(), DispatcherPriority.Normal);
-                cm.output.SetDefaultOutputValues();
+                cm.Output.SetDefaultOutputValues();
             }
         }
         #endregion
@@ -217,7 +217,7 @@ namespace VisualDetection.ViewModel
                 CurrentFrame = MiscMethods.MatToBitmapSource(cm.CameraViewGrayScaleMat);
             }
 
-            cm.output.UpdateOutputValues(eyeAngle, (int)timer.ElapsedMilliseconds);
+            cm.Output.UpdateOutputValues(eyeAngle, (int)timer.ElapsedMilliseconds);
         }
 
 

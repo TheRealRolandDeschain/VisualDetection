@@ -4,10 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using VisualDetection.Util;
+using VisualDetection.Interfaces;
 
 namespace VisualDetection.ViewModel
 {
-    public class SimulateMouseButtonsOptionsViewModel : ViewModelBase
+    public class SimulateMouseButtonsOptionsViewModel : ViewModelBase, IOutputOption
     {
         #region Constructor
         public SimulateMouseButtonsOptionsViewModel()
@@ -31,6 +32,11 @@ namespace VisualDetection.ViewModel
         #endregion
 
         #region Public Properties
+        /// <summary>
+        /// Title of this Option
+        /// </summary>
+        public string OptionTitle { get; private set; }
+
         /// <summary>
         /// The time for the simulated button press
         /// </summary>
@@ -203,9 +209,8 @@ namespace VisualDetection.ViewModel
         /// </summary>
         private void SetDefaultValues()
         {
+            OptionTitle = GenDefString.SimulateMouseButtonTitle;
             ButtonPressTime = GenDefInt.DefaultButtonPressTime;
-
-            
         }
 
         /// <summary>
@@ -225,7 +230,7 @@ namespace VisualDetection.ViewModel
         /// <param name="e"></param>
         public void OnTriggerOnTriggerStatusChanged(object source, EventArgs e)
         {
-
+            System.Windows.MessageBox.Show(OptionTitle);
         }
         #endregion
     }

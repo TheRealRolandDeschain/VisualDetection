@@ -23,23 +23,23 @@ namespace VisualDetection.Detectors
             Rectangle[] eyesDetected;
             
 
-            Rectangle[] facesDetected = cm.cascadeOptions.Face.DetectMultiScale(
+            Rectangle[] facesDetected = cm.CascadeOptions.Face.DetectMultiScale(
                 CameraModel.Instance.CameraViewGrayScaleMat,
-                cm.cascadeOptions.FaceScale,
-                cm.cascadeOptions.FaceMinNeigbours,
-                cm.cascadeOptions.FaceMinSize, 
-                cm.cascadeOptions.FaceMaxSize
+                cm.CascadeOptions.FaceScale,
+                cm.CascadeOptions.FaceMinNeigbours,
+                cm.CascadeOptions.FaceMinSize, 
+                cm.CascadeOptions.FaceMaxSize
                 );
             if (facesDetected.Length < 1) return null;
 
             using (Mat faceRegion = new Mat(CameraModel.Instance.CameraViewGrayScaleMat, facesDetected[0]))
             {
-                eyesDetected = cm.cascadeOptions.Eye.DetectMultiScale(
+                eyesDetected = cm.CascadeOptions.Eye.DetectMultiScale(
                     faceRegion,
-                    cm.cascadeOptions.EyesScale,
-                    cm.cascadeOptions.EyesMinNeigbours,
-                    cm.cascadeOptions.EyesMinSize,
-                    cm.cascadeOptions.EyesMaxSize
+                    cm.CascadeOptions.EyesScale,
+                    cm.CascadeOptions.EyesMinNeigbours,
+                    cm.CascadeOptions.EyesMinSize,
+                    cm.CascadeOptions.EyesMaxSize
                     );
                 if (eyesDetected.Length != 2) return null;
                 eyesDetected[0].Offset(facesDetected[0].X, facesDetected[0].Y);
@@ -50,9 +50,9 @@ namespace VisualDetection.Detectors
 
             if (showFeatures)
             {
-                CvInvoke.Rectangle(CameraModel.Instance.CameraViewMat, facesDetected[0], cm.generalOptions.FaceRectColorScalar, 4);
-                CvInvoke.Rectangle(CameraModel.Instance.CameraViewMat, eyesDetected[0], cm.generalOptions.EyesRectColorScalar, 4);
-                CvInvoke.Rectangle(CameraModel.Instance.CameraViewMat, eyesDetected[1], cm.generalOptions.EyesRectColorScalar, 4);
+                CvInvoke.Rectangle(CameraModel.Instance.CameraViewMat, facesDetected[0], cm.GeneralOptions.FaceRectColorScalar, 4);
+                CvInvoke.Rectangle(CameraModel.Instance.CameraViewMat, eyesDetected[0], cm.GeneralOptions.EyesRectColorScalar, 4);
+                CvInvoke.Rectangle(CameraModel.Instance.CameraViewMat, eyesDetected[1], cm.GeneralOptions.EyesRectColorScalar, 4);
             }
             return CalcAngle(eyesDetectedPoints);
         }

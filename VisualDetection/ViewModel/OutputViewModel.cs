@@ -18,9 +18,9 @@ namespace VisualDetection.ViewModel
         /// </summary>
         public OutputViewModel()
         {
-            CameraModel.Instance.output = this;
+            cm.Output = this;
             SetDefaultOutputValues();
-
+            cm.OutputOptions.HandleTriggerStatusEventSubscribers();
         }
         #endregion
 
@@ -213,20 +213,20 @@ namespace VisualDetection.ViewModel
         /// <returns></returns>
         private void CheckTriggerActivation()
         {
-            if (NumberOfFramesWithNoFace > cm.outputOptions.NumberOfAllowedUndefinedFrames)
+            if (NumberOfFramesWithNoFace > cm.OutputOptions.NumberOfAllowedUndefinedFrames)
             {
                 PositiveFrames = 0;
             }
             else
             {
-                if (Math.Abs(EyeAngle) > cm.outputOptions.TriggerAngle)
+                if (Math.Abs(EyeAngle) > cm.OutputOptions.TriggerAngle)
                 {
                     PositiveFrames++;
-                    if((EyeAngle > 0) && (PositiveFrames > cm.outputOptions.NumberOfPositiveFramesNeeded))
+                    if((EyeAngle > 0) && (PositiveFrames > cm.OutputOptions.NumberOfPositiveFramesNeeded))
                     {
                         LeftTriggerActive = true;
                     }
-                    else if ((EyeAngle < 0) && (PositiveFrames > cm.outputOptions.NumberOfPositiveFramesNeeded))
+                    else if ((EyeAngle < 0) && (PositiveFrames > cm.OutputOptions.NumberOfPositiveFramesNeeded))
                     {
                         RightTriggerActive = true;
                     }
