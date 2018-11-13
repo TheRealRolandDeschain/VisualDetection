@@ -301,4 +301,4 @@ namespace VisualDetection.ViewModel
         public event TriggerStatusChangedEventHandler TriggerStatusChanged;
         #endregion
     }
-}
+} 

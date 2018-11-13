@@ -46,8 +46,8 @@ namespace VisualDetection.ViewModel
             {
                 if (availableOptionsListSelectedIndex != value)
                 {
-                    HandleTriggerStatusEventSubscribers();
                     SetProperty(ref availableOptionsListSelectedIndex, value);
+                    HandleTriggerStatusEventSubscribers();
                 }
             }
         }
