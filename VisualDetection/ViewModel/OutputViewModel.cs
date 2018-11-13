@@ -126,6 +126,7 @@ namespace VisualDetection.ViewModel
             {
                 if (leftTriggerActive != value)
                 {
+                    OnTriggerStatusChanged();
                     LeftTriggerActiveIndicator = UpdateIndicator(value);
                     SetProperty(ref leftTriggerActive, value);
                 }
@@ -142,6 +143,7 @@ namespace VisualDetection.ViewModel
             {
                 if (rightTriggerActive != value)
                 {
+                    OnTriggerStatusChanged();
                     RightTriggerActiveIndicator = UpdateIndicator(value);
                     SetProperty(ref rightTriggerActive, value);
                 }
@@ -277,6 +279,26 @@ namespace VisualDetection.ViewModel
             }
             CheckTriggerActivation();
         }
+        #endregion
+
+        #region Protected Methods
+        protected virtual void OnTriggerStatusChanged()
+        {
+            if(TriggerStatusChanged != null)
+            {
+                TriggerStatusChanged(this, EventArgs.Empty);
+            }
+        }
+        #endregion
+
+        #region Public Delegates and Events
+        /// <summary>
+        /// Event for status changes of left or right trigger
+        /// </summary>
+        /// <param name="source"></param>
+        /// <param name="e"></param>
+        public delegate void TriggerStatusChangedEventHandler(object source, EventArgs e);
+        public event TriggerStatusChangedEventHandler TriggerStatusChanged;
         #endregion
     }
 }

@@ -148,6 +148,18 @@ namespace VisualDetection.ViewModel
             OpenSoftwareOptions = new OpenSoftwareOptionsViewModel();
             CallWindowsStandardFunctionsOptions = new CallWindowsStandardFunctionsOptionsViewModel();
         }
+
+        /// <summary>
+        /// This Method handles which one of the output options viewmodels is subscribed to 
+        /// TriggerStatusChangedEvent and thus handling which option is active
+        /// </summary>
+        private void HandleTriggerStatusEventSubscribers()
+        {
+            for(int i = 0; i < AvailableOptionsList.Count; i++)
+            {
+                if
+            }
+        }
         #endregion
 
         #region Public Methods

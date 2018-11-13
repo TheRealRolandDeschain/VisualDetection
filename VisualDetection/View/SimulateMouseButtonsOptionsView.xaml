@@ -10,6 +10,7 @@
     <UserControl.Resources>
         <ResourceDictionary>
             <local:SimulateMouseButtonsOptionsViewModel x:Key="vm" />
+            <BooleanToVisibilityConverter x:Key="BoolToVis" />
         </ResourceDictionary>
     </UserControl.Resources>
 
@@ -32,11 +33,11 @@
                 <CheckBox Content="Invert Left-Right" IsChecked="{Binding InverLeftRightEnabled}"/>
                 <CheckBox Content="Use as Toggle Switch" IsChecked="{Binding UseAsToggleSwitchEnabled}"/>
                 <CheckBox Content="Use Middle Mouse Button" IsChecked="{Binding UseMiddleMouseButtonEnabled}"/>
-                <CheckBox Content="Use instead of Right MB" Margin="20, 5" IsEnabled="{Binding UseMiddleMouseButtonEnabled}" IsChecked="{Binding UseInsteadOfRight}"/>
-                <CheckBox Content="Use instead of Left MB" Margin="20, 5" IsEnabled="{Binding UseMiddleMouseButtonEnabled}" IsChecked="{Binding UseInsteadOfLeft}"/>
-                <CheckBox Content="Use instead of Both MB" Margin="20, 5" IsEnabled="{Binding UseMiddleMouseButtonEnabled}" IsChecked="{Binding UseInsteadOfBoth}"/>
+                <CheckBox Content="Use instead of Right MB" Margin="20, 5" IsChecked="{Binding UseInsteadOfRight}" Visibility="{Binding Path=UseMiddleMouseButtonEnabled, Converter={StaticResource BoolToVis}}"/>
+                <CheckBox Content="Use instead of Left MB" Margin="20, 5" IsChecked="{Binding UseInsteadOfLeft}" Visibility="{Binding Path=UseMiddleMouseButtonEnabled, Converter={StaticResource BoolToVis}}"/>
+                <CheckBox Content="Use instead of Both MB" Margin="20, 5" IsChecked="{Binding UseInsteadOfBoth}" Visibility="{Binding Path=UseMiddleMouseButtonEnabled, Converter={StaticResource BoolToVis}}"/>
                 <CheckBox Content="Use MouseWheel" IsChecked="{Binding UseMouseWheelEnabled}"/>
-                <CheckBox Content="Invert Up-Down" Margin="20,0" IsEnabled="{Binding UseMouseWheelEnabled}" IsChecked="{Binding InvertUpDownEnabled}"/>
+                <CheckBox Content="Invert Up-Down" Margin="20,0" IsChecked="{Binding InvertUpDownEnabled}" Visibility="{Binding Path=UseMouseWheelEnabled, Converter={StaticResource BoolToVis}}"/>
             </StackPanel>
             <StackPanel Grid.Row="1" Grid.Column="1" Margin="5">
                 <Label Content="Select length of Button Press [ms]: " Style="{StaticResource OptionsTitleLabel}"/>

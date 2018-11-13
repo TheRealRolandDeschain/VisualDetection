@@ -204,6 +204,8 @@ namespace VisualDetection.ViewModel
         private void SetDefaultValues()
         {
             ButtonPressTime = GenDefInt.DefaultButtonPressTime;
+
+            
         }
 
         /// <summary>
@@ -216,6 +218,15 @@ namespace VisualDetection.ViewModel
         #endregion
 
         #region Public Methods
+        /// <summary>
+        /// Trigger Status changed Event was raised
+        /// </summary>
+        /// <param name="source"></param>
+        /// <param name="e"></param>
+        public void OnTriggerOnTriggerStatusChanged(object source, EventArgs e)
+        {
+
+        }
         #endregion
     }
 }

@@ -26,8 +26,8 @@
         </Grid.RowDefinitions>
 
         <!-- Gridsplitters-->
-        <GridSplitter Grid.Column="1" Grid.Row="0" Grid.RowSpan="3" Grid.ColumnSpan="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
-        <GridSplitter Grid.Column="0" Grid.Row="1" Grid.RowSpan="1" Grid.ColumnSpan="3" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+        <GridSplitter Grid.Column="1" Grid.Row="0" Grid.RowSpan="3" Grid.ColumnSpan="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="DarkGray"/>
+        <GridSplitter Grid.Column="0" Grid.Row="1" Grid.RowSpan="1" Grid.ColumnSpan="3" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="DarkGray"/>
         <!-- Gridsplitters-->
         
         <!-- Views -->
