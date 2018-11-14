@@ -35,9 +35,9 @@
             </Image.Source>
         </Image>
         <StackPanel  Grid.Column="0" Grid.ColumnSpan="1" Grid.Row="2" Grid.RowSpan="1" VerticalAlignment="Center" HorizontalAlignment="center" Orientation="Horizontal">
-            <RadioButton Name="RadioButtonOriginalImageView" Content="Original Image" IsChecked="{Binding RadioButtonOriginalImageViewChecked}" Margin="10, 0, 10, 0" Foreground="White"/>
-            <RadioButton Name="RadioButtonGrayScaleImageView" Content="GrayScale Image" IsChecked="{Binding RadioButtonGrayScaleImageViewChecked}" Margin="10, 0, 10, 0" Foreground="White"/>
-            <RadioButton Name="RadioButtonDetectedFeaturesImageView" Content="Detected Features" IsChecked="{Binding RadioButtonDetectedFeaturesImageViewChecked}" Margin="10, 0, 10, 0" Foreground="White"/>
+            <RadioButton Name="RadioButtonOriginalImageView" Content="Original Image" IsChecked="{Binding RadioButtonOriginalImageViewChecked}" />
+            <RadioButton Name="RadioButtonGrayScaleImageView" Content="GrayScale Image" IsChecked="{Binding RadioButtonGrayScaleImageViewChecked}"/>
+            <RadioButton Name="RadioButtonDetectedFeaturesImageView" Content="Detected Features" IsChecked="{Binding RadioButtonDetectedFeaturesImageViewChecked}"/>
         </StackPanel>
     </Grid>
 </UserControl>

@@ -12,6 +12,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using VisualDetection.Model;
+using VisualDetection.Util;
 
 namespace VisualDetection.View
 {
@@ -23,6 +25,7 @@ namespace VisualDetection.View
         public SimulateKeyPressSequenceOptionsView()
         {
             InitializeComponent();
+            DataContext = CameraModel.Instance.OutputOptions.AvailableOptionsList.First(option => option.OptionTitle == GenDefString.SimulateKeyPressSequenceTitle);
         }
     }
 }

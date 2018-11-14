@@ -7,14 +7,8 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
 
-    <UserControl.Resources>
-        <ResourceDictionary>
-            <local:OpenSoftwareOptionsViewModel x:Key="vm" />
-        </ResourceDictionary>
-    </UserControl.Resources>
-
     <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
-        <Grid DataContext="{StaticResource vm}">
+        <Grid>
 
             <Grid.RowDefinitions>
                 <RowDefinition Height="45"/>

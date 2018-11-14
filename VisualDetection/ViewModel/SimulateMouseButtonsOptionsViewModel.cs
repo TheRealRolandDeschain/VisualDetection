@@ -5,6 +5,12 @@ using System.Text;
 using System.Threading.Tasks;
 using VisualDetection.Util;
 using VisualDetection.Interfaces;
+using VisualDetection.Model;
+using System.Diagnostics;
+using System.Runtime.InteropServices;
+using System.Windows.Controls;
+using System.Drawing;
+using System.Windows.Forms;
 
 namespace VisualDetection.ViewModel
 {
@@ -18,17 +24,14 @@ namespace VisualDetection.ViewModel
         #endregion
 
         #region Private Properties
-        private bool onlyUseRightMB;
-        private bool onlyUseLeftMB;
-        private bool inverLeftRightEnabled;
-        private bool useAsToggleSwitchEnabled;
-        private bool useMiddleMouseButtonEnabled;
-        private bool useInsteadOfRight;
-        private bool useInsteadOfLeft;
-        private bool useInsteadOfBoth;
-        private bool useMouseWheelEnabled;
-        private bool invertUpDownEnabled;
         private int buttonPressTime;
+        private int coolDownTime;
+        private Stopwatch buttonPressTimer;
+        private Stopwatch coolDownTimer;
+        private bool useAsToggleSwitchEnabled;
+        private MouseButtonsimulationMajorOptions majorOptionsSelected;
+        private MBSimulationMiddleMouseOption middleMouseButtonOptions;
+        private UseMouseWheelEnabled mouseWheelOptions;
         #endregion
 
         #region Public Properties
@@ -53,52 +56,22 @@ namespace VisualDetection.ViewModel
         }
 
         /// <summary>
-        /// 
+        /// The minimum time between two simulated button press
         /// </summary>
-        public bool OnlyUseRightMB
+        public int CoolDownTime
         {
-            get { return onlyUseRightMB; }
+            get { return coolDownTime; }
             set
             {
-                if (onlyUseRightMB != value)
+                if (coolDownTime != value)
                 {
-                    SetProperty(ref onlyUseRightMB, value);
+                    SetProperty(ref coolDownTime, value);
                 }
             }
         }
 
         /// <summary>
-        /// 
-        /// </summary>
-        public bool OnlyUseLeftMB
-        {
-            get { return onlyUseLeftMB; }
-            set
-            {
-                if (onlyUseLeftMB != value)
-                {
-                    SetProperty(ref onlyUseLeftMB, value);
-                }
-            }
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public bool InverLeftRightEnabled
-        {
-            get { return inverLeftRightEnabled; }
-            set
-            {
-                if (inverLeftRightEnabled != value)
-                {
-                    SetProperty(ref inverLeftRightEnabled, value);
-                }
-            }
-        }
-
-        /// <summary>
-        /// 
+        /// Defines if Simulation is used as Toggle Switch
         /// </summary>
         public bool UseAsToggleSwitchEnabled
         {
@@ -113,91 +86,46 @@ namespace VisualDetection.ViewModel
         }
 
         /// <summary>
-        /// 
+        /// Major Options
         /// </summary>
-        public bool UseMiddleMouseButtonEnabled
+        public MouseButtonsimulationMajorOptions MajorOptionsSelected
         {
-            get { return useMiddleMouseButtonEnabled; }
+            get { return majorOptionsSelected; }
             set
             {
-                if (useMiddleMouseButtonEnabled != value)
+                if (majorOptionsSelected != value)
                 {
-                    SetProperty(ref useMiddleMouseButtonEnabled, value);
+                    SetProperty(ref majorOptionsSelected, value);
                 }
             }
         }
 
         /// <summary>
-        /// 
+        /// Middle Mouse Button Options
         /// </summary>
-        public bool UseInsteadOfRight
+        public MBSimulationMiddleMouseOption MiddleMouseButtonOptions
         {
-            get { return useInsteadOfRight; }
+            get { return middleMouseButtonOptions; }
             set
             {
-                if (useInsteadOfRight != value)
+                if (middleMouseButtonOptions != value)
                 {
-                    SetProperty(ref useInsteadOfRight, value);
+                    SetProperty(ref middleMouseButtonOptions, value);
                 }
             }
         }
 
         /// <summary>
-        /// 
+        /// Mouse Wheel Options
         /// </summary>
-        public bool UseInsteadOfLeft
+        public UseMouseWheelEnabled MouseWheelOptions
         {
-            get { return useInsteadOfLeft; }
+            get { return mouseWheelOptions; }
             set
             {
-                if (useInsteadOfLeft != value)
+                if (mouseWheelOptions != value)
                 {
-                    SetProperty(ref useInsteadOfLeft, value);
-                }
-            }
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public bool UseInsteadOfBoth
-        {
-            get { return useInsteadOfBoth; }
-            set
-            {
-                if (useInsteadOfBoth != value)
-                {
-                    SetProperty(ref useInsteadOfBoth, value);
-                }
-            }
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public bool UseMouseWheelEnabled
-        {
-            get { return useMouseWheelEnabled; }
-            set
-            {
-                if (useMouseWheelEnabled != value)
-                {
-                    SetProperty(ref useMouseWheelEnabled, value);
-                }
-            }
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public bool InvertUpDownEnabled
-        {
-            get { return invertUpDownEnabled; }
-            set
-            {
-                if (invertUpDownEnabled != value)
-                {
-                    SetProperty(ref invertUpDownEnabled, value);
+                    SetProperty(ref mouseWheelOptions, value);
                 }
             }
         }
@@ -211,14 +139,17 @@ namespace VisualDetection.ViewModel
         {
             OptionTitle = GenDefString.SimulateMouseButtonTitle;
             ButtonPressTime = GenDefInt.DefaultButtonPressTime;
+            CoolDownTime = GenDefInt.DefaultCoolDownTime;
+            buttonPressTimer = new Stopwatch();
+            coolDownTimer = new Stopwatch();
         }
 
         /// <summary>
-        /// Handles the Checkboxes based on new changes
+        /// Simulates the MouseClicks as ToggleSwitches
         /// </summary>
-        private void HandleCheckboxes()
+        private void SimulateMouseClickAsToggleSwitch()
         {
-
+            mouse_event(MOUSEEVENTF_LEFTDOWN, (uint)Cursor.Position.X, (uint)Cursor.Position.Y, 0, 0);
         }
         #endregion
 
@@ -230,8 +161,21 @@ namespace VisualDetection.ViewModel
         /// <param name="e"></param>
         public void OnTriggerOnTriggerStatusChanged(object source, EventArgs e)
         {
-            System.Windows.MessageBox.Show(OptionTitle);
+            System.Windows.MessageBox.Show(UseAsToggleSwitchEnabled.ToString());
         }
+        #endregion
+
+        #region Setup for MouseClick Simulation
+        // Taken from https://stackoverflow.com/questions/2416748/how-do-you-simulate-mouse-click-in-c
+        [DllImport("user32.dll", CharSet = CharSet.Auto, CallingConvention = CallingConvention.StdCall)]
+        public static extern void mouse_event(uint dwFlags, uint dx, uint dy, uint cButtons, uint dwExtraInfo);
+        private const int MOUSEEVENTF_LEFTDOWN = 0x02;
+        private const int MOUSEEVENTF_LEFTUP = 0x04;
+        private const int MOUSEEVENTF_RIGHTDOWN = 0x08;
+        private const int MOUSEEVENTF_RIGHTUP = 0x10;
+        private const int MOUSEEVENTF_MIDDLEDOWN = 0x0020;
+        private const int MOUSEEVENTF_MIDDLEUP = 0x0040;
+        private const int MOUSEEVENTF_WHEEL = 0x0800;
         #endregion
     }
 }

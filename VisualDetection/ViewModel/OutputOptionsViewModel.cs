@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using VisualDetection.Model;
 using VisualDetection.Util;
 using VisualDetection.Interfaces;
+using System.Windows;
 
 namespace VisualDetection.ViewModel
 {
@@ -116,10 +117,9 @@ namespace VisualDetection.ViewModel
             AvailableOptionsList = new List<IOutputOption>()
             {
                 new SimulateMouseButtonsOptionsViewModel(),
-                new SimulateKeyPressOptionsViewModel(),
                 new SimulateKeyPressSequenceOptionsViewModel(),
                 new OpenSoftwareOptionsViewModel(),
-                new CallWindowsStandardFunctionsOptionsViewModel()
+                new CallWindowsStandardFunctionsOptionsViewModel(),
             };
             AvailableOptionsListSelectedIndex = GenDefInt.DefaultOutpuOptionSelectedIndex;
             TriggerAngle = GenDefInt.DefaultTriggerAngle;

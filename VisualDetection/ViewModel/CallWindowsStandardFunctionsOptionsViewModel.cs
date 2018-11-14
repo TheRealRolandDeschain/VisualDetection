@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using VisualDetection.Util;
 using VisualDetection.Interfaces;
-
+using VisualDetection.Model;
 
 namespace VisualDetection.ViewModel
 {

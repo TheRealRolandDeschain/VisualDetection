@@ -51,6 +51,7 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Management" />
     <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -91,6 +92,7 @@
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Interfaces\IOutputOption.cs" />
     <Compile Include="Model\CameraModel.cs" />
+    <Compile Include="Util\EnumMatchToBooleanConverter.cs" />
     <Compile Include="Util\Enums.cs" />
     <Compile Include="Util\GeneralDefines.cs" />
     <Compile Include="Util\MiscMethods.cs" />
@@ -103,7 +105,6 @@
     <Compile Include="ViewModel\OpenSoftwareOptionsViewModel.cs" />
     <Compile Include="ViewModel\OutputOptionsViewModel.cs" />
     <Compile Include="ViewModel\OutputViewModel.cs" />
-    <Compile Include="ViewModel\SimulateKeyPressOptionsViewModel.cs" />
     <Compile Include="ViewModel\SimulateKeyPressSequenceOptionsViewModel.cs" />
     <Compile Include="ViewModel\SimulateMouseButtonsOptionsViewModel.cs" />
     <Compile Include="ViewModel\ViewModelBase.cs" />
@@ -118,9 +119,6 @@
     </Compile>
     <Compile Include="View\OutputView.xaml.cs">
       <DependentUpon>OutputView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\SimulateKeyPressOptionsView.xaml.cs">
-      <DependentUpon>SimulateKeyPressOptionsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\SimulateKeyPressSequenceOptionsView.xaml.cs">
       <DependentUpon>SimulateKeyPressSequenceOptionsView.xaml</DependentUpon>
@@ -181,10 +179,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\OutputView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\SimulateKeyPressOptionsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

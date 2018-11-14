@@ -19,7 +19,6 @@ namespace VisualDetection.Util
 
         //OutputOptionTitles
         public const string SimulateMouseButtonTitle = "Simulate Mouse Buttons...";
-        public const string SimulateKeyPressTitle = "Simulate Key Press...";
         public const string SimulateKeyPressSequenceTitle = "Simulate Key Press Sequence...";
         public const string OpenExternalSoftwareTitle = "Open External Software...";
         public const string CallWindowsStandardFunctionTitle = "Call Windows Standard Function...";
@@ -45,6 +44,7 @@ namespace VisualDetection.Util
         public const int DefaultNrOfPositiveFramesNeeded = 5;
         public const int DefaultNrOfUndefinedFramesAllowed = 3;
         public const int DefaultButtonPressTime = 100;
+        public const int DefaultCoolDownTime = 500;
     }
 
     public static class GenDefDouble
