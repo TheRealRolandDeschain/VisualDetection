@@ -215,9 +215,11 @@ namespace VisualDetection.ViewModel
         {
             if (NumberOfFramesWithNoFace > cm.OutputOptions.NumberOfAllowedUndefinedFrames)
             {
+                LeftTriggerActive = false;
+                RightTriggerActive = false;
                 PositiveFrames = 0;
             }
-            else
+            else if(FaceDetected)
             {
                 if (Math.Abs(EyeAngle) > cm.OutputOptions.TriggerAngle)
                 {

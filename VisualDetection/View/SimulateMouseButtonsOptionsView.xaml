@@ -22,7 +22,10 @@
             <Label Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" Content="Options for Mouse Button Simulations: " Style="{StaticResource OutputOptionsTitleLabel}"/>
             <StackPanel Grid.Row="1" Grid.Column="0" Margin="5">
                 <CheckBox Content="Use as Toggle Switch" IsChecked="{Binding UseAsToggleSwitchEnabled}"/>
-                
+
+                <RadioButton Content="Use Standard Functionality" IsChecked="{Binding Path=MajorOptionsSelected, Mode=TwoWay, Converter={StaticResource enumConverter}, 
+                             ConverterParameter=UseStandard}" GroupName="MBSimulationMajorOption"/>
+
                 <RadioButton Content="Only Use Right MB" IsChecked="{Binding Path=MajorOptionsSelected, Mode=TwoWay, Converter={StaticResource enumConverter}, 
                              ConverterParameter=OnlyUseRightMB}" GroupName="MBSimulationMajorOption"/>
                 
@@ -63,8 +66,14 @@
                 <Label Content="Select length of Button Press [ms]: " Style="{StaticResource OptionsTitleLabel}"/>
                 <TextBox Text="{Binding ButtonPressTime, UpdateSourceTrigger=PropertyChanged}" TextWrapping="NoWrap"/>
                 
-                <Label Content="Select a cooldown time between to Simulations [ms]: " Style="{StaticResource OptionsTitleLabel}"/>
-                <TextBox Text="{Binding CooldownTime, UpdateSourceTrigger=PropertyChanged}" TextWrapping="NoWrap"/>
+                <Label Content="Select a cooldown time [ms]: " Style="{StaticResource OptionsTitleLabel}"/>
+                <TextBox Text="{Binding CoolDownTime, UpdateSourceTrigger=PropertyChanged}" TextWrapping="NoWrap"/>
+
+                <Label Content="Select Mouse Wheel Speed [ms]: " Style="{StaticResource OptionsTitleLabel}"/>
+                <TextBox Text="{Binding MouseWheelSpeedTime, UpdateSourceTrigger=PropertyChanged}" TextWrapping="NoWrap"/>
+
+                <Label Content="Select Mouse Wheel Indent [ms]: " Style="{StaticResource OptionsTitleLabel}"/>
+                <TextBox Text="{Binding MouseWheelIndent, UpdateSourceTrigger=PropertyChanged}" TextWrapping="NoWrap"/>
             </StackPanel>
 
         </Grid>

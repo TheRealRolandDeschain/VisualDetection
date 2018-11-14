@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace VisualDetection.Util
+﻿namespace VisualDetection.Util
 {
 
     /// <summary>
@@ -22,6 +16,7 @@ namespace VisualDetection.Util
     /// </summary>
     public enum MouseButtonsimulationMajorOptions
     {
+        UseStandard,
         OnlyUseRightMB,
         OnlyUseLeftMB,
         InverLeftRightEnabled,

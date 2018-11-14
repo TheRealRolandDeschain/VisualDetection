@@ -92,6 +92,7 @@
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Interfaces\IOutputOption.cs" />
     <Compile Include="Model\CameraModel.cs" />
+    <Compile Include="Model\SimulatedMouseModel.cs" />
     <Compile Include="Util\EnumMatchToBooleanConverter.cs" />
     <Compile Include="Util\Enums.cs" />
     <Compile Include="Util\GeneralDefines.cs" />

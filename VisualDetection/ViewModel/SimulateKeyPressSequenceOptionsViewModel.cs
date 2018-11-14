@@ -46,7 +46,6 @@ namespace VisualDetection.ViewModel
         /// <param name="e"></param>
         public void OnTriggerOnTriggerStatusChanged(object source, EventArgs e)
         {
-            System.Windows.MessageBox.Show(OptionTitle);
         }
         #endregion
     }

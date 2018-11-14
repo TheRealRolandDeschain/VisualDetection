@@ -26,12 +26,13 @@ namespace VisualDetection.ViewModel
         #region Private Properties
         private int buttonPressTime;
         private int coolDownTime;
-        private Stopwatch buttonPressTimer;
-        private Stopwatch coolDownTimer;
+        private int mouseWheelSpeedTime;
+        private int mouseWheelIndent;
         private bool useAsToggleSwitchEnabled;
         private MouseButtonsimulationMajorOptions majorOptionsSelected;
         private MBSimulationMiddleMouseOption middleMouseButtonOptions;
         private UseMouseWheelEnabled mouseWheelOptions;
+        private SimulatedMouseModel mouse;
         #endregion
 
         #region Public Properties
@@ -51,6 +52,37 @@ namespace VisualDetection.ViewModel
                 if (buttonPressTime != value)
                 {
                     SetProperty(ref buttonPressTime, value);
+                    mouse.UpdateTimers(value);
+                }
+            }
+        }
+
+        /// <summary>
+        /// The amount of ms between two mousewheel actions 
+        /// </summary>
+        public int MouseWheelSpeedTime
+        {
+            get { return mouseWheelSpeedTime; }
+            set
+            {
+                if (mouseWheelSpeedTime != value)
+                {
+                    SetProperty(ref mouseWheelSpeedTime, value);
+                }
+            }
+        }
+
+        /// <summary>
+        /// The amount of turn indents for the mousewheel
+        /// </summary>
+        public int MouseWheelIndent
+        {
+            get { return mouseWheelIndent; }
+            set
+            {
+                if (mouseWheelIndent != value)
+                {
+                    SetProperty(ref mouseWheelIndent, value);
                 }
             }
         }
@@ -66,6 +98,7 @@ namespace VisualDetection.ViewModel
                 if (coolDownTime != value)
                 {
                     SetProperty(ref coolDownTime, value);
+                    if(mouse != null) mouse.CoolDownTime = value;
                 }
             }
         }
@@ -96,6 +129,7 @@ namespace VisualDetection.ViewModel
                 if (majorOptionsSelected != value)
                 {
                     SetProperty(ref majorOptionsSelected, value);
+                    mouse.ReleaseMouseButtons(true, true, true);
                 }
             }
         }
@@ -111,6 +145,7 @@ namespace VisualDetection.ViewModel
                 if (middleMouseButtonOptions != value)
                 {
                     SetProperty(ref middleMouseButtonOptions, value);
+                    mouse.ReleaseMouseButtons(true, true, true);
                 }
             }
         }
@@ -126,6 +161,7 @@ namespace VisualDetection.ViewModel
                 if (mouseWheelOptions != value)
                 {
                     SetProperty(ref mouseWheelOptions, value);
+                    mouse.ReleaseMouseButtons(true, true, true);
                 }
             }
         }
@@ -138,18 +174,55 @@ namespace VisualDetection.ViewModel
         private void SetDefaultValues()
         {
             OptionTitle = GenDefString.SimulateMouseButtonTitle;
-            ButtonPressTime = GenDefInt.DefaultButtonPressTime;
             CoolDownTime = GenDefInt.DefaultCoolDownTime;
-            buttonPressTimer = new Stopwatch();
-            coolDownTimer = new Stopwatch();
+            MouseWheelSpeedTime = GenDefInt.DefaultMouseWheelSpeedTime;
+            MouseWheelIndent = GenDefInt.DefaultMouseWheelIndent;
+            mouse = new SimulatedMouseModel();
         }
 
         /// <summary>
-        /// Simulates the MouseClicks as ToggleSwitches
+        /// Method that handles the standard options
         /// </summary>
-        private void SimulateMouseClickAsToggleSwitch()
+        private void HandleStandardClick(bool left, bool right)
         {
-            mouse_event(MOUSEEVENTF_LEFTDOWN, (uint)Cursor.Position.X, (uint)Cursor.Position.Y, 0, 0);
+            mouse.PressMouseButtons(left, right, false);
+        }
+
+        /// <summary>
+        /// Method that handles the standard options
+        /// </summary>
+        private void HandleMiddleMouseButtonClick(bool left, bool right)
+        {
+            switch(MiddleMouseButtonOptions)
+            {
+                case MBSimulationMiddleMouseOption.UseInsteadOfBoth:
+                    mouse.PressMouseButtons(false, false, left || right);
+                    break;
+                case MBSimulationMiddleMouseOption.UseInsteadOfLeft:
+                    mouse.PressMouseButtons(false, right, left);
+                    break;
+                case MBSimulationMiddleMouseOption.UseInsteadOfRight:
+                    mouse.PressMouseButtons(left, false, right);
+                    break;
+            }
+        }
+
+        /// <summary>
+        /// Method that handles the mousewheel options
+        /// </summary>
+        private void HandlesMouseWheelTurn(bool left, bool right)
+        {
+            if (left == right) return;
+
+            switch(MouseWheelOptions)
+            {
+                case UseMouseWheelEnabled.InvertUpDownDisabled:
+                    mouse.TurnMouseWheel(left, MouseWheelIndent);
+                    break;
+                case UseMouseWheelEnabled.InvertUpDownEnabled:
+                    mouse.TurnMouseWheel(left, MouseWheelIndent);
+                    break;
+            }
         }
         #endregion
 
@@ -161,21 +234,29 @@ namespace VisualDetection.ViewModel
         /// <param name="e"></param>
         public void OnTriggerOnTriggerStatusChanged(object source, EventArgs e)
         {
-            System.Windows.MessageBox.Show(UseAsToggleSwitchEnabled.ToString());
+            var triggers = (source as OutputViewModel);
+            switch (MajorOptionsSelected)
+            { 
+                case MouseButtonsimulationMajorOptions.UseStandard:
+                    HandleStandardClick(triggers.LeftTriggerActive, triggers.RightTriggerActive);
+                    break;
+                case MouseButtonsimulationMajorOptions.OnlyUseRightMB:
+                    HandleStandardClick(false, triggers.LeftTriggerActive || triggers.RightTriggerActive);
+                    break;
+                case MouseButtonsimulationMajorOptions.OnlyUseLeftMB:
+                    HandleStandardClick(triggers.LeftTriggerActive || triggers.RightTriggerActive, false);
+                    break;
+                case MouseButtonsimulationMajorOptions.InverLeftRightEnabled:
+                    HandleStandardClick(triggers.RightTriggerActive, triggers.LeftTriggerActive);
+                    break;
+                case MouseButtonsimulationMajorOptions.UseMiddleMouseButtonEnabled:
+                    HandleMiddleMouseButtonClick(triggers.LeftTriggerActive, triggers.RightTriggerActive);
+                    break;
+                case MouseButtonsimulationMajorOptions.UseMouseWheelEnabled:
+                    HandlesMouseWheelTurn(triggers.LeftTriggerActive, triggers.RightTriggerActive);
+                    break;
+            }
         }
-        #endregion
-
-        #region Setup for MouseClick Simulation
-        // Taken from https://stackoverflow.com/questions/2416748/how-do-you-simulate-mouse-click-in-c
-        [DllImport("user32.dll", CharSet = CharSet.Auto, CallingConvention = CallingConvention.StdCall)]
-        public static extern void mouse_event(uint dwFlags, uint dx, uint dy, uint cButtons, uint dwExtraInfo);
-        private const int MOUSEEVENTF_LEFTDOWN = 0x02;
-        private const int MOUSEEVENTF_LEFTUP = 0x04;
-        private const int MOUSEEVENTF_RIGHTDOWN = 0x08;
-        private const int MOUSEEVENTF_RIGHTUP = 0x10;
-        private const int MOUSEEVENTF_MIDDLEDOWN = 0x0020;
-        private const int MOUSEEVENTF_MIDDLEUP = 0x0040;
-        private const int MOUSEEVENTF_WHEEL = 0x0800;
         #endregion
     }
 }
