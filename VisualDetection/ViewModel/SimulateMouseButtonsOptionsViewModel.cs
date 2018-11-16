@@ -1,16 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using VisualDetection.Util;
 using VisualDetection.Interfaces;
 using VisualDetection.Model;
-using System.Diagnostics;
-using System.Runtime.InteropServices;
-using System.Windows.Controls;
-using System.Drawing;
-using System.Windows.Forms;
+using VisualDetection.Util;
 
 namespace VisualDetection.ViewModel
 {
@@ -52,7 +43,7 @@ namespace VisualDetection.ViewModel
                 if (buttonPressTime != value)
                 {
                     SetProperty(ref buttonPressTime, value);
-                    mouse.UpdateTimers(value);
+                    mouse.UpdateTimers();
                 }
             }
         }
@@ -68,6 +59,7 @@ namespace VisualDetection.ViewModel
                 if (mouseWheelSpeedTime != value)
                 {
                     SetProperty(ref mouseWheelSpeedTime, value);
+                    mouse.UpdateTimers();
                 }
             }
         }
@@ -98,7 +90,7 @@ namespace VisualDetection.ViewModel
                 if (coolDownTime != value)
                 {
                     SetProperty(ref coolDownTime, value);
-                    if(mouse != null) mouse.CoolDownTime = value;
+                    if (mouse != null) mouse.CoolDownTime = value;
                 }
             }
         }
@@ -173,27 +165,23 @@ namespace VisualDetection.ViewModel
         /// </summary>
         private void SetDefaultValues()
         {
+            mouse = new SimulatedMouseModel(this);
             OptionTitle = GenDefString.SimulateMouseButtonTitle;
             CoolDownTime = GenDefInt.DefaultCoolDownTime;
+            ButtonPressTime = GenDefInt.DefaultButtonPressTime;
             MouseWheelSpeedTime = GenDefInt.DefaultMouseWheelSpeedTime;
             MouseWheelIndent = GenDefInt.DefaultMouseWheelIndent;
-            mouse = new SimulatedMouseModel();
+
         }
 
         /// <summary>
         /// Method that handles the standard options
         /// </summary>
-        private void HandleStandardClick(bool left, bool right)
-        {
-            mouse.PressMouseButtons(left, right, false);
-        }
-
-        /// <summary>
-        /// Method that handles the standard options
-        /// </summary>
+        /// <param name="left"></param>
+        /// <param name="right"></param>
         private void HandleMiddleMouseButtonClick(bool left, bool right)
         {
-            switch(MiddleMouseButtonOptions)
+            switch (MiddleMouseButtonOptions)
             {
                 case MBSimulationMiddleMouseOption.UseInsteadOfBoth:
                     mouse.PressMouseButtons(false, false, left || right);
@@ -208,19 +196,28 @@ namespace VisualDetection.ViewModel
         }
 
         /// <summary>
-        /// Method that handles the mousewheel options
+        ///  Method that handles the mousewheel options
         /// </summary>
+        /// <param name="left"></param>
+        /// <param name="right"></param>
         private void HandlesMouseWheelTurn(bool left, bool right)
         {
-            if (left == right) return;
+            if (left == right)
+            {
+                if (UseAsToggleSwitchEnabled)
+                {
+                    mouse.StopMouseWheel();
+                    return;
+                }
+            }
 
-            switch(MouseWheelOptions)
+            switch (MouseWheelOptions)
             {
                 case UseMouseWheelEnabled.InvertUpDownDisabled:
-                    mouse.TurnMouseWheel(left, MouseWheelIndent);
+                    mouse.TurnMouseWheel(left);
                     break;
                 case UseMouseWheelEnabled.InvertUpDownEnabled:
-                    mouse.TurnMouseWheel(left, MouseWheelIndent);
+                    mouse.TurnMouseWheel(right);
                     break;
             }
         }
@@ -236,18 +233,18 @@ namespace VisualDetection.ViewModel
         {
             var triggers = (source as OutputViewModel);
             switch (MajorOptionsSelected)
-            { 
+            {
                 case MouseButtonsimulationMajorOptions.UseStandard:
-                    HandleStandardClick(triggers.LeftTriggerActive, triggers.RightTriggerActive);
+                    mouse.PressMouseButtons(triggers.LeftTriggerActive, triggers.RightTriggerActive, false);
                     break;
                 case MouseButtonsimulationMajorOptions.OnlyUseRightMB:
-                    HandleStandardClick(false, triggers.LeftTriggerActive || triggers.RightTriggerActive);
+                    mouse.PressMouseButtons(false, triggers.LeftTriggerActive || triggers.RightTriggerActive, false);
                     break;
                 case MouseButtonsimulationMajorOptions.OnlyUseLeftMB:
-                    HandleStandardClick(triggers.LeftTriggerActive || triggers.RightTriggerActive, false);
+                    mouse.PressMouseButtons(triggers.LeftTriggerActive || triggers.RightTriggerActive, false, false);
                     break;
                 case MouseButtonsimulationMajorOptions.InverLeftRightEnabled:
-                    HandleStandardClick(triggers.RightTriggerActive, triggers.LeftTriggerActive);
+                    mouse.PressMouseButtons(triggers.RightTriggerActive, triggers.LeftTriggerActive, false);
                     break;
                 case MouseButtonsimulationMajorOptions.UseMiddleMouseButtonEnabled:
                     HandleMiddleMouseButtonClick(triggers.LeftTriggerActive, triggers.RightTriggerActive);

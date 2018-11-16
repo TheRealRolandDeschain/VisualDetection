@@ -126,9 +126,9 @@ namespace VisualDetection.ViewModel
             {
                 if (leftTriggerActive != value)
                 {
+                    SetProperty(ref leftTriggerActive, value);
                     OnTriggerStatusChanged();
                     LeftTriggerActiveIndicator = UpdateIndicator(value);
-                    SetProperty(ref leftTriggerActive, value);
                 }
             }
         }
@@ -143,9 +143,9 @@ namespace VisualDetection.ViewModel
             {
                 if (rightTriggerActive != value)
                 {
+                    SetProperty(ref rightTriggerActive, value);
                     OnTriggerStatusChanged();
                     RightTriggerActiveIndicator = UpdateIndicator(value);
-                    SetProperty(ref rightTriggerActive, value);
                 }
             }
         }
@@ -286,10 +286,7 @@ namespace VisualDetection.ViewModel
         #region Protected Methods
         protected virtual void OnTriggerStatusChanged()
         {
-            if(TriggerStatusChanged != null)
-            {
-                TriggerStatusChanged(this, EventArgs.Empty);
-            }
+            TriggerStatusChanged?.Invoke(this, EventArgs.Empty);
         }
         #endregion
 

@@ -339,7 +339,7 @@
                     </Trigger>
                 </Style.Triggers>
             </Style>
-            
+
             <!-- Radiobuttons -->
             <Style TargetType="{x:Type RadioButton}">
                 <Setter Property="Foreground" Value="White"/>
@@ -352,7 +352,6 @@
                     </Trigger>
                 </Style.Triggers>
             </Style>
-
         </ResourceDictionary>
     </Application.Resources>
 </Application>

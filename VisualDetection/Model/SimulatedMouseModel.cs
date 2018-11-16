@@ -5,23 +5,36 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Timers;
 using System.Windows.Forms;
+using VisualDetection.ViewModel;
+using Timer = System.Timers.Timer;
 
 namespace VisualDetection.Model
 {
     public class SimulatedMouseModel
     {
         #region Constructor
-        public SimulatedMouseModel()
+        public SimulatedMouseModel(SimulateMouseButtonsOptionsViewModel SimulateMouseButtonsOptionsViewModelIn)
         {
             buttonPressTimerLeft = new Timer();
+            buttonPressTimerLeft.Elapsed += OnLeftTimmerTicked;
             coolDownTimerLeft = new Stopwatch();
             buttonPressTimerRight = new Timer();
+            buttonPressTimerRight.Elapsed += OnRightTimmerTicked;
             coolDownTimerRight = new Stopwatch();
+            buttonPressTimerMiddle = new Timer();
+            buttonPressTimerMiddle.Elapsed += OnMiddleTimmerTicked;
+            coolDownTimerMiddle = new Stopwatch();
+            buttonPressTimerWheel = new Timer();
+            buttonPressTimerWheel.Elapsed += OnWheelTimmerTicked;
+            coolDownTimerWheel = new Stopwatch();
+            simulatedMBViewModel = SimulateMouseButtonsOptionsViewModelIn;
         }
         #endregion
 
         #region Private Properties
+        private SimulateMouseButtonsOptionsViewModel simulatedMBViewModel;
         private const int MOUSEEVENTF_LEFTDOWN = 0x02;
         private const int MOUSEEVENTF_LEFTUP = 0x04;
         private const int MOUSEEVENTF_RIGHTDOWN = 0x08;
@@ -33,6 +46,11 @@ namespace VisualDetection.Model
         private Stopwatch coolDownTimerLeft;
         private Timer buttonPressTimerRight;
         private Stopwatch coolDownTimerRight;
+        private Timer buttonPressTimerMiddle;
+        private Stopwatch coolDownTimerMiddle;
+        private Timer buttonPressTimerWheel;
+        private Stopwatch coolDownTimerWheel;
+        private bool currentMouseWheelDirection;
         #endregion
 
         #region Public Properties
@@ -50,10 +68,15 @@ namespace VisualDetection.Model
         /// <summary>
         /// Sets the timers after a option has changed
         /// </summary>
-        public void UpdateTimers(int buttonPressTime)
+        public void UpdateTimers()
         {
+            //Checking if 0 is a quick and dirty fix, should be changed!
+            var buttonPressTime = (simulatedMBViewModel.ButtonPressTime != 0) ? simulatedMBViewModel.ButtonPressTime : 1;
+            var mouseWheelSpeed = (simulatedMBViewModel.MouseWheelSpeedTime != 0) ? simulatedMBViewModel.MouseWheelSpeedTime : 1;
             buttonPressTimerLeft.Interval = buttonPressTime;
             buttonPressTimerRight.Interval = buttonPressTime;
+            buttonPressTimerMiddle.Interval = buttonPressTime;
+            buttonPressTimerWheel.Interval = mouseWheelSpeed;
         }
 
         /// <summary>
@@ -69,16 +92,22 @@ namespace VisualDetection.Model
             {
                 MouseButtons |= MOUSEEVENTF_LEFTUP;
                 LeftButtonPressed = false;
+                coolDownTimerLeft.Restart();
+                buttonPressTimerLeft.Stop();
             }
             if (releasRight && RightButtonPressed)
             {
                 MouseButtons |= MOUSEEVENTF_RIGHTUP;
                 RightButtonPressed = false;
+                coolDownTimerRight.Restart();
+                buttonPressTimerRight.Stop();
             }
             if (releaseMiddle && MiddleMouseButtonPressed)
             {
                 MouseButtons |= MOUSEEVENTF_MIDDLEUP;
                 MiddleMouseButtonPressed = false;
+                coolDownTimerMiddle.Restart();
+                buttonPressTimerMiddle.Stop();
             }
             if (MouseButtons != 0)
             {
@@ -94,18 +123,20 @@ namespace VisualDetection.Model
         /// <param name="pressMiddle"></param>
         public void PressMouseButtons(bool pressLeft, bool pressRight, bool pressMiddle)
         {
+            var toggleSwitch = simulatedMBViewModel.UseAsToggleSwitchEnabled;
+            var setCoolDown = simulatedMBViewModel.CoolDownTime;
             uint MouseButtons = 0;
-            if (pressLeft && !LeftButtonPressed)
+            if (pressLeft && !LeftButtonPressed && (coolDownTimerLeft.ElapsedMilliseconds >= setCoolDown))
             {
                 MouseButtons |= MOUSEEVENTF_LEFTDOWN;
                 LeftButtonPressed = true;
             }
-            if (pressRight && !RightButtonPressed)
+            if (pressRight && !RightButtonPressed && (coolDownTimerRight.ElapsedMilliseconds >= setCoolDown))
             {
                 MouseButtons |= MOUSEEVENTF_RIGHTDOWN;
                 RightButtonPressed = true;
             }
-            if (pressMiddle && !MiddleMouseButtonPressed)
+            if (pressMiddle && !MiddleMouseButtonPressed && (coolDownTimerMiddle.ElapsedMilliseconds >= setCoolDown))
             {
                 MouseButtons |= MOUSEEVENTF_MIDDLEDOWN;
                 MiddleMouseButtonPressed = true;
@@ -114,6 +145,23 @@ namespace VisualDetection.Model
             {
                 mouse_event(MouseButtons, (uint)Cursor.Position.X, (uint)Cursor.Position.Y, 0, 0);
             }
+
+            if (toggleSwitch)
+            {
+                ReleaseMouseButtons(!pressLeft, !pressRight, !pressMiddle);
+            }
+            else if (pressLeft)
+            {
+                buttonPressTimerLeft.Start();
+            }
+            else if (pressRight)
+            {
+                buttonPressTimerRight.Start();
+            }
+            else if (pressMiddle)
+            {
+                buttonPressTimerMiddle.Start();
+            }
         }
 
         /// <summary>
@@ -121,12 +169,84 @@ namespace VisualDetection.Model
         /// </summary>
         /// <param name="turnUpdown">specifies the direction true = up, false = down</param>
         /// <param name="turnMovement">specifies the indentes of the move</param>
-        public void TurnMouseWheel(bool turnUpdown, int turnMovement)
+        public void TurnMouseWheel(bool turnUpdown)
         {
-            int turns = turnMovement * 120;
-            if (!turnUpdown) turns *= -1;
-            mouse_event(MOUSEEVENTF_WHEEL, (uint)Cursor.Position.X, (uint)Cursor.Position.Y, turns, 0);
+            currentMouseWheelDirection = turnUpdown;
+            var turnMovement = simulatedMBViewModel.MouseWheelIndent;
+            var toggle = simulatedMBViewModel.UseAsToggleSwitchEnabled;
+            var setCoolDown = simulatedMBViewModel.CoolDownTime;
+            if (toggle || coolDownTimerWheel.ElapsedMilliseconds > setCoolDown)
+            {
+                int turns = turnMovement * 120;
+                if (!currentMouseWheelDirection) turns *= -1;
+                mouse_event(MOUSEEVENTF_WHEEL, (uint)Cursor.Position.X, (uint)Cursor.Position.Y, turns, 0);
+            }
+            if (toggle)
+            {
+                buttonPressTimerWheel.Start();
+                coolDownTimerWheel.Stop();
+            }
+            else
+            {
+                coolDownTimerWheel.Restart();
+            }
         }
+
+        /// <summary>
+        /// Stops the recoursive spinning of the wheel
+        /// </summary>
+        public void StopMouseWheel()
+        {
+            buttonPressTimerWheel.Stop();
+            coolDownTimerWheel.Restart();
+        }
+
+
+
+        /// <summary>
+        /// Elapsed left button press time
+        /// </summary>
+        /// <param name="source"></param>
+        /// <param name="e"></param>
+        public void OnLeftTimmerTicked(object source, EventArgs e)
+        {
+            ReleaseMouseButtons(true, false, false);
+
+        }
+
+        /// <summary>
+        /// Elapsed right button press time
+        /// </summary>
+        /// <param name="source"></param>
+        /// <param name="e"></param>
+        public void OnRightTimmerTicked(object source, EventArgs e)
+        {
+
+            ReleaseMouseButtons(false, true, false);
+        }
+
+        /// <summary>
+        /// Elapsed Middle button press time
+        /// </summary>
+        /// <param name="source"></param>
+        /// <param name="e"></param>
+        public void OnMiddleTimmerTicked(object source, EventArgs e)
+        {
+
+            ReleaseMouseButtons(false, false, true);
+        }
+
+        /// <summary>
+        /// Elapsed wheel turn time
+        /// </summary>
+        /// <param name="source"></param>
+        /// <param name="e"></param>
+        public void OnWheelTimmerTicked(object source, EventArgs e)
+        {
+            TurnMouseWheel(currentMouseWheelDirection);
+
+        }
+
 
         #endregion
 

@@ -24,5 +24,40 @@ namespace VisualDetection.View
         {
             InitializeComponent();
         }
+
+
+        private void Test_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+
+            if (e.LeftButton == MouseButtonState.Pressed)
+            {
+                Test.Background = Brushes.Red;
+            }
+            else if (e.RightButton == MouseButtonState.Pressed)
+            {
+                Test.Background = Brushes.Blue;
+            }
+            else if (e.MiddleButton == MouseButtonState.Pressed)
+            {
+                Test.Background = Brushes.Green;
+            }
+        }
+
+        private void Test_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+            Test.Background = Brushes.White;
+        }
+
+        private void Test_MouseWheel(object sender, MouseWheelEventArgs e)
+        {
+            if(e.Delta > 0)
+            {
+                Test.Background = Brushes.Yellow;
+            }
+            else
+            {
+                Test.Background = Brushes.Brown;
+            }
+        }
     }
 }

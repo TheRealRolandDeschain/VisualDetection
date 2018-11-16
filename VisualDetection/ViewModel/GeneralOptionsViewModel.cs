@@ -153,12 +153,18 @@ namespace VisualDetection.ViewModel
             ManagementObjectSearcher searcher = new ManagementObjectSearcher(wmiQuery);
             ManagementObjectCollection retObjectCollection = searcher.Get();
 
+
             foreach (var WmiObject in retObjectCollection)
             {
-                    if (WmiObject["DeviceClass"] != null && WmiObject["DeviceClass"].ToString().Equals("IMAGE"))
+                if (WmiObject["DeviceClass"] != null && WmiObject["DeviceClass"].ToString().Equals("IMAGE"))
+                {
+                    AvailableCameras.Add(WmiObject["DeviceName"].ToString());
+                    var asdf = WmiObject.Properties;
+                    foreach (PropertyData property in asdf)
                     {
-                        AvailableCameras.Add(WmiObject["DeviceName"].ToString());
+                        Console.WriteLine();
                     }
+                }
             }
             SelectedCameraIndex = 0;
         }
