@@ -12,19 +12,19 @@
         <ResourceDictionary>
             <local:OutputOptionsViewModel x:Key="vm" />
 
-            <DataTemplate x:Key="SimulateMouseButtonsOptions" DataType="{x:Type views:SimulateMouseButtonsOptionsView}">
+            <DataTemplate DataType="{x:Type local:SimulateMouseButtonsOptionsViewModel}">
                 <views:SimulateMouseButtonsOptionsView />
             </DataTemplate>
 
-            <DataTemplate x:Key="SimulateKeyPressSequenceOptions" DataType="{x:Type views:SimulateKeyPressSequenceOptionsView}">
+            <DataTemplate DataType="{x:Type local:SimulateKeyPressSequenceOptionsViewModel}">
                 <views:SimulateKeyPressSequenceOptionsView />
             </DataTemplate>
 
-            <DataTemplate x:Key="OpenSoftwareOption" DataType="{x:Type views:OpenSoftwareOptionsview}">
+            <DataTemplate  DataType="{x:Type local:OpenSoftwareOptionsViewModel}">
                 <views:OpenSoftwareOptionsview/>
             </DataTemplate>
 
-            <DataTemplate x:Key="CallWindowsStandardFunctionsOption" DataType="{x:Type views:CallWindowsStandardFunctionsOptionsView}">
+            <DataTemplate DataType="{x:Type local:CallWindowsStandardFunctionsOptionsViewModel}">
                 <views:CallWindowsStandardFunctionsOptionsView/>
             </DataTemplate>
         </ResourceDictionary>
@@ -66,24 +66,7 @@
         </StackPanel>
 
         <Border Grid.Row="0" Grid.Column="1" Grid.RowSpan="5" BorderBrush="White" BorderThickness="1, 0, 0, 0">
-            <ContentControl Name="OutputOptionsContentControl" Content="{Binding}" >
-                <ContentControl.Style>
-                    <Style TargetType="{x:Type ContentControl}">
-                        <Setter Property="ContentTemplate" Value="{StaticResource SimulateMouseButtonsOptions}" />
-                        <Style.Triggers>
-                            <DataTrigger Binding="{Binding AvailableOptionsListSelectedIndex}" Value="1">
-                                <Setter Property="ContentTemplate" Value="{StaticResource SimulateKeyPressSequenceOptions}" />
-                            </DataTrigger>
-                            <DataTrigger Binding="{Binding AvailableOptionsListSelectedIndex}" Value="2">
-                                <Setter Property="ContentTemplate" Value="{StaticResource OpenSoftwareOption}" />
-                            </DataTrigger>
-                            <DataTrigger Binding="{Binding AvailableOptionsListSelectedIndex}" Value="3">
-                                <Setter Property="ContentTemplate" Value="{StaticResource CallWindowsStandardFunctionsOption}" />
-                            </DataTrigger>
-                        </Style.Triggers>
-                    </Style>
-                </ContentControl.Style>
-            </ContentControl>
+            <ContentControl Name="OutputOptionsContentControl" Content="{Binding ElementName=AvailableOptionsListComboBox,Path=SelectedItem}" />
         </Border>
     </Grid>
 </UserControl>

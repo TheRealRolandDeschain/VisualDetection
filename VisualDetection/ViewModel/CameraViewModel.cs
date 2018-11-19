@@ -2,7 +2,6 @@
 using Emgu.CV.CvEnum;
 using System;
 using System.Diagnostics;
-using System.Drawing;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -175,7 +174,10 @@ namespace VisualDetection.ViewModel
         /// </summary>
         private void CaptureCameraFrame()
         {
-            if (Capture.Grab()) Capture.Retrieve(cm.CameraViewMat);
+            if (Capture.Grab())
+            {
+                Capture.Retrieve(cm.CameraViewMat);
+            }
             timer.Restart();
             CvInvoke.CvtColor(cm.CameraViewMat, cm.CameraViewGrayScaleMat, ColorConversion.Bgr2Gray);
             if (cm.GeneralOptions.UseEqualizeHist)

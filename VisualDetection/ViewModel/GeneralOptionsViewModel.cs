@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using System.Management;
 using System.Windows.Media;
+using Emgu.CV;
 using Emgu.CV.Structure;
 using VisualDetection.Model;
 using VisualDetection.Util;
-
+using WebEye.Controls.Wpf;
 
 namespace VisualDetection.ViewModel
 {
@@ -41,7 +42,7 @@ namespace VisualDetection.ViewModel
         /// <summary>
         /// The list of all available cameras on the system. 
         /// </summary>
-        public List<string> AvailableCameras { get; set; }
+        public List<WebCameraId> AvailableCameras { get; set; }
 
         /// <summary>
         /// The list of available detector types 
@@ -147,25 +148,9 @@ namespace VisualDetection.ViewModel
         /// </summary>
         private void GetAvailableCameraList()
         {
-            AvailableCameras = new List<string>();
-            string wmiQuery = string.Format("SELECT * FROM Win32_PnPSignedDriver");
+            WebCameraControl wc = new WebCameraControl();
 
-            ManagementObjectSearcher searcher = new ManagementObjectSearcher(wmiQuery);
-            ManagementObjectCollection retObjectCollection = searcher.Get();
-
-
-            foreach (var WmiObject in retObjectCollection)
-            {
-                if (WmiObject["DeviceClass"] != null && WmiObject["DeviceClass"].ToString().Equals("IMAGE"))
-                {
-                    AvailableCameras.Add(WmiObject["DeviceName"].ToString());
-                    var asdf = WmiObject.Properties;
-                    foreach (PropertyData property in asdf)
-                    {
-                        Console.WriteLine();
-                    }
-                }
-            }
+            AvailableCameras = new List<WebCameraId>(wc.GetVideoCaptureDevices());
             SelectedCameraIndex = 0;
         }
 

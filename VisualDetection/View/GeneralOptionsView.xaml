@@ -30,7 +30,7 @@
 
         <StackPanel Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="1" Grid.RowSpan="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="10, 0">
             <Label Content="Select Camera" Style="{StaticResource OptionsTitleLabel}"/>
-            <ComboBox Name="SelectCameraCombobox" ItemsSource="{Binding AvailableCameras}" SelectedIndex="{Binding SelectedCameraIndex}"/>
+            <ComboBox Name="SelectCameraCombobox" ItemsSource="{Binding AvailableCameras}" DisplayMemberPath="Name" SelectedIndex="{Binding SelectedCameraIndex}"/>
         </StackPanel>
         <StackPanel Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="1" Grid.RowSpan="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="10, 0">
             <Label Content="Select Detector Type" Style="{StaticResource OptionsTitleLabel}"/>
