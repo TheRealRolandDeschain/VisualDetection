@@ -43,7 +43,7 @@ namespace VisualDetection.Util
         public const int DefaultTriggerAngle = 5;
         public const int DefaultNrOfPositiveFramesNeeded = 5;
         public const int DefaultNrOfUndefinedFramesAllowed = 5;
-        public const int DefaultButtonPressTime = 100;
+        public const int DefaultButtonPressTime = 500;
         public const int DefaultCoolDownTime = 500;
         public const int DefaultMouseWheelSpeedTime = 250;
         public const int DefaultMouseWheelIndent = 1;

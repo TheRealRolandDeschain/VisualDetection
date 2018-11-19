@@ -20,15 +20,19 @@ namespace VisualDetection.Model
             buttonPressTimerLeft = new Timer();
             buttonPressTimerLeft.Elapsed += OnLeftTimmerTicked;
             coolDownTimerLeft = new Stopwatch();
+            coolDownTimerLeft.Start();
             buttonPressTimerRight = new Timer();
             buttonPressTimerRight.Elapsed += OnRightTimmerTicked;
             coolDownTimerRight = new Stopwatch();
+            coolDownTimerRight.Start();
             buttonPressTimerMiddle = new Timer();
             buttonPressTimerMiddle.Elapsed += OnMiddleTimmerTicked;
             coolDownTimerMiddle = new Stopwatch();
+            coolDownTimerMiddle.Start();
             buttonPressTimerWheel = new Timer();
             buttonPressTimerWheel.Elapsed += OnWheelTimmerTicked;
             coolDownTimerWheel = new Stopwatch();
+            coolDownTimerWheel.Start();
             simulatedMBViewModel = SimulateMouseButtonsOptionsViewModelIn;
         }
         #endregion
@@ -211,7 +215,6 @@ namespace VisualDetection.Model
         public void OnLeftTimmerTicked(object source, EventArgs e)
         {
             ReleaseMouseButtons(true, false, false);
-
         }
 
         /// <summary>
@@ -221,7 +224,6 @@ namespace VisualDetection.Model
         /// <param name="e"></param>
         public void OnRightTimmerTicked(object source, EventArgs e)
         {
-
             ReleaseMouseButtons(false, true, false);
         }
 
@@ -232,7 +234,6 @@ namespace VisualDetection.Model
         /// <param name="e"></param>
         public void OnMiddleTimmerTicked(object source, EventArgs e)
         {
-
             ReleaseMouseButtons(false, false, true);
         }
 
@@ -244,7 +245,6 @@ namespace VisualDetection.Model
         public void OnWheelTimmerTicked(object source, EventArgs e)
         {
             TurnMouseWheel(currentMouseWheelDirection);
-
         }
 
 
