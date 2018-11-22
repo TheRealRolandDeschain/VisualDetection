@@ -12,7 +12,6 @@
         Height="900" Width="1600" MinWidth="1200" MinHeight="675"
         WindowState="Maximized">
 
-
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" MinWidth="500"/>
