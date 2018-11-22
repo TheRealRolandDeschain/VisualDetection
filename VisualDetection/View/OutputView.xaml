@@ -62,9 +62,6 @@
                 <Label Content="Number of Frames without a face deteced: " Style="{StaticResource OptionsTitleLabel}"/>
                 <TextBox Text="{Binding NumberOfFramesWithNoFace}" TextWrapping="NoWrap" IsEnabled="False"/>
             </StackPanel>
-            <StackPanel Grid.Column="1" Grid.Row="3" Margin="10, 10">
-                <Border Name="Test" Background="White" Height="50" Width="200" MouseDown="Test_MouseDown" MouseUp="Test_MouseUp" MouseWheel="Test_MouseWheel"/>
-            </StackPanel>
         </Grid>
     </ScrollViewer>
 </UserControl>
