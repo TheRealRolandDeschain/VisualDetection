@@ -1,4 +1,5 @@
 ﻿using Squirrel;
+using System;
 using System.Threading.Tasks;
 using System.Windows.Threading;
 using VisualDetection.ViewModel;
@@ -32,6 +33,11 @@ namespace VisualDetection.Util
                 try
                 {
                     var IsUpdateAvailable = await Task.Run(() => mgr.Result.CheckForUpdate().Result);
+                    if (IsUpdateAvailable.CurrentlyInstalledVersion.SHA1 != IsUpdateAvailable.FutureReleaseEntry.SHA1)
+                    {
+                        await mgr.Result.UpdateApp();
+                        UpdateManager.RestartApp();
+                    }
                     updaterMessage = GenDefString.NewUpdateFound;
                     dispatcher.Invoke(() => SetUpdaterMessage(), DispatcherPriority.Normal);
                 }
