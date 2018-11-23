@@ -1,9 +1,7 @@
-﻿using System;
+﻿using Emgu.CV.Structure;
 using System.Collections.Generic;
-using System.Management;
+using System.Threading.Tasks;
 using System.Windows.Media;
-using Emgu.CV;
-using Emgu.CV.Structure;
 using VisualDetection.Model;
 using VisualDetection.Util;
 using WebEye.Controls.Wpf;

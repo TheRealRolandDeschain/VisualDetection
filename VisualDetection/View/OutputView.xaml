@@ -46,19 +46,23 @@
                     <Label Content="Right Trigger activated" Style="{StaticResource OptionsTitleLabel}" VerticalAlignment="Center"/>
                 </StackPanel>
             </StackPanel>
+            <StackPanel Grid.Column="2" Grid.Row="0" Margin="10, 0">
+                <Label Content="Application Updater:" Style="{StaticResource OptionsTitleLabel}"/>
+                <TextBox Text="{Binding UpdateMessage}" TextWrapping="NoWrap" IsEnabled="False"/>
+            </StackPanel>
             <StackPanel Grid.Column="1" Grid.Row="0" Margin="10, 0">
                 <Label Content="Calculated Angle: " Style="{StaticResource OptionsTitleLabel}"/>
                 <TextBox Text="{Binding EyeAngle}" TextWrapping="NoWrap" IsEnabled="False"/>
             </StackPanel>
-            <StackPanel Grid.Column="2" Grid.Row="0" Margin="10, 0">
+            <StackPanel Grid.Column="1" Grid.Row="1" Margin="10, 0">
                 <Label Content="Frame Calculation time [ms]: " Style="{StaticResource OptionsTitleLabel}"/>
                 <TextBox Text="{Binding FrameCalculationTime}" TextWrapping="NoWrap" IsEnabled="False"/>
             </StackPanel>
-            <StackPanel Grid.Column="1" Grid.Row="1" Margin="10, 0">
+            <StackPanel Grid.Column="1" Grid.Row="2" Margin="10, 0">
                 <Label Content="Number of Positive Frames: " Style="{StaticResource OptionsTitleLabel}"/>
                 <TextBox Text="{Binding PositiveFrames}" TextWrapping="NoWrap" IsEnabled="False"/>
             </StackPanel>
-            <StackPanel Grid.Column="2" Grid.Row="1" Margin="10, 0">
+            <StackPanel Grid.Column="1" Grid.Row="3" Margin="10, 0">
                 <Label Content="Number of Frames without a face deteced: " Style="{StaticResource OptionsTitleLabel}"/>
                 <TextBox Text="{Binding NumberOfFramesWithNoFace}" TextWrapping="NoWrap" IsEnabled="False"/>
             </StackPanel>

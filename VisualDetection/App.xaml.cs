@@ -1,7 +1,5 @@
-﻿
-using Squirrel;
-using System;
-using System.Windows;
+﻿using System.Windows;
+using VisualDetection.Util;
 
 namespace VisualDetection
 {
@@ -10,10 +8,5 @@ namespace VisualDetection
     /// </summary>
     public partial class App : Application
     {
-        #region Protected Methods
-        #endregion
-
-        #region Private Methods
-        #endregion
     }
 }

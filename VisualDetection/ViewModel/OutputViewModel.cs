@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media;
 using VisualDetection.Model;
+using VisualDetection.Util;
 
 namespace VisualDetection.ViewModel
 {
@@ -21,6 +22,7 @@ namespace VisualDetection.ViewModel
             cm.Output = this;
             SetDefaultOutputValues();
             cm.OutputOptions.HandleTriggerStatusEventSubscribers();
+            UpdateApplication();
         }
         #endregion
 
@@ -36,6 +38,7 @@ namespace VisualDetection.ViewModel
         private Brush leftTriggerActiveIndicator;
         private Brush rightTriggerActiveIndicator;
         private CameraModel cm = CameraModel.Instance;
+        private string updateMessage;
         #endregion
 
         #region Public Properties
@@ -194,6 +197,21 @@ namespace VisualDetection.ViewModel
                 }
             }
         }
+
+        /// <summary>
+        /// messages concernig updating the app
+        /// </summary>
+        public string UpdateMessage
+        {
+            get { return updateMessage; }
+            set
+            {
+                if (updateMessage != value)
+                {
+                    SetProperty(ref updateMessage, value);
+                }
+            }
+        }
         #endregion
 
         #region Private Methods
@@ -241,6 +259,15 @@ namespace VisualDetection.ViewModel
                 }
             }
         }
+
+        /// <summary>
+        /// Handles checking for Updates and UpdaterMessage
+        /// </summary>
+        private void UpdateApplication()
+        {
+            UpdateCheckManager updateManager = new UpdateCheckManager(this);
+            Task updateTask = updateManager.CheckForUpdatesAsync();
+        }
         #endregion
 
         #region Public Methods
@@ -259,6 +286,7 @@ namespace VisualDetection.ViewModel
             FaceDetected = false;
             LeftTriggerActive = false;
             RightTriggerActive = false;
+            UpdateMessage = GenDefString.CheckingForUpdates;
         }
 
         /// <summary>
