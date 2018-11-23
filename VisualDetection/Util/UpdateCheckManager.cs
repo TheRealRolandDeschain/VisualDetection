@@ -33,14 +33,8 @@ namespace VisualDetection.Util
                 try
                 {
                     mgr.Result.UpdateApp();
-                    //var IsUpdateAvailable = mgr.Result.CheckForUpdate().Result;
-                    //if (IsUpdateAvailable.CurrentlyInstalledVersion.SHA1 != IsUpdateAvailable.FutureReleaseEntry.SHA1)
-                    //{
-                    //    mgr.Result.UpdateApp();
-                    //    UpdateManager.RestartApp();
-                    //}
-                    //updaterMessage = GenDefString.NewUpdateFound;
-                    //dispatcher.Invoke(() => SetUpdaterMessage(), DispatcherPriority.Normal);
+                    updaterMessage = GenDefString.NewUpdateFound;
+                    dispatcher.Invoke(() => SetUpdaterMessage(), DispatcherPriority.Normal);
                 }
                 catch(Exception e)
                 {
