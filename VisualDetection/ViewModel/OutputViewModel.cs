@@ -266,7 +266,8 @@ namespace VisualDetection.ViewModel
         private void UpdateApplication()
         {
             UpdateCheckManager updateManager = new UpdateCheckManager(this);
-            Task updateTask = updateManager.CheckForUpdatesAsync();
+            Task updateTask = new Task(updateManager.CheckForUpdates);
+            updateTask.Start();
         }
         #endregion
 

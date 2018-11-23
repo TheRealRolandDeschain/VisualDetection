@@ -26,23 +26,25 @@ namespace VisualDetection.Util
         /// Checks for available Updates and reports back to the user
         /// </summary>
         /// <returns></returns>
-        public async Task CheckForUpdatesAsync()
+        public void CheckForUpdates()
         {
             using (var mgr = UpdateManager.GitHubUpdateManager(GenDefString.RepositoryLink))
             {
                 try
                 {
-                    var IsUpdateAvailable = await Task.Run(() => mgr.Result.CheckForUpdate().Result);
-                    if (IsUpdateAvailable.CurrentlyInstalledVersion.SHA1 != IsUpdateAvailable.FutureReleaseEntry.SHA1)
-                    {
-                        await mgr.Result.UpdateApp();
-                        UpdateManager.RestartApp();
-                    }
-                    updaterMessage = GenDefString.NewUpdateFound;
-                    dispatcher.Invoke(() => SetUpdaterMessage(), DispatcherPriority.Normal);
+                    mgr.Result.UpdateApp();
+                    //var IsUpdateAvailable = mgr.Result.CheckForUpdate().Result;
+                    //if (IsUpdateAvailable.CurrentlyInstalledVersion.SHA1 != IsUpdateAvailable.FutureReleaseEntry.SHA1)
+                    //{
+                    //    mgr.Result.UpdateApp();
+                    //    UpdateManager.RestartApp();
+                    //}
+                    //updaterMessage = GenDefString.NewUpdateFound;
+                    //dispatcher.Invoke(() => SetUpdaterMessage(), DispatcherPriority.Normal);
                 }
-                catch
+                catch(Exception e)
                 {
+                    var asdf = e;
                     updaterMessage = GenDefString.UpdateFailed;
                     dispatcher.Invoke(() => SetUpdaterMessage(), DispatcherPriority.Normal);
                 }
