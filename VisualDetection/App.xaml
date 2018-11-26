@@ -324,6 +324,7 @@
                 <Setter Property="TextAlignment" Value="Left" />
                 <Setter Property="VerticalContentAlignment" Value="Center" />
                 <Setter Property="Padding" Value="5,0"/>
+                <Setter Property="CaretBrush" Value="White"/>
             </Style>
 
             <!-- Checkboxes -->

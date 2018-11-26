@@ -7,6 +7,7 @@ namespace VisualDetection.Util
     {
         //Github Repository Link
         public const string RepositoryLink = @"https://github.com/TheRealRolandDeschain/VisualDetection";
+        public const string LocalTempFolder = @"C:\temp\";
 
         public const string StartCaptureButtonString = "Start Capture";
         public const string StopCaptureButtonString = "Stop Capture";
@@ -27,10 +28,13 @@ namespace VisualDetection.Util
         public const string CallWindowsStandardFunctionTitle = "Call Windows Standard Function...";
 
         //Updates
-        public const string CheckingForUpdates = "checking for updates...";
+        public const string CheckingForUpdates = "Checking for updates...";
         public const string UpdateFailed = "Checking for updates failed!";
-        public const string NewUpdateFound = "Found and installed new update. Do you want to restart to apply?";
-        public const string AlreadyUpToDate = "you are running the latest version!";
+        public const string NewUpdateFound = "Found and installed new update. \nA restart of the application is needed to apply updated version. ";
+        public const string AlreadyUpToDate = "Currently running the latest version. ";
+
+        //Keypress sequence default
+        public const string KeyPressSequenceDefault = "Enter your key sequence here...";
     }
 
     public static class GenDefInt

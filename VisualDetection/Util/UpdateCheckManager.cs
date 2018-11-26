@@ -1,58 +1,32 @@
 ﻿using Squirrel;
 using System;
 using System.Threading.Tasks;
-using System.Windows.Threading;
-using VisualDetection.ViewModel;
 
 namespace VisualDetection.Util
 {
-    public class UpdateCheckManager
+    public static class UpdateCheckManager
     {
-        #region Constructor
-        public UpdateCheckManager(OutputViewModel outputIn)
-        {
-            outputvm = outputIn;
-        }
-        #endregion
-
-        #region Private Properties
-        private Dispatcher dispatcher = Dispatcher.CurrentDispatcher;
-        private OutputViewModel outputvm;
-        private string updaterMessage;
-        #endregion
-
         #region Public Methods
-        /// <summary>
-        /// Checks for available Updates and reports back to the user
-        /// </summary>
-        /// <returns></returns>
-        public void CheckForUpdates()
+        public static async Task CheckForUpdates(IProgress<string> progressReport)
         {
-            using (var mgr = UpdateManager.GitHubUpdateManager(GenDefString.RepositoryLink))
-            {
-                try
-                {
-                    mgr.Result.UpdateApp();
-                    updaterMessage = GenDefString.NewUpdateFound;
-                    dispatcher.Invoke(() => SetUpdaterMessage(), DispatcherPriority.Normal);
-                }
-                catch(Exception e)
-                {
-                    var asdf = e;
-                    updaterMessage = GenDefString.UpdateFailed;
-                    dispatcher.Invoke(() => SetUpdaterMessage(), DispatcherPriority.Normal);
-                }
-            }
-        }
-        #endregion
+            //wait for 2 sekonds, so GUI shows up and works.
+            progressReport.Report(GenDefString.CheckingForUpdates);
+            await Task.Delay(2000);
+            progressReport.Report("Updating not yet implemented. ");
 
-        #region Private Methods
-        /// <summary>
-        /// Sets the message output for the updater status
-        /// </summary>
-        private void SetUpdaterMessage()
-        {
-            outputvm.UpdateMessage = updaterMessage;
+            //using (var mgr = UpdateManager.GitHubUpdateManager(GenDefString.RepositoryLink))
+            //{
+            //    progressReport.Report(GenDefString.CheckingForUpdates);
+            //    try
+            //    {
+            //        var updateinfo = await mgr.Result.CheckForUpdate();
+            //        Console.WriteLine("done");
+            //    }
+            //    catch(Exception e)
+            //    {
+            //        System.Windows.MessageBox.Show(e.Message);
+            //    }
+            //}
         }
         #endregion
     }

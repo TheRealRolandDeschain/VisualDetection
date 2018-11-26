@@ -24,9 +24,6 @@
                 <views:OpenSoftwareOptionsview/>
             </DataTemplate>
 
-            <DataTemplate DataType="{x:Type local:CallWindowsStandardFunctionsOptionsViewModel}">
-                <views:CallWindowsStandardFunctionsOptionsView/>
-            </DataTemplate>
         </ResourceDictionary>
     </UserControl.Resources>
 

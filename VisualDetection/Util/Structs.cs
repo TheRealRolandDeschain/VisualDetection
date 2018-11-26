@@ -1,0 +1,54 @@
+﻿using System;
+using System.Runtime.InteropServices;
+
+namespace VisualDetection.Util
+{
+    [StructLayout(LayoutKind.Sequential)]
+    public struct MOUSEINPUT
+    {
+        public int dx;
+        public int dy;
+        public uint mouseData;
+        public uint dwFlags;
+        public uint time;
+        public IntPtr dwExtraInfo;
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    public struct KEYBOARDINPUT
+    {
+        public ushort wVk;
+        public ushort wScan;
+        public uint dwFlags;
+        public uint time;
+        public IntPtr dwExtraInfo;
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    public struct HARDWAREINPUT
+    {
+        public int uMsg;
+        public short wParamL;
+        public short wParamH;
+    }
+
+    [StructLayout(LayoutKind.Explicit)]
+    public struct MOUSEANDKEYBOARDINPUT
+    {
+        [FieldOffset(0)]
+        public MOUSEINPUT mi;
+
+        [FieldOffset(0)]
+        public KEYBOARDINPUT ki;
+
+        [FieldOffset(0)]
+        public HARDWAREINPUT hi;
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    public struct INPUT
+    {
+        public SendInputEventType type;
+        public MOUSEANDKEYBOARDINPUT mkhi;
+    }
+}

@@ -119,7 +119,6 @@ namespace VisualDetection.ViewModel
                 new SimulateMouseButtonsOptionsViewModel(),
                 new SimulateKeyPressSequenceOptionsViewModel(),
                 new OpenSoftwareOptionsViewModel(),
-                new CallWindowsStandardFunctionsOptionsViewModel(),
             };
             AvailableOptionsListSelectedIndex = GenDefInt.DefaultOutpuOptionSelectedIndex;
             TriggerAngle = GenDefInt.DefaultTriggerAngle;

@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:VisualDetection.ViewModel"
              xmlns:controls="clr-namespace:VisualDetection.View"
+             xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
 
@@ -16,6 +17,12 @@
     
     <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
         <Grid DataContext="{StaticResource vm}">
+
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="Loaded" >
+                    <i:InvokeCommandAction Command="{Binding OutputViewLoaded}" />
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
 
             <Grid.RowDefinitions>
                 <RowDefinition Height="50"/>
@@ -46,9 +53,9 @@
                     <Label Content="Right Trigger activated" Style="{StaticResource OptionsTitleLabel}" VerticalAlignment="Center"/>
                 </StackPanel>
             </StackPanel>
-            <StackPanel Grid.Column="2" Grid.Row="0" Margin="10, 0">
+            <StackPanel Grid.Column="2" Grid.Row="0" Grid.RowSpan="2" Margin="10, 0">
                 <Label Content="Application Updater:" Style="{StaticResource OptionsTitleLabel}"/>
-                <TextBox Text="{Binding UpdateMessage}" TextWrapping="NoWrap" IsEnabled="False"/>
+                <TextBox Text="{Binding UpdateMessage}" TextWrapping="NoWrap" IsEnabled="False" />
             </StackPanel>
             <StackPanel Grid.Column="1" Grid.Row="0" Margin="10, 0">
                 <Label Content="Calculated Angle: " Style="{StaticResource OptionsTitleLabel}"/>

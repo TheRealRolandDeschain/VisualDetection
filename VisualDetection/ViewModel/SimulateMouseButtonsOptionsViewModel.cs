@@ -209,6 +209,7 @@ namespace VisualDetection.ViewModel
                     mouse.StopMouseWheel();
                     return;
                 }
+                else return;
             }
 
             switch (MouseWheelOptions)

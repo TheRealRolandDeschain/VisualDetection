@@ -69,6 +69,27 @@
     <Reference Include="Emgu.CV.World, Version=3.4.1.2976, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\EMGU.CV.3.4.1.2976\lib\net35\Emgu.CV.World.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Expression.Controls, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.SDK.Expression.Blend.1.0.0\lib\net45\Microsoft.Expression.Controls.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Expression.Drawing, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.SDK.Expression.Blend.1.0.0\lib\net45\Microsoft.Expression.Drawing.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Expression.Effects, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.SDK.Expression.Blend.1.0.0\lib\net45\Microsoft.Expression.Effects.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Expression.Interactions, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.SDK.Expression.Blend.1.0.0\lib\net45\Microsoft.Expression.Interactions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Expression.Prototyping.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.SDK.Expression.Blend.1.0.0\lib\net45\Microsoft.Expression.Prototyping.Interactivity.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Expression.Prototyping.SketchControls, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.SDK.Expression.Blend.1.0.0\lib\net45\Microsoft.Expression.Prototyping.SketchControls.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.SDK.Expression.Blend, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.SDK.Expression.Blend.1.0.0\lib\net45\Microsoft.SDK.Expression.Blend.dll</HintPath>
+    </Reference>
     <Reference Include="Mono.Cecil, Version=0.10.1.0, Culture=neutral, PublicKeyToken=50cebf1cceb9d05e, processorArchitecture=MSIL">
       <HintPath>..\packages\Mono.Cecil.0.10.1\lib\net40\Mono.Cecil.dll</HintPath>
     </Reference>
@@ -103,6 +124,9 @@
     <Reference Include="System.Management" />
     <Reference Include="System.ServiceModel" />
     <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.SDK.Expression.Blend.1.0.0\lib\net45\System.Windows.Interactivity.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -146,14 +170,15 @@
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Interfaces\IOutputOption.cs" />
     <Compile Include="Model\CameraModel.cs" />
+    <Compile Include="Model\SimulatedKeyPressModel.cs" />
     <Compile Include="Model\SimulatedMouseModel.cs" />
     <Compile Include="Util\EnumMatchToBooleanConverter.cs" />
     <Compile Include="Util\Enums.cs" />
     <Compile Include="Util\GeneralDefines.cs" />
     <Compile Include="Util\MiscMethods.cs" />
     <Compile Include="Util\RelayCommand.cs" />
+    <Compile Include="Util\Structs.cs" />
     <Compile Include="Util\UpdateCheckManager.cs" />
-    <Compile Include="ViewModel\CallWindowsStandardFunctionsOptionsViewModel.cs" />
     <Compile Include="ViewModel\CameraViewModel.cs" />
     <Compile Include="ViewModel\CascadeDetectorOptionsViewModel.cs" />
     <Compile Include="ViewModel\GeneralOptionsViewModel.cs" />
@@ -164,9 +189,6 @@
     <Compile Include="ViewModel\SimulateKeyPressSequenceOptionsViewModel.cs" />
     <Compile Include="ViewModel\SimulateMouseButtonsOptionsViewModel.cs" />
     <Compile Include="ViewModel\ViewModelBase.cs" />
-    <Compile Include="View\CallWindowsStandardFunctionsOptionsView.xaml.cs">
-      <DependentUpon>CallWindowsStandardFunctionsOptionsView.xaml</DependentUpon>
-    </Compile>
     <Compile Include="View\OpenSoftwareOptionsview.xaml.cs">
       <DependentUpon>OpenSoftwareOptionsview.xaml</DependentUpon>
     </Compile>
@@ -182,10 +204,6 @@
     <Compile Include="View\SimulateMouseButtonsOptionsView.xaml.cs">
       <DependentUpon>SimulateMouseButtonsOptionsView.xaml</DependentUpon>
     </Compile>
-    <Page Include="View\CallWindowsStandardFunctionsOptionsView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="View\CameraView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Input;
 using System.Windows.Media;
 using VisualDetection.Model;
 using VisualDetection.Util;
@@ -22,7 +24,6 @@ namespace VisualDetection.ViewModel
             cm.Output = this;
             SetDefaultOutputValues();
             cm.OutputOptions.HandleTriggerStatusEventSubscribers();
-            UpdateApplication();
         }
         #endregion
 
@@ -39,9 +40,20 @@ namespace VisualDetection.ViewModel
         private Brush rightTriggerActiveIndicator;
         private CameraModel cm = CameraModel.Instance;
         private string updateMessage;
+        private RelayCommand outputViewLoaded;
         #endregion
 
         #region Public Properties
+        /// <summary>
+        /// The output view was loaded
+        /// </summary>
+        public ICommand OutputViewLoaded
+        {
+            get
+            {
+                return outputViewLoaded ?? (outputViewLoaded = new RelayCommand(async command => await CheckUpdates().ConfigureAwait(false)));
+            }
+        }
 
         /// <summary>
         /// The angle between the eyes showing the tilt of the head
@@ -260,14 +272,22 @@ namespace VisualDetection.ViewModel
             }
         }
 
-        /// <summary>
-        /// Handles checking for Updates and UpdaterMessage
-        /// </summary>
-        private void UpdateApplication()
+        private async Task CheckUpdates()
         {
-            UpdateCheckManager updateManager = new UpdateCheckManager(this);
-            Task updateTask = new Task(updateManager.CheckForUpdates);
-            updateTask.Start();
+            Progress<string> updateProgressReport = new Progress<string>();
+            updateProgressReport.ProgressChanged += ReportUpdateProgress;
+            await UpdateCheckManager.CheckForUpdates(updateProgressReport);
+        }
+
+
+        /// <summary>
+        /// Method for update report changed
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ReportUpdateProgress(object sender, string e)
+        {
+            UpdateMessage = e;
         }
         #endregion
 
@@ -287,7 +307,7 @@ namespace VisualDetection.ViewModel
             FaceDetected = false;
             LeftTriggerActive = false;
             RightTriggerActive = false;
-            UpdateMessage = GenDefString.CheckingForUpdates;
+            UpdateMessage = GenDefString.AlreadyUpToDate;
         }
 
         /// <summary>
@@ -313,6 +333,9 @@ namespace VisualDetection.ViewModel
         #endregion
 
         #region Protected Methods
+        /// <summary>
+        /// TriggerStatus has changed
+        /// </summary>
         protected virtual void OnTriggerStatusChanged()
         {
             TriggerStatusChanged?.Invoke(this, EventArgs.Empty);
