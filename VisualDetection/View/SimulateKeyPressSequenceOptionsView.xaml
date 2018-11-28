@@ -18,38 +18,76 @@
             </Grid.RowDefinitions>
 
             <Label Grid.Row="0" Content="Options for Simulating Key Press Sequence: " Style="{StaticResource OutputOptionsTitleLabel}"/>
-            <StackPanel Grid.Row="1" Margin="5" >
-                <Label Content="Select Sequence for right side: " Style="{StaticResource OptionsTitleLabel}"/>
-                <TextBox Text="{Binding RightSideSequence, Mode=OneWay}" TextWrapping="NoWrap" MinHeight="100" VerticalContentAlignment="Top" CaretBrush="Transparent">
+            <StackPanel Grid.Row="1" Margin="5" Grid.Column="0" Grid.ColumnSpan="2">
+                <Label Content="Select Sequence for Right Side: " Style="{StaticResource OptionsTitleLabel}"/>
+                <TextBox Name="RightSideTextbox" Text="{Binding RightSideSequence, Mode=OneWay}" TextWrapping="NoWrap" MinHeight="100" VerticalContentAlignment="Top" 
+                         CaretBrush="Transparent" IsReadOnly="True" SelectionBrush="Transparent">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="KeyUp">
-                            <ei:CallMethodAction TargetObject="{Binding}" MethodName="RightSideAddKey"/>
+                            <ei:CallMethodAction TargetObject="{Binding}" MethodName="AddKey"/>
                         </i:EventTrigger>
                         <i:EventTrigger EventName="GotFocus">
-                            <i:InvokeCommandAction Command="{Binding RightSideGotFocus}" />
+                            <ei:CallMethodAction TargetObject="{Binding}" MethodName="GotFocusSetup" />
+                        </i:EventTrigger>
+                        <i:EventTrigger EventName="LostFocus">
+                            <ei:CallMethodAction TargetObject="{Binding}" MethodName="TextboxLostFocus" />
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
                 </TextBox>
                 <WrapPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,5">
-                    <Button Content="+" Template="{DynamicResource ButtonBaseControlTemplate1}"/>
-                    <Button Content="&lt;==" Template="{DynamicResource ButtonBaseControlTemplate1}"/>
-                    <Button Content="Clear" Template="{DynamicResource ButtonBaseControlTemplate1}"/>
+                    <WrapPanel.Style>
+                        <Style>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding SetFocusToRightSideTextBox}" Value="True">
+                                    <Setter Property="FocusManager.FocusedElement" Value="{Binding ElementName=RightSideTextbox}"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </WrapPanel.Style>
+                    <Button Content="+" Template="{DynamicResource ButtonBaseControlTemplate1}" Command="{Binding RightSidePlusButtonClicked}"/>
+                    <Button Content="&lt;--" Template="{DynamicResource ButtonBaseControlTemplate1}" Command="{Binding RightSideBackSlashButtonClicked}"/>
+                    <Button Content="Clear" Template="{DynamicResource ButtonBaseControlTemplate1}" Command="{Binding RightSideClearButtonClicked}"/>
                 </WrapPanel>
-                <Label Content="Select Sequence for left side: " Style="{StaticResource OptionsTitleLabel}"/>
-                <TextBox Text="{Binding LeftSideSequence, Mode=OneWay}" TextWrapping="NoWrap" MinHeight="100" VerticalContentAlignment="Top">
+                <Label Content="Select Sequence for Left Side: " Style="{StaticResource OptionsTitleLabel}"/>
+                <TextBox Name="LeftSideTextbox" Text="{Binding LeftSideSequence, Mode=OneWay}" TextWrapping="NoWrap" MinHeight="100" VerticalContentAlignment="Top" 
+                         CaretBrush="Transparent" IsReadOnly="True" SelectionBrush="Transparent">
                     <i:Interaction.Triggers>
-                        <i:EventTrigger EventName="Keyboard.KeyDown" >
-                            <i:InvokeCommandAction Command="{Binding LeftSideKeyDown}" />
+                        <i:EventTrigger EventName="KeyUp">
+                            <ei:CallMethodAction TargetObject="{Binding}" MethodName="AddKey"/>
+                        </i:EventTrigger>
+                        <i:EventTrigger EventName="GotFocus">
+                            <ei:CallMethodAction TargetObject="{Binding}" MethodName="GotFocusSetup" />
+                        </i:EventTrigger>
+                        <i:EventTrigger EventName="LostFocus">
+                            <ei:CallMethodAction TargetObject="{Binding}" MethodName="TextboxLostFocus" />
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
                 </TextBox>
                 <WrapPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,5">
-                    <Button Content="+" Template="{DynamicResource ButtonBaseControlTemplate1}"/>
-                    <Button Content="&lt;==" Template="{DynamicResource ButtonBaseControlTemplate1}"/>
-                    <Button Content="Clear" Template="{DynamicResource ButtonBaseControlTemplate1}"/>
+                    <WrapPanel.Style>
+                        <Style>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding SetFocusToLeftSideTextBox}" Value="True">
+                                    <Setter Property="FocusManager.FocusedElement" Value="{Binding ElementName=LeftSideTextbox}"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </WrapPanel.Style>
+                    <Button Content="+" Template="{DynamicResource ButtonBaseControlTemplate1}" Command="{Binding LeftSidePlusButtonClicked}"/>
+                    <Button Content="&lt;--" Template="{DynamicResource ButtonBaseControlTemplate1}" Command="{Binding LeftSideBackSlashButtonClicked}"/>
+                    <Button Content="Clear" Template="{DynamicResource ButtonBaseControlTemplate1}" Command="{Binding LeftSideClearButtonClicked}"/>
                 </WrapPanel>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Grid.Row="0" Grid.Column="0">
+                        <Label Grid.Row="0" Grid.Column="0" Content="Select CoolDown Time: " Style="{StaticResource OptionsTitleLabel}"/>
+                        <TextBox Name="CoolDownTimer" Grid.Row="0" Grid.Column="0" Text="{Binding CoolDownTimer, UpdateSourceTrigger=PropertyChanged}" TextWrapping="NoWrap"/>
+                    </StackPanel>
+                </Grid>
             </StackPanel>
-
         </Grid>
     </ScrollViewer>
 </UserControl>

@@ -325,6 +325,7 @@
                 <Setter Property="VerticalContentAlignment" Value="Center" />
                 <Setter Property="Padding" Value="5,0"/>
                 <Setter Property="CaretBrush" Value="White"/>
+                <Setter Property="SelectionBrush" Value="#AAFFFFFF"/>
             </Style>
 
             <!-- Checkboxes -->

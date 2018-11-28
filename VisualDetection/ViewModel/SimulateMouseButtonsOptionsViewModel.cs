@@ -15,9 +15,9 @@ namespace VisualDetection.ViewModel
         #endregion
 
         #region Private Properties
-        private int buttonPressTime;
-        private int coolDownTime;
-        private int mouseWheelSpeedTime;
+        private uint buttonPressTime;
+        private uint coolDownTime;
+        private uint mouseWheelSpeedTime;
         private int mouseWheelIndent;
         private bool useAsToggleSwitchEnabled;
         private MouseButtonsimulationMajorOptions majorOptionsSelected;
@@ -35,7 +35,7 @@ namespace VisualDetection.ViewModel
         /// <summary>
         /// The time for the simulated button press
         /// </summary>
-        public int ButtonPressTime
+        public uint ButtonPressTime
         {
             get { return buttonPressTime; }
             set
@@ -51,7 +51,7 @@ namespace VisualDetection.ViewModel
         /// <summary>
         /// The amount of ms between two mousewheel actions 
         /// </summary>
-        public int MouseWheelSpeedTime
+        public uint MouseWheelSpeedTime
         {
             get { return mouseWheelSpeedTime; }
             set
@@ -82,7 +82,7 @@ namespace VisualDetection.ViewModel
         /// <summary>
         /// The minimum time between two simulated button press
         /// </summary>
-        public int CoolDownTime
+        public uint CoolDownTime
         {
             get { return coolDownTime; }
             set

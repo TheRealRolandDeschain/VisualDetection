@@ -14,45 +14,47 @@
         </ResourceDictionary>
     </UserControl.Resources>
 
-    <Grid DataContext="{StaticResource vm}">
+    <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+        <Grid DataContext="{StaticResource vm}">
 
-        <Grid.RowDefinitions>
-            <RowDefinition Height="50"/>
-            <RowDefinition Height="50"/>
-            <RowDefinition Height="50"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="50"/>
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
-        </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="50"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
 
-        <StackPanel Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="1" Grid.RowSpan="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="10, 0">
-            <Label Content="Select Camera" Style="{StaticResource OptionsTitleLabel}"/>
-            <ComboBox Name="SelectCameraCombobox" ItemsSource="{Binding AvailableCameras}" DisplayMemberPath="Name" SelectedIndex="{Binding SelectedCameraIndex}"/>
-        </StackPanel>
-        <StackPanel Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="1" Grid.RowSpan="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="10, 0">
-            <Label Content="Select Detector Type" Style="{StaticResource OptionsTitleLabel}"/>
-            <ComboBox Name="SelectDetectorype" ItemsSource="{Binding DetectorTypeList}" SelectedIndex="{Binding SelectedDetectorTypeIndex}"/>
-        </StackPanel>
-        <StackPanel Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="1" Grid.RowSpan="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="10, 0">
-            <Label Content="Idle [ms] after Frame Calculation" Style="{StaticResource OptionsTitleLabel}"/>
-            <TextBox Text="{Binding IdleAfterFrameCalculationMS, UpdateSourceTrigger=PropertyChanged}" TextWrapping="NoWrap"/>
-        </StackPanel>
-        <StackPanel Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="1" Grid.RowSpan="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="10, 0">
-            <Label Content="Detected Feature Colors:" Style="{StaticResource OptionsTitleLabel}"/>
-            <DockPanel FlowDirection="LeftToRight" HorizontalAlignment="Left" VerticalAlignment="Stretch">
-                <Label Content="Face:" Style="{StaticResource OptionsTitleLabel}" FontSize="12" Margin="5,0"/>
-                <xctk:PropertyGridEditorColorPicker Background="Transparent" Name="face" Margin="5,0" Width="50" BorderBrush="#32FFFFFF" BorderThickness="1" SelectedColor="{Binding FaceRectColor, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                <Label Content="Eyes:" Style="{StaticResource OptionsTitleLabel}" FontSize="12" Margin="5,0"/>
-                <xctk:PropertyGridEditorColorPicker Background="Transparent" Name="eye" Margin="5,0" Width="50" BorderBrush="#32FFFFFF" BorderThickness="1" SelectedColor="{Binding EyesRectColor, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-            </DockPanel>
-        </StackPanel>
-        <StackPanel Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="1" Grid.RowSpan="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="10, 0">
-            <Label Content="Equalization of Grayscale Image Histogramm: " Style="{StaticResource OptionsTitleLabel}"/>
-            <CheckBox Content="Equalize Histogramm" IsChecked="{Binding UseEqualizeHist}"/>
-        </StackPanel>
-    </Grid>
+            <StackPanel Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="1" Grid.RowSpan="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="10, 0">
+                <Label Content="Select Camera" Style="{StaticResource OptionsTitleLabel}"/>
+                <ComboBox Name="SelectCameraCombobox" ItemsSource="{Binding AvailableCameras}" DisplayMemberPath="Name" SelectedIndex="{Binding SelectedCameraIndex}"/>
+            </StackPanel>
+            <StackPanel Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="1" Grid.RowSpan="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="10, 0">
+                <Label Content="Select Detector Type" Style="{StaticResource OptionsTitleLabel}"/>
+                <ComboBox Name="SelectDetectorype" ItemsSource="{Binding DetectorTypeList}" SelectedIndex="{Binding SelectedDetectorTypeIndex}"/>
+            </StackPanel>
+            <StackPanel Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="1" Grid.RowSpan="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="10, 0">
+                <Label Content="Idle [ms] after Frame Calculation" Style="{StaticResource OptionsTitleLabel}"/>
+                <TextBox Text="{Binding IdleAfterFrameCalculationMS, UpdateSourceTrigger=PropertyChanged}" TextWrapping="NoWrap"/>
+            </StackPanel>
+            <StackPanel Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="1" Grid.RowSpan="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="10, 0">
+                <Label Content="Detected Feature Colors:" Style="{StaticResource OptionsTitleLabel}"/>
+                <DockPanel FlowDirection="LeftToRight" HorizontalAlignment="Left" VerticalAlignment="Stretch">
+                    <Label Content="Face:" Style="{StaticResource OptionsTitleLabel}" FontSize="12" Margin="5,0"/>
+                    <xctk:PropertyGridEditorColorPicker Background="Transparent" Name="face" Margin="5,0" Width="50" BorderBrush="#32FFFFFF" BorderThickness="1" SelectedColor="{Binding FaceRectColor, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                    <Label Content="Eyes:" Style="{StaticResource OptionsTitleLabel}" FontSize="12" Margin="5,0"/>
+                    <xctk:PropertyGridEditorColorPicker Background="Transparent" Name="eye" Margin="5,0" Width="50" BorderBrush="#32FFFFFF" BorderThickness="1" SelectedColor="{Binding EyesRectColor, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                </DockPanel>
+            </StackPanel>
+            <StackPanel Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="1" Grid.RowSpan="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="10, 0">
+                <Label Content="Equalization of Grayscale Image Histogramm: " Style="{StaticResource OptionsTitleLabel}"/>
+                <CheckBox Content="Equalize Histogramm" IsChecked="{Binding UseEqualizeHist}"/>
+            </StackPanel>
+        </Grid>
+    </ScrollViewer>
 </UserControl>

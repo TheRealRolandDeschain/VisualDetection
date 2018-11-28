@@ -56,8 +56,7 @@ namespace VisualDetection.Model
         public bool RightButtonPressed { get; set; } = false;
         public bool LeftButtonPressed { get; set; } = false;
         public bool MiddleMouseButtonPressed { get; set; } = false;
-        public int CoolDownTime { get; set; }
-
+        public uint CoolDownTime { get; set; }
         #endregion
 
         #region Private Methods
