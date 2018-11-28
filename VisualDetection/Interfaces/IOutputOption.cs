@@ -10,6 +10,6 @@ namespace VisualDetection.Interfaces
     {
         string OptionTitle { get; }
 
-        void OnTriggerOnTriggerStatusChanged(object source, EventArgs e);
+        void OnTriggerStatusChanged(object source, EventArgs e);
     }
 }

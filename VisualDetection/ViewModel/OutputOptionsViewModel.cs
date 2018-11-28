@@ -138,11 +138,11 @@ namespace VisualDetection.ViewModel
             {
                 if (i == AvailableOptionsListSelectedIndex)
                 {
-                    CameraModel.Instance.Output.TriggerStatusChanged += AvailableOptionsList[i].OnTriggerOnTriggerStatusChanged;
+                    CameraModel.Instance.Output.TriggerStatusChanged += AvailableOptionsList[i].OnTriggerStatusChanged;
                 }
                 else
                 {
-                    CameraModel.Instance.Output.TriggerStatusChanged -= AvailableOptionsList[i].OnTriggerOnTriggerStatusChanged;
+                    CameraModel.Instance.Output.TriggerStatusChanged -= AvailableOptionsList[i].OnTriggerStatusChanged;
                 }
             }
         }

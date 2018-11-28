@@ -230,7 +230,7 @@ namespace VisualDetection.ViewModel
         /// </summary>
         /// <param name="source"></param>
         /// <param name="e"></param>
-        public void OnTriggerOnTriggerStatusChanged(object source, EventArgs e)
+        public void OnTriggerStatusChanged(object source, EventArgs e)
         {
             var triggers = (source as OutputViewModel);
             switch (MajorOptionsSelected)

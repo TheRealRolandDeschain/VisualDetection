@@ -5,6 +5,7 @@ using VisualDetection.Model;
 using System.Windows.Input;
 using System.Collections.Generic;
 using System.Windows.Controls;
+using System.Diagnostics;
 
 namespace VisualDetection.ViewModel
 {
@@ -33,6 +34,8 @@ namespace VisualDetection.ViewModel
         private uint coolDownTimer;
         private List<string> rightSequenceKeyList;
         private List<string> leftSequenceKeyList;
+        private Stopwatch coolDownTimerRight;
+        private Stopwatch coolDownTimerLeft;
         #endregion
 
         #region Public Properties
@@ -201,6 +204,8 @@ namespace VisualDetection.ViewModel
             rightSequenceKeyList = new List<string>();
             leftSequenceKeyList = new List<string>();
             CoolDownTimer = GenDefInt.DefaultCoolDownTime;
+            coolDownTimerLeft = new Stopwatch();
+            coolDownTimerRight = new Stopwatch();
         }
 
         /// <summary>
@@ -321,6 +326,19 @@ namespace VisualDetection.ViewModel
                 SetFocusToLeftSideTextBox = true;
             }
         }
+
+        /// <summary>
+        /// Handles the simulation of a given key sequence
+        /// </summary>
+        /// <param name="keylist"></param>
+        private void HandleKeySequenceSimulation(List<string> keylist)
+        {
+            foreach (string key in keylist)
+            {
+                var subkeys = SimulatedKeyPressModel.GetKeyCodeFromString(key);
+                SimulatedKeyPressModel.KeyPress(subkeys);
+            }
+        }
         #endregion
 
         #region Public Methods
@@ -407,9 +425,21 @@ namespace VisualDetection.ViewModel
         /// </summary>
         /// <param name="source"></param>
         /// <param name="e"></param>
-        public void OnTriggerOnTriggerStatusChanged(object source, EventArgs e)
+        public void OnTriggerStatusChanged(object source, EventArgs e)
         {
-
+            var triggers = (source as OutputViewModel);
+            if(triggers.RightTriggerActive)
+            {
+                if (coolDownTimerRight.IsRunning && coolDownTimerRight.ElapsedMilliseconds < CoolDownTimer) return;
+                HandleKeySequenceSimulation(rightSequenceKeyList);
+                coolDownTimerRight.Restart();
+            }
+            else if (triggers.LeftTriggerActive)
+            {
+                if (coolDownTimerLeft.IsRunning && coolDownTimerLeft.ElapsedMilliseconds < CoolDownTimer) return;
+                HandleKeySequenceSimulation(leftSequenceKeyList);
+                coolDownTimerLeft.Restart();
+            }
         }
         #endregion
     }
