@@ -19,8 +19,41 @@
                 <ColumnDefinition Width="2*"/>
             </Grid.ColumnDefinitions>
 
-            <Label Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" Content="'Open External Software' will be implemented soon... " Style="{StaticResource OutputOptionsTitleLabel}"/>
-
+            <Label Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" Content="'Options for opening external software: " Style="{StaticResource OutputOptionsTitleLabel}"/>
+            <StackPanel Grid.Row="1" Margin="5" Grid.Column="0" Grid.ColumnSpan="2">
+                <DataGrid MinHeight="100" ItemsSource="{Binding ListOfProcesses}" SelectedIndex="{Binding IndexOfSelectedProcess}" AutoGenerateColumns="False" BorderBrush="White" BorderThickness="1" Background="Transparent">
+                    <DataGrid.Columns>
+                        <DataGridTemplateColumn Header="Left">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <CheckBox IsChecked="{Binding IsTriggeredLefts, UpdateSourceTrigger=PropertyChanged}" />
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                        <DataGridTemplateColumn Header="Rigth">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <CheckBox IsChecked="{Binding IsTriggeredRight, UpdateSourceTrigger=PropertyChanged}" />
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                        <DataGridTemplateColumn Header="Open/Close">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <CheckBox IsChecked="{Binding IsTriggeredOpenClose, UpdateSourceTrigger=PropertyChanged}" />
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                        <DataGridTextColumn Header="Name" Binding="{Binding ProcessName}" />
+                        <DataGridTextColumn Header="Running" Binding="{Binding NrOfInstancesRunning}"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+                <WrapPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,5">
+                    <Button Content="Add" Template="{DynamicResource ButtonBaseControlTemplate1}" Command="{Binding AddProcess}"/>
+                    <Button Content="Delete" Template="{DynamicResource ButtonBaseControlTemplate1}" Command="{Binding RightSideBackSlashButtonClicked}"/>
+                    <Button Content="Clear" Template="{DynamicResource ButtonBaseControlTemplate1}" Command="{Binding RightSideClearButtonClicked}"/>
+                </WrapPanel>
+            </StackPanel>
         </Grid>
     </ScrollViewer>
 </UserControl>
