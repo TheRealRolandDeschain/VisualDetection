@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Windows;
+using VisualDetection.Util;
 using VisualDetection.ViewModel;
 
 namespace VisualDetection.Model
@@ -16,16 +16,16 @@ namespace VisualDetection.Model
         public ProcessModel(string path)
         {
             ProcessName = Path.GetFileNameWithoutExtension(path);
-            processPath = path;
+            processExtension = Path.GetExtension(path);
+            ProcessPath = path;
             instances = new List<Process>();
-            NrOfInstancesRunning = 3;
         }
         #endregion
 
         #region Private Properties
         private string processName;
-        private uint nrOfInstancesRunning;
-        private string processPath;
+        private string processExtension;
+        private int nrOfInstancesRunning;
         private List<Process> instances;
         private bool isTriggeredLeft;
         private bool isTriggeredRight;
@@ -33,6 +33,11 @@ namespace VisualDetection.Model
         #endregion
 
         #region Public Properties
+        /// <summary>
+        /// The path of the process
+        /// </summary>
+        public string ProcessPath { get; set; }
+
         /// <summary>
         /// The name of this Process
         /// </summary>
@@ -52,7 +57,7 @@ namespace VisualDetection.Model
         /// The number of instances of the current process
         /// that are running
         /// </summary>
-        public uint NrOfInstancesRunning
+        public int NrOfInstancesRunning
         {
             get { return nrOfInstancesRunning; }
             set
@@ -75,6 +80,7 @@ namespace VisualDetection.Model
             {
                 if (isTriggeredLeft != value)
                 {
+                    IsTriggeredOpenClose = false;
                     SetProperty(ref isTriggeredLeft, value);
                 }
             }
@@ -91,6 +97,7 @@ namespace VisualDetection.Model
             {
                 if (isTriggeredRight != value)
                 {
+                    IsTriggeredOpenClose = false;
                     SetProperty(ref isTriggeredRight, value);
                 }
             }
@@ -108,6 +115,8 @@ namespace VisualDetection.Model
             {
                 if (isTriggeredOpenClose != value)
                 {
+                    IsTriggeredLeft = false;
+                    IsTriggeredRight = false;
                     SetProperty(ref isTriggeredOpenClose, value);
                 }
             }
@@ -115,9 +124,79 @@ namespace VisualDetection.Model
         #endregion
 
         #region Private Methods
+        /// <summary>
+        /// Sets the value for the number of instances (used for GUI update)
+        /// </summary>
+        private void UpdateNrOfInstances()
+        {
+            NrOfInstancesRunning = instances.Count;
+        }
         #endregion
 
         #region Public Methods
+        /// <summary>
+        /// Starts a new instance of the current process
+        /// </summary>
+        public void StartNewInstance()
+        {
+            try
+            {
+                Process newInstance;
+                if (processExtension == GenDefString.ExecutableExtension)
+                {
+                    newInstance = new Process();
+                    newInstance.StartInfo.UseShellExecute = false;
+                    newInstance.StartInfo.FileName = ProcessPath;
+                    newInstance.Start();
+                }
+                else
+                {
+                    newInstance = Process.Start(ProcessPath);
+                }
+                newInstance.EnableRaisingEvents = true;
+                newInstance.Exited += OnProcessExited;
+                instances.Add(newInstance);
+                UpdateNrOfInstances();
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.Message);
+            }
+        }
+
+        /// <summary>
+        /// stops the last instance int he list
+        /// </summary>
+        public void StopLastInstance()
+        {
+            if (instances.Count < 1) return;
+            try
+            {
+                var instanceToDelete = instances.Last();
+                instanceToDelete.Exited -= OnProcessExited;
+                instanceToDelete.CloseMainWindow();
+                instanceToDelete.Close();
+                instances.RemoveAt(instances.Count - 1);
+                UpdateNrOfInstances();
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.Message);
+            }
+        }
+
+        /// <summary>
+        /// Trigger Status changed Event was raised
+        /// </summary>
+        /// <param name="source"></param>
+        /// <param name="e"></param>
+        public void OnProcessExited(object source, EventArgs e)
+        {
+            var process = source as Process;
+            if (process == null) return;
+            instances.Remove(process);
+            UpdateNrOfInstances();
+        }
         #endregion
     }
 }

@@ -286,6 +286,7 @@ namespace VisualDetection.ViewModel
             OpenFileDialog ofd = new OpenFileDialog
             {
                 Title = GenDefString.HaarCascadeOfdTitle,
+                InitialDirectory = Directory.GetCurrentDirectory(),
                 DefaultExt = GenDefString.HaarCascadeOfdDefaultExt,
                 Filter = GenDefString.HaarCascadeOfdFilter,
                 Multiselect = false
@@ -316,6 +317,7 @@ namespace VisualDetection.ViewModel
             OpenFileDialog ofd = new OpenFileDialog
             {
                 Title = GenDefString.HaarCascadeOfdTitle,
+                InitialDirectory = Directory.GetCurrentDirectory(),
                 DefaultExt = GenDefString.HaarCascadeOfdDefaultExt,
                 Filter = GenDefString.HaarCascadeOfdFilter,
                 Multiselect = false

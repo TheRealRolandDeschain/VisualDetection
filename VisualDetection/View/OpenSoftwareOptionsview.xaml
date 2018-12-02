@@ -19,40 +19,66 @@
                 <ColumnDefinition Width="2*"/>
             </Grid.ColumnDefinitions>
 
-            <Label Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" Content="'Options for opening external software: " Style="{StaticResource OutputOptionsTitleLabel}"/>
+            <Label Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" Content="Options for opening external software: " Style="{StaticResource OutputOptionsTitleLabel}"/>
             <StackPanel Grid.Row="1" Margin="5" Grid.Column="0" Grid.ColumnSpan="2">
-                <DataGrid MinHeight="100" ItemsSource="{Binding ListOfProcesses}" SelectedIndex="{Binding IndexOfSelectedProcess}" AutoGenerateColumns="False" BorderBrush="White" BorderThickness="1" Background="Transparent">
-                    <DataGrid.Columns>
-                        <DataGridTemplateColumn Header="Left">
-                            <DataGridTemplateColumn.CellTemplate>
-                                <DataTemplate>
-                                    <CheckBox IsChecked="{Binding IsTriggeredLefts, UpdateSourceTrigger=PropertyChanged}" />
-                                </DataTemplate>
-                            </DataGridTemplateColumn.CellTemplate>
-                        </DataGridTemplateColumn>
-                        <DataGridTemplateColumn Header="Rigth">
-                            <DataGridTemplateColumn.CellTemplate>
-                                <DataTemplate>
-                                    <CheckBox IsChecked="{Binding IsTriggeredRight, UpdateSourceTrigger=PropertyChanged}" />
-                                </DataTemplate>
-                            </DataGridTemplateColumn.CellTemplate>
-                        </DataGridTemplateColumn>
-                        <DataGridTemplateColumn Header="Open/Close">
-                            <DataGridTemplateColumn.CellTemplate>
-                                <DataTemplate>
-                                    <CheckBox IsChecked="{Binding IsTriggeredOpenClose, UpdateSourceTrigger=PropertyChanged}" />
-                                </DataTemplate>
-                            </DataGridTemplateColumn.CellTemplate>
-                        </DataGridTemplateColumn>
-                        <DataGridTextColumn Header="Name" Binding="{Binding ProcessName}" />
-                        <DataGridTextColumn Header="Running" Binding="{Binding NrOfInstancesRunning}"/>
-                    </DataGrid.Columns>
-                </DataGrid>
+                <ListView MinHeight="100" MaxHeight="300" ItemsSource="{Binding ListOfProcesses}" SelectedIndex="{Binding IndexOfSelectedProcess}">
+                    <ListView.View>
+                        <GridView>
+                            <GridView.Columns>
+                                <GridViewColumn Header="Left" Width="50">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <CheckBox IsChecked="{Binding IsTriggeredLeft}"/>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                                <GridViewColumn Header="Right" Width="50">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <CheckBox IsChecked="{Binding IsTriggeredRight}"/>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                                <GridViewColumn Header="Open/Close" Width="100">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <CheckBox IsChecked="{Binding IsTriggeredOpenClose}"/>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                                <GridViewColumn Header="Name" Width="200">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <Label Content="{Binding ProcessName}" Style="{StaticResource OptionsTitleLabel}"/>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                                <GridViewColumn Header="Instances" Width="100">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <Label Content="{Binding NrOfInstancesRunning}" Style="{StaticResource OptionsTitleLabel}"/>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                            </GridView.Columns>
+                        </GridView>
+                    </ListView.View>
+                </ListView>
                 <WrapPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,5">
                     <Button Content="Add" Template="{DynamicResource ButtonBaseControlTemplate1}" Command="{Binding AddProcess}"/>
-                    <Button Content="Delete" Template="{DynamicResource ButtonBaseControlTemplate1}" Command="{Binding RightSideBackSlashButtonClicked}"/>
-                    <Button Content="Clear" Template="{DynamicResource ButtonBaseControlTemplate1}" Command="{Binding RightSideClearButtonClicked}"/>
+                    <Button Content="Delete" Template="{DynamicResource ButtonBaseControlTemplate1}" Command="{Binding DeleteProcess}"/>
+                    <Button Content="Clear" Template="{DynamicResource ButtonBaseControlTemplate1}" Command="{Binding ClearAllProcesses}"/>
                 </WrapPanel>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Grid.Row="0" Grid.Column="0">
+                        <Label Grid.Row="0" Grid.Column="0" Content="Select CoolDown Time: " Style="{StaticResource OptionsTitleLabel}"/>
+                        <TextBox Name="CoolDownTimer" Grid.Row="0" Grid.Column="0" Text="{Binding CoolDownTimer, UpdateSourceTrigger=PropertyChanged}" TextWrapping="NoWrap"/>
+                    </StackPanel>
+                </Grid>
             </StackPanel>
         </Grid>
     </ScrollViewer>

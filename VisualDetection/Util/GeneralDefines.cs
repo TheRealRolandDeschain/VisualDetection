@@ -33,8 +33,15 @@ namespace VisualDetection.Util
         public const string NewUpdateFound = "Found and installed new update. \nA restart of the application is needed to apply updated version. ";
         public const string AlreadyUpToDate = "Currently running the latest version. ";
 
-        //Keypress sequence default
+        //Keypress sequence defaults
         public const string KeyPressSequenceDefault = "Enter your key sequence here...";
+
+        //Open external software defaults
+        public const string OpenFileDialogDefaultTitle = "Select a Software. ";
+        public const string OpenFileDialogInitialDirectory = @"C:\Program Files";
+        public const string ProcessAlreadyInList = "The selected file is already in the list! ";
+        public const string UnableToStartThisProcess = "The application is unable to start process: ";
+        public const string ExecutableExtension = ".exe";
     }
 
     public static class GenDefInt
