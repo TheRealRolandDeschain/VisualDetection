@@ -30,8 +30,18 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
-
+            <!-- FACE -->
             <StackPanel Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="1" Grid.RowSpan="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="10, 0">
+                <StackPanel.ToolTip>
+                    <StackPanel>
+                        <TextBlock FontWeight="Bold">Haar Cascade File for Face Detection</TextBlock>
+                        <TextBlock>
+                            Select an appropriate XML-file containing pre-trained haar classifiers for face detection. <LineBreak/>
+                            Such files can easily be found on the internet, the most commonly used can be found in the public OpenCV Github Repository: <LineBreak/>
+                            https://github.com/opencv/opencv/tree/master/data/haarcascadess
+                        </TextBlock>
+                    </StackPanel>
+                </StackPanel.ToolTip>
                 <Label Content="Select Haar Classifier for face detection: " Style="{StaticResource OptionsTitleLabel}"/>
                 <DockPanel FlowDirection="LeftToRight" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                     <Button Content="Load" Command="{Binding LoadHaarCascadeFaceClicked}" Margin="0,0, 10, 0" VerticalAlignment="Stretch" Template="{DynamicResource ButtonBaseControlTemplate1}"/>
@@ -39,23 +49,71 @@
                 </DockPanel>
             </StackPanel>
             <StackPanel Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="1" Grid.RowSpan="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="10, 0">
+                <StackPanel.ToolTip>
+                    <StackPanel>
+                        <TextBlock FontWeight="Bold">Scale Value for Face Detection</TextBlock>
+                        <TextBlock>
+                            Since the trained data in the cascade classifier file are made with fixed sizes, the software creates a scale pyramid and tests each resulting image. <LineBreak/>
+                            For example a value of 1.05 will scale each image in the pyramide by 5% respective to it's previous one. <LineBreak/>
+                            Therefore a value closer to 1 will get better detection results, but costs calculation performance. 
+                        </TextBlock>
+                    </StackPanel>
+                </StackPanel.ToolTip>
                 <Label Content="Select the Scale Value for Face Detection: " Style="{StaticResource OptionsTitleLabel}"/>
                 <TextBox Text="{Binding FaceScale, UpdateSourceTrigger=PropertyChanged}" TextWrapping="NoWrap"/>
             </StackPanel>
             <StackPanel Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="1" Grid.RowSpan="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="10, 0">
+                <StackPanel.ToolTip>
+                    <StackPanel>
+                        <TextBlock FontWeight="Bold">Number of Minimum Neighbours for Face Detection</TextBlock>
+                        <TextBlock>
+                            Parameter specifies how many neighbors each detected candidate rectangle should have to retain it. <LineBreak/>
+                            This parameter will affect the quality of the detected faces. Higher value results in less detections but with higher quality.
+                        </TextBlock>
+                    </StackPanel>
+                </StackPanel.ToolTip>
                 <Label Content="Select the Number of Minimum Neighbours for Face Detection: " Style="{StaticResource OptionsTitleLabel}"/>
                 <TextBox Text="{Binding FaceMinNeigbours, UpdateSourceTrigger=PropertyChanged}" TextWrapping="NoWrap"/>
             </StackPanel>
             <StackPanel Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="1" Grid.RowSpan="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="10, 0">
+                <StackPanel.ToolTip>
+                    <StackPanel>
+                        <TextBlock FontWeight="Bold">Minimum Rectangle Size for Face Detection</TextBlock>
+                        <TextBlock>
+                            This parameter defines the minimum size of detectable faces in the image. <LineBreak/>
+                            Faces smaller than the set size (in pixels x pixels) will be ignored. 
+                        </TextBlock>
+                    </StackPanel>
+                </StackPanel.ToolTip>
                 <Label Content="Select Minimum Rectangle Size for Face Detection: " Style="{StaticResource OptionsTitleLabel}"/>
                 <TextBox Text="{Binding FaceMinSizeValue, UpdateSourceTrigger=PropertyChanged}" TextWrapping="NoWrap" />
             </StackPanel>
             <StackPanel Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="1" Grid.RowSpan="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="10, 0">
+                <StackPanel.ToolTip>
+                    <StackPanel>
+                        <TextBlock FontWeight="Bold">Maximum Rectangle Size for Face Detection</TextBlock>
+                        <TextBlock>
+                            This parameter defines the maximum size of detectable faces in the image. <LineBreak/>
+                            Faces bigger than the set size (in pixels x pixels) will be ignored.
+                        </TextBlock>
+                    </StackPanel>
+                </StackPanel.ToolTip>
                 <Label Content="Select Maximum Rectangle Size for Face Detection: " Style="{StaticResource OptionsTitleLabel}"/>
                 <TextBox Text="{Binding FaceMaxSizeValue, UpdateSourceTrigger=PropertyChanged}" TextWrapping="NoWrap"/>
             </StackPanel>
 
+            <!-- EYE -->
             <StackPanel Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="1" Grid.RowSpan="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="10, 0">
+                <StackPanel.ToolTip>
+                    <StackPanel>
+                        <TextBlock FontWeight="Bold">Haar Cascade File for Face Detection</TextBlock>
+                        <TextBlock>
+                            Select an appropriate XML-file containing pre-trained haar classifiers for face detection. <LineBreak/>
+                            Such files can easily be found on the internet, the most commonly used can be found in the public OpenCV Github Repository: <LineBreak/>
+                            https://github.com/opencv/opencv/tree/master/data/haarcascadess
+                        </TextBlock>
+                    </StackPanel>
+                </StackPanel.ToolTip>
                 <Label Content="Select Haar Classifier for eye detection: " Style="{StaticResource OptionsTitleLabel}"/>
                 <DockPanel FlowDirection="LeftToRight" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                     <Button Content="Load" Command="{Binding LoadHaarCascadeEyeClicked}" Margin="0,0, 10, 0" VerticalAlignment="Stretch" Template="{DynamicResource ButtonBaseControlTemplate1}"/>
@@ -63,18 +121,55 @@
                 </DockPanel>
             </StackPanel>
             <StackPanel Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="1" Grid.RowSpan="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="10, 0">
+                <StackPanel.ToolTip>
+                    <StackPanel>
+                        <TextBlock FontWeight="Bold">Scale Value for Eye Detection</TextBlock>
+                        <TextBlock>
+                            Since the trained data in the cascade classifier file are made with fixed sizes, the software creates a scale pyramid and tests each resulting image. <LineBreak/>
+                            For example a value of 1.05 will scale each image in the pyramide by 5% respective to it's previous one. <LineBreak/>
+                            Therefore a value closer to 1 will get better detection results, but costs calculation performance.
+                        </TextBlock>
+                    </StackPanel>
+                </StackPanel.ToolTip>
                 <Label Content="Select the Scale Value for Eye Detection:  " Style="{StaticResource OptionsTitleLabel}"/>
                 <TextBox Text="{Binding EyesScale, UpdateSourceTrigger=PropertyChanged}" TextWrapping="NoWrap"/>
             </StackPanel>
             <StackPanel Grid.Column="1" Grid.Row="2" Grid.ColumnSpan="1" Grid.RowSpan="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="10, 0">
+                <StackPanel.ToolTip>
+                    <StackPanel>
+                        <TextBlock FontWeight="Bold">Number of Minimum Neighbours for Eye Detection</TextBlock>
+                        <TextBlock>
+                            Parameter specifies how many neighbors each detected candidate rectangle should have to retain it. <LineBreak/>
+                            This parameter will affect the quality of the detected faces. Higher value results in less detections but with higher quality.
+                        </TextBlock>
+                    </StackPanel>
+                </StackPanel.ToolTip>
                 <Label Content="Select the Number of Minimum Neighbours for Eye Detection: " Style="{StaticResource OptionsTitleLabel}"/>
                 <TextBox Text="{Binding EyesMinNeigbours, UpdateSourceTrigger=PropertyChanged}" TextWrapping="NoWrap"/>
             </StackPanel>
             <StackPanel Grid.Column="1" Grid.Row="3" Grid.ColumnSpan="1" Grid.RowSpan="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="10, 0">
+                <StackPanel.ToolTip>
+                    <StackPanel>
+                        <TextBlock FontWeight="Bold">Minimum Rectangle Size for Eye Detection</TextBlock>
+                        <TextBlock>
+                            This parameter defines the minimum size of detectable eyes in the image. <LineBreak/>
+                            Eyes smaller than the set size (in pixels x pixels) will be ignored.
+                        </TextBlock>
+                    </StackPanel>
+                </StackPanel.ToolTip>
                 <Label Content="Select Minimum Rectangle Size for Eye Detection:  " Style="{StaticResource OptionsTitleLabel}"/>
                 <TextBox Text="{Binding EyesMinSizeValue, UpdateSourceTrigger=PropertyChanged}" TextWrapping="NoWrap"/>
             </StackPanel>
             <StackPanel Grid.Column="1" Grid.Row="4" Grid.ColumnSpan="1" Grid.RowSpan="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="10, 0">
+                <StackPanel.ToolTip>
+                    <StackPanel>
+                        <TextBlock FontWeight="Bold">Maximum Rectangle Size for Face Detection</TextBlock>
+                        <TextBlock>
+                            This parameter defines the minimum size of detectable eyes in the image. <LineBreak/>
+                            Eyes bigger than the set size (in pixels x pixels) will be ignored.
+                        </TextBlock>
+                    </StackPanel>
+                </StackPanel.ToolTip>
                 <Label Content="Select Maximum Rectangle Size for Eye Detection: " Style="{StaticResource OptionsTitleLabel}"/>
                 <TextBox Text="{Binding EyesMaxSizeValue, UpdateSourceTrigger=PropertyChanged}" TextWrapping="NoWrap"/>
             </StackPanel>

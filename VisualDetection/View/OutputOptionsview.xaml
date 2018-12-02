@@ -43,20 +43,61 @@
             </Grid.ColumnDefinitions>
 
             <StackPanel Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="1" Grid.RowSpan="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="10, 0">
+                <StackPanel.ToolTip>
+                    <StackPanel>
+                        <TextBlock FontWeight="Bold">Output Options</TextBlock>
+                        <TextBlock>
+                            Here you can select, what kind of action you want to trigger: <LineBreak/>
+                            Simulate Mouse Buttons: Presses mouse buttons or uses the mouse wheel virtually based on the options set. <LineBreak/>
+                            Simulate Keypress Sequence: A sequence of keys can be set for the left and right trigger, which will be virtually pressed upon the respective trigger activation<LineBreak/>
+                            Open external software: You can select different files or software which will be opened upon trigger activation <LineBreak/>
+                        </TextBlock>
+                    </StackPanel>
+                </StackPanel.ToolTip>
                 <Label Content="Select the Action you want to trigger: " Style="{StaticResource OptionsTitleLabel}"/>
                 <ComboBox Name="AvailableOptionsListComboBox" ItemsSource="{Binding AvailableOptionsList}" DisplayMemberPath="OptionTitle" 
                       SelectedIndex="{Binding AvailableOptionsListSelectedIndex, UpdateSourceTrigger=PropertyChanged}"/>
             </StackPanel>
 
             <StackPanel Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="1" Grid.RowSpan="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="10, 0">
+                <StackPanel.ToolTip>
+                    <StackPanel>
+                        <TextBlock FontWeight="Bold">Trigger Angle</TextBlock>
+                        <TextBlock>
+                            To activate the left or right trigger, the software calculates the angle of your eyes relative to the horizontal plane. <LineBreak/>
+                            This option determines how much you have to tilt your head, in order to trigger an activation. <LineBreak/>
+                            (Keep in mind, that face detection currently only works up to a tilt of 15-20 degrees!)
+                        </TextBlock>
+                    </StackPanel>
+                </StackPanel.ToolTip>
                 <Label Content="Select the trigger angle: " Style="{StaticResource OptionsTitleLabel}"/>
                 <TextBox Text="{Binding TriggerAngle, UpdateSourceTrigger=PropertyChanged}" TextWrapping="NoWrap"/>
             </StackPanel>
             <StackPanel Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="1" Grid.RowSpan="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="10, 0">
+                <StackPanel.ToolTip>
+                    <StackPanel>
+                        <TextBlock FontWeight="Bold">Number of Positive Frames needed: </TextBlock>
+                        <TextBlock>
+                            To prevent the application from triggering false positives you can set a number of minimum frames with positive outcome here. <LineBreak/>
+                            Only if there are the set number of positive (detected angle > trigger angle) frames in a row, will the respective trigger be activated. <LineBreak/>
+                            Please keep in mind, that this options corresponds directly to the responsiveness of the application - in conjunction with the set idle time after each frame calculation. 
+                        </TextBlock>
+                    </StackPanel>
+                </StackPanel.ToolTip>
                 <Label Content="Select Nr. of needed positive frames: " Style="{StaticResource OptionsTitleLabel}"/>
                 <TextBox Text="{Binding NumberOfPositiveFramesNeeded, UpdateSourceTrigger=PropertyChanged}" TextWrapping="NoWrap"/>
             </StackPanel>
             <StackPanel Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="1" Grid.RowSpan="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="10, 0">
+                <StackPanel.ToolTip>
+                    <StackPanel>
+                        <TextBlock FontWeight="Bold">Number of allowed undefined Frames</TextBlock>
+                        <TextBlock>
+                            This option works in conjunction with the set number of positive frames needed. If more than the frames in row return no detected face than set here, <LineBreak/>
+                            the counter for the number of positive frames will be reset. This is to prevent reseting the counter if the application is unable to detect a face for <LineBreak/>
+                            only a few frames. 
+                        </TextBlock>
+                    </StackPanel>
+                </StackPanel.ToolTip>
                 <Label Content="Select Nr. allowed undefined frames" Style="{StaticResource OptionsTitleLabel}"/>
                 <TextBox Text="{Binding NumberOfAllowedUndefinedFrames, UpdateSourceTrigger=PropertyChanged}" TextWrapping="NoWrap"/>
             </StackPanel>

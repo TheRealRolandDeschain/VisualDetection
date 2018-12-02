@@ -24,7 +24,17 @@
         </Grid.RowDefinitions>
 
         <Button Content="{Binding StartStopCaptureButtonContent}" Command="{Binding StartStopCaptureButtonClicked}" HorizontalAlignment="Right"
-                VerticalAlignment="Stretch" Grid.Column="0" Grid.ColumnSpan="1" Grid.Row="0" Grid.RowSpan="1" Template="{DynamicResource ButtonBaseControlTemplate1}"/>
+                VerticalAlignment="Stretch" Grid.Column="0" Grid.ColumnSpan="1" Grid.Row="0" Grid.RowSpan="1" Template="{DynamicResource ButtonBaseControlTemplate1}" ToolTipService.ShowOnDisabled="True">
+            <Button.ToolTip>
+                <StackPanel>
+                    <TextBlock FontWeight="Bold">Start Caputure Button</TextBlock>
+                    <TextBlock>
+                        This button starts the capture from the selected camera. 
+                        Make sure, all necessary input options are set before starting the capture.
+                    </TextBlock>
+                </StackPanel>
+            </Button.ToolTip>
+        </Button>
         <Image  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="0" Grid.ColumnSpan="1" Grid.Row="1" Grid.RowSpan="1">
             <Image.Source >
                 <Binding Path="CurrentFrame">
@@ -35,6 +45,15 @@
             </Image.Source>
         </Image>
         <StackPanel  Grid.Column="0" Grid.ColumnSpan="1" Grid.Row="2" Grid.RowSpan="1" VerticalAlignment="Center" HorizontalAlignment="center" Orientation="Horizontal">
+            <StackPanel.ToolTip>
+                <StackPanel>
+                    <TextBlock FontWeight="Bold">Type of output image:</TextBlock>
+                    <TextBlock>
+                        Select if the shown image should be displayed as the original captured image, a grayscale version,
+                        or with the detected features added to the image. 
+                    </TextBlock>
+                </StackPanel>
+            </StackPanel.ToolTip>
             <RadioButton Name="RadioButtonOriginalImageView" Content="Original Image" IsChecked="{Binding RadioButtonOriginalImageViewChecked}" />
             <RadioButton Name="RadioButtonGrayScaleImageView" Content="GrayScale Image" IsChecked="{Binding RadioButtonGrayScaleImageViewChecked}"/>
             <RadioButton Name="RadioButtonDetectedFeaturesImageView" Content="Detected Features" IsChecked="{Binding RadioButtonDetectedFeaturesImageViewChecked}"/>

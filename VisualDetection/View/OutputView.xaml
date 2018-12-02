@@ -58,19 +58,54 @@
                 <TextBox Text="{Binding UpdateMessage}" TextWrapping="NoWrap" IsEnabled="False" />
             </StackPanel>
             <StackPanel Grid.Column="1" Grid.Row="0" Margin="10, 0">
+                <StackPanel.ToolTip>
+                    <StackPanel>
+                        <TextBlock FontWeight="Bold">Calculated Angle</TextBlock>
+                        <TextBlock>
+                            This box displayes the angle of your head tilt the application currently calculates from the camera image. <LineBreak/>
+                            If this value (absolute value) becomes bigger than the set trigger angle value, the trigger for the respective side will be activated. 
+                        </TextBlock>
+                    </StackPanel>
+                </StackPanel.ToolTip>
                 <Label Content="Calculated Angle: " Style="{StaticResource OptionsTitleLabel}"/>
                 <TextBox Text="{Binding EyeAngle}" TextWrapping="NoWrap" IsEnabled="False"/>
             </StackPanel>
             <StackPanel Grid.Column="1" Grid.Row="1" Margin="10, 0">
+                <StackPanel.ToolTip>
+                    <StackPanel>
+                        <TextBlock FontWeight="Bold">Frame Calculation Time</TextBlock>
+                        <TextBlock>
+                            This box displayes the time the application needed to capture and calculate the face and eye detection of the most resent frame. 
+                        </TextBlock>
+                    </StackPanel>
+                </StackPanel.ToolTip>
                 <Label Content="Frame Calculation time [ms]: " Style="{StaticResource OptionsTitleLabel}"/>
                 <TextBox Text="{Binding FrameCalculationTime}" TextWrapping="NoWrap" IsEnabled="False"/>
             </StackPanel>
             <StackPanel Grid.Column="1" Grid.Row="2" Margin="10, 0">
+                <StackPanel.ToolTip>
+                    <StackPanel>
+                        <TextBlock FontWeight="Bold">Number of positive Frames</TextBlock>
+                        <TextBlock>
+                            This box displays the number of frames in a row, which returned positive, <LineBreak/>
+                            meaning a face was detected and the angle was higher than the set trigger angle. 
+                        </TextBlock>
+                    </StackPanel>
+                </StackPanel.ToolTip>
                 <Label Content="Number of Positive Frames: " Style="{StaticResource OptionsTitleLabel}"/>
                 <TextBox Text="{Binding PositiveFrames}" TextWrapping="NoWrap" IsEnabled="False"/>
             </StackPanel>
             <StackPanel Grid.Column="1" Grid.Row="3" Margin="10, 0">
-                <Label Content="Number of Frames without a face deteced: " Style="{StaticResource OptionsTitleLabel}"/>
+                <StackPanel.ToolTip>
+                    <StackPanel>
+                        <TextBlock FontWeight="Bold">Number of Frames without Face Detection</TextBlock>
+                        <TextBlock>
+                            This box displayes the number of frames since the last time a face was detected. <LineBreak/>
+                            A face counts only as 'detected' if both the face and both eyes could be found. 
+                        </TextBlock>
+                    </StackPanel>
+                </StackPanel.ToolTip>
+                <Label Content="Number of Frames without  Face Detection: " Style="{StaticResource OptionsTitleLabel}"/>
                 <TextBox Text="{Binding NumberOfFramesWithNoFace}" TextWrapping="NoWrap" IsEnabled="False"/>
             </StackPanel>
         </Grid>

@@ -675,6 +675,13 @@
                 </Setter>
             </Style>
 
+            <!-- Tooltips -->
+            <Style TargetType="ToolTip">
+                <Setter Property="Foreground" Value="White"/>
+                <Setter Property="Background" Value="Black"/>
+                <Setter Property="BorderBrush" Value="#32FFFFFF"/>
+                <Setter Property="StaysOpen" Value="True"/>
+            </Style>
         </ResourceDictionary>
     </Application.Resources>
 </Application>

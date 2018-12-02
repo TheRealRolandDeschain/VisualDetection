@@ -18,7 +18,21 @@
             </Grid.RowDefinitions>
 
             <Label Grid.Row="0" Content="Options for Simulating Key Press Sequence: " Style="{StaticResource OutputOptionsTitleLabel}"/>
-            <StackPanel Grid.Row="1" Margin="5" Grid.Column="0" Grid.ColumnSpan="2">
+            <StackPanel Grid.Row="1" Margin="5" Grid.Column="0" Grid.ColumnSpan="2" ToolTipService.ShowDuration="20000">
+                <StackPanel.ToolTip>
+                    <StackPanel>
+                        <TextBlock FontWeight="Bold">Insert Key Sequence</TextBlock>
+                        <TextBlock>
+                            You can enter the desired sequence of keys, which should be activated by the right and left trigger here. All keys from the keyboard are accepted, including function keys, 
+                            or for example the Windows-Key. <LineBreak/><LineBreak/>
+                            Each input is directly converted and displayed as windows-keycode. If you want to add a combination of keys you can use the '+' button as follows: <LineBreak/>
+                            Add the first key, press the '+' button, then add the second key. You can create combinations of even more keys this way. <LineBreak/><LineBreak/>
+                            To delete the last key in the seque press the '&lt;--' button, to delete the complete sequence, press the 'Clear' button <LineBreak/><LineBreak/>
+                            The value set in the cool down timer box will determine the minimum time, between two activations for each side. <LineBreak/>
+                            Hint: Some special keys are internally combination of several other keys. For example [AltGr] key is a combination of [Alt] and [Ctrl]
+                        </TextBlock>
+                    </StackPanel>
+                </StackPanel.ToolTip>
                 <Label Content="Select Sequence for Right Side: " Style="{StaticResource OptionsTitleLabel}"/>
                 <TextBox Name="RightSideTextbox" Text="{Binding RightSideSequence, Mode=OneWay}" TextWrapping="NoWrap" MinHeight="100" VerticalContentAlignment="Top" 
                          CaretBrush="Transparent" IsReadOnly="True" SelectionBrush="Transparent">
@@ -83,7 +97,7 @@
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
                     <StackPanel Grid.Row="0" Grid.Column="0">
-                        <Label Grid.Row="0" Grid.Column="0" Content="Select CoolDown Time: " Style="{StaticResource OptionsTitleLabel}"/>
+                        <Label Grid.Row="0" Grid.Column="0" Content="Select CoolDown Time [ms]: " Style="{StaticResource OptionsTitleLabel}"/>
                         <TextBox Name="CoolDownTimer" Grid.Row="0" Grid.Column="0" Text="{Binding CoolDownTimer, UpdateSourceTrigger=PropertyChanged}" TextWrapping="NoWrap"/>
                     </StackPanel>
                 </Grid>

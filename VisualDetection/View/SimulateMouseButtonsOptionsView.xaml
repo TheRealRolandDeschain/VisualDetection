@@ -21,48 +21,73 @@
 
             <Label Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" Content="Options for Mouse Button Simulations: " Style="{StaticResource OutputOptionsTitleLabel}"/>
             <StackPanel Grid.Row="1" Grid.Column="0" Margin="5">
-                <CheckBox Content="Use as Toggle Switch" IsChecked="{Binding UseAsToggleSwitchEnabled}"/>
+                <CheckBox Content="Use as Toggle Switch" IsChecked="{Binding UseAsToggleSwitchEnabled}">
+                    <CheckBox.ToolTip>
+                        <TextBlock>
+                            If checked, virtual mouse buttons will be pressed as long as the respective trigger is active. " <LineBreak/>
+                            If unchecked the virtual button presses will last for the amount of time set in 'length of button press'. 
+                        </TextBlock>
+                    </CheckBox.ToolTip>
+                </CheckBox>
 
                 <RadioButton Content="Use Standard Functionality" IsChecked="{Binding Path=MajorOptionsSelected, Mode=TwoWay, Converter={StaticResource enumConverter}, 
-                             ConverterParameter=UseStandard}" GroupName="MBSimulationMajorOption"/>
+                             ConverterParameter=UseStandard}" GroupName="MBSimulationMajorOption" ToolTip="Uses the left trigger for the left and the right trigger for the right mouse button. "/>
 
                 <RadioButton Content="Only Use Right MB" IsChecked="{Binding Path=MajorOptionsSelected, Mode=TwoWay, Converter={StaticResource enumConverter}, 
-                             ConverterParameter=OnlyUseRightMB}" GroupName="MBSimulationMajorOption"/>
+                             ConverterParameter=OnlyUseRightMB}" GroupName="MBSimulationMajorOption" ToolTip="Uses the left AND the right trigger for the right mouse button. "/>
                 
                 <RadioButton Content="Only Use Left MB" IsChecked="{Binding Path=MajorOptionsSelected, Mode=TwoWay, Converter={StaticResource enumConverter}, 
-                             ConverterParameter=OnlyUseLeftMB}" GroupName="MBSimulationMajorOption"/>
+                             ConverterParameter=OnlyUseLeftMB}" GroupName="MBSimulationMajorOption" ToolTip="Uses the left AND the right trigger for the left mouse button. "/>
                 
                 <RadioButton Content="Invert Left-Right" IsChecked="{Binding Path=MajorOptionsSelected, Mode=TwoWay, Converter={StaticResource enumConverter}, 
-                             ConverterParameter=InverLeftRightEnabled}" GroupName="MBSimulationMajorOption"/>
+                             ConverterParameter=InverLeftRightEnabled}" GroupName="MBSimulationMajorOption" ToolTip="Uses the left trigger for the right and the right trigger for the left mouse button. "/>
                 
                 <RadioButton Content="Use Middle Mouse Button" Name="MiddleMousebuttonEnabled" IsChecked="{Binding Path=MajorOptionsSelected, Mode=TwoWay, Converter={StaticResource enumConverter}, 
-                             ConverterParameter=UseMiddleMouseButtonEnabled}" GroupName="MBSimulationMajorOption"/>
+                             ConverterParameter=UseMiddleMouseButtonEnabled}" GroupName="MBSimulationMajorOption" ToolTip="Uses the middle mouse button instead of one of the standard mouse buttons. "/>
 
                 <RadioButton Content="Use instead of Right MB" Margin="20, 5" IsChecked="{Binding Path=MiddleMouseButtonOptions, Mode=TwoWay, Converter={StaticResource enumConverter}, 
                              ConverterParameter=UseInsteadOfRight}" GroupName="MBSimulationMiddleMouseOption"
-                             Visibility="{Binding ElementName=MiddleMousebuttonEnabled, Path=IsChecked, Converter={StaticResource BoolToVis}}" />
+                             Visibility="{Binding ElementName=MiddleMousebuttonEnabled, Path=IsChecked, Converter={StaticResource BoolToVis}}" 
+                             ToolTip="Uses the left trigger for the right and the right trigger for the middle mouse button. "/>
 
                 <RadioButton Content="Use instead of Left MB" Margin="20, 5" IsChecked="{Binding Path=MiddleMouseButtonOptions, Mode=TwoWay, Converter={StaticResource enumConverter}, 
                              ConverterParameter=UseInsteadOfLeft}" GroupName="MBSimulationMiddleMouseOption"
-                             Visibility="{Binding ElementName=MiddleMousebuttonEnabled, Path=IsChecked, Converter={StaticResource BoolToVis}}"/>
+                             Visibility="{Binding ElementName=MiddleMousebuttonEnabled, Path=IsChecked, Converter={StaticResource BoolToVis}}"
+                             ToolTip="Uses the left trigger for the middle and the right trigger for the right mouse button. "/>
 
                 <RadioButton Content="Use instead of Both MB" Margin="20, 5" IsChecked="{Binding Path=MiddleMouseButtonOptions, Mode=TwoWay, Converter={StaticResource enumConverter}, 
                              ConverterParameter=UseInsteadOfBoth}" GroupName="MBSimulationMiddleMouseOption"
-                             Visibility="{Binding ElementName=MiddleMousebuttonEnabled, Path=IsChecked, Converter={StaticResource BoolToVis}}"/>
+                             Visibility="{Binding ElementName=MiddleMousebuttonEnabled, Path=IsChecked, Converter={StaticResource BoolToVis}}"
+                             ToolTip="Uses both triggers for the middle mouse button. "/>
                 
                 <RadioButton Content="Use MouseWheel" Name="MouseWheelEnabled" IsChecked="{Binding Path=MajorOptionsSelected, Mode=TwoWay, Converter={StaticResource enumConverter}, 
-                             ConverterParameter=UseMouseWheelEnabled}" GroupName="MBSimulationMajorOption"/>
+                             ConverterParameter=UseMouseWheelEnabled}" GroupName="MBSimulationMajorOption"
+                             ToolTip="Uses triggers to scroll up and down, simulating the mouse wheel. "/>
 
                 <RadioButton Content="Use Normal" Margin="20, 5" IsChecked="{Binding Path=MouseWheelOptions, Mode=TwoWay, Converter={StaticResource enumConverter}, 
                              ConverterParameter=InvertUpDownDisabled}" GroupName="MBSimulationMouseWheelOption"
-                             Visibility="{Binding ElementName=MouseWheelEnabled, Path=IsChecked, Converter={StaticResource BoolToVis}}"/>
+                             Visibility="{Binding ElementName=MouseWheelEnabled, Path=IsChecked, Converter={StaticResource BoolToVis}}"
+                             ToolTip="Uses the right trigger to scroll up and the left trigger to scroll down. "/>
 
                 <RadioButton Content="Invert Up-Down" Margin="20, 5" IsChecked="{Binding Path=MouseWheelOptions, Mode=TwoWay, Converter={StaticResource enumConverter}, 
                              ConverterParameter=InvertUpDownEnabled}" GroupName="MBSimulationMouseWheelOption"
-                             Visibility="{Binding ElementName=MouseWheelEnabled, Path=IsChecked, Converter={StaticResource BoolToVis}}"/>
+                             Visibility="{Binding ElementName=MouseWheelEnabled, Path=IsChecked, Converter={StaticResource BoolToVis}}"
+                             ToolTip="Uses the left trigger to scroll up and the right trigger to scroll down. "/>
             </StackPanel>
             <StackPanel Grid.Row="1" Grid.Column="1" Margin="5">
-                
+                <StackPanel.ToolTip>
+                    <StackPanel>
+                        <TextBlock FontWeight="Bold">Timer and Speed Options for Mouse Button Simulation</TextBlock>
+                        <TextBlock>
+                            Use the following boxes to determine the value of different timers and speed: <LineBreak/><LineBreak/>
+                            -Lengh of but Button Press: Sets the duration of simulated button presses if usage as toggle switch is disabled. <LineBreak/><LineBreak/>
+                            -Cooldown time: Sets the minimum amount of time between two simulated button presses. <LineBreak/><LineBreak/>
+                            -Mouse Wheel Speed: Sets the time between to mouse wheel indent movements (if used as toggle switch). In essence this sets the scroll speed for the mouse wheel <LineBreak/><LineBreak/>
+                            -Mouse Wheel Indent: Sets the length each virtual mouse wheel turn will scoll. 
+                        </TextBlock>
+                    </StackPanel>
+                </StackPanel.ToolTip>
+
                 <Label Content="Select length of Button Press [ms]: " Style="{StaticResource OptionsTitleLabel}"/>
                 <TextBox Text="{Binding ButtonPressTime, UpdateSourceTrigger=PropertyChanged}" TextWrapping="NoWrap"/>
                 
