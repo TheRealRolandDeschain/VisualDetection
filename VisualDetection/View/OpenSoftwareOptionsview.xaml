@@ -86,7 +86,7 @@
                     </Grid.ColumnDefinitions>
                     <StackPanel Grid.Row="0" Grid.Column="0">
                         <Label Grid.Row="0" Grid.Column="0" Content="Select CoolDown Time: " Style="{StaticResource OptionsTitleLabel}"/>
-                        <TextBox Name="CoolDownTimer" Grid.Row="0" Grid.Column="0" Text="{Binding CoolDownTimer, UpdateSourceTrigger=PropertyChanged}" TextWrapping="NoWrap"/>
+                        <TextBox Name="CoolDownTimer" Grid.Row="0" Grid.Column="0" Text="{Binding CoolDownTimer, UpdateSourceTrigger=Explicit}" TextWrapping="NoWrap"  LostFocus="TextBox_LostFocus" KeyUp="TextBox_KeyUp"/>
                     </StackPanel>
                 </Grid>
             </StackPanel>

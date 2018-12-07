@@ -71,7 +71,7 @@
                     </StackPanel>
                 </StackPanel.ToolTip>
                 <Label Content="Select the trigger angle: " Style="{StaticResource OptionsTitleLabel}"/>
-                <TextBox Text="{Binding TriggerAngle, UpdateSourceTrigger=PropertyChanged}" TextWrapping="NoWrap"/>
+                <TextBox Text="{Binding TriggerAngle, UpdateSourceTrigger=Explicit}" TextWrapping="NoWrap"  LostFocus="TextBox_LostFocus" KeyUp="TextBox_KeyUp"/>
             </StackPanel>
             <StackPanel Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="1" Grid.RowSpan="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="10, 0">
                 <StackPanel.ToolTip>
@@ -85,7 +85,7 @@
                     </StackPanel>
                 </StackPanel.ToolTip>
                 <Label Content="Select Nr. of needed positive frames: " Style="{StaticResource OptionsTitleLabel}"/>
-                <TextBox Text="{Binding NumberOfPositiveFramesNeeded, UpdateSourceTrigger=PropertyChanged}" TextWrapping="NoWrap"/>
+                <TextBox Text="{Binding NumberOfPositiveFramesNeeded, UpdateSourceTrigger=Explicit}" TextWrapping="NoWrap"  LostFocus="TextBox_LostFocus" KeyUp="TextBox_KeyUp"/>
             </StackPanel>
             <StackPanel Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="1" Grid.RowSpan="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="10, 0">
                 <StackPanel.ToolTip>
@@ -99,7 +99,7 @@
                     </StackPanel>
                 </StackPanel.ToolTip>
                 <Label Content="Select Nr. allowed undefined frames" Style="{StaticResource OptionsTitleLabel}"/>
-                <TextBox Text="{Binding NumberOfAllowedUndefinedFrames, UpdateSourceTrigger=PropertyChanged}" TextWrapping="NoWrap"/>
+                <TextBox Text="{Binding NumberOfAllowedUndefinedFrames, UpdateSourceTrigger=Explicit}" TextWrapping="NoWrap"  LostFocus="TextBox_LostFocus" KeyUp="TextBox_KeyUp"/>
             </StackPanel>
 
             <Border Grid.Row="0" Grid.Column="1" Grid.RowSpan="5" BorderBrush="White" BorderThickness="1, 0, 0, 0">

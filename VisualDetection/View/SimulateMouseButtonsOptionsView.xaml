@@ -89,16 +89,16 @@
                 </StackPanel.ToolTip>
 
                 <Label Content="Select length of Button Press [ms]: " Style="{StaticResource OptionsTitleLabel}"/>
-                <TextBox Text="{Binding ButtonPressTime, UpdateSourceTrigger=PropertyChanged}" TextWrapping="NoWrap"/>
+                <TextBox Text="{Binding ButtonPressTime, UpdateSourceTrigger=Explicit}" TextWrapping="NoWrap" LostFocus="TextBox_LostFocus" KeyUp="TextBox_KeyUp"/>
                 
                 <Label Content="Select a cooldown time [ms]: " Style="{StaticResource OptionsTitleLabel}"/>
-                <TextBox Text="{Binding CoolDownTime, UpdateSourceTrigger=PropertyChanged}" TextWrapping="NoWrap"/>
+                <TextBox Text="{Binding CoolDownTime, UpdateSourceTrigger=Explicit}" TextWrapping="NoWrap" LostFocus="TextBox_LostFocus" KeyUp="TextBox_KeyUp"/>
 
                 <Label Content="Select Mouse Wheel Speed [ms]: " Style="{StaticResource OptionsTitleLabel}"/>
-                <TextBox Text="{Binding MouseWheelSpeedTime, UpdateSourceTrigger=PropertyChanged}" TextWrapping="NoWrap"/>
+                <TextBox Text="{Binding MouseWheelSpeedTime, UpdateSourceTrigger=Explicit}" TextWrapping="NoWrap" LostFocus="TextBox_LostFocus" KeyUp="TextBox_KeyUp"/>
 
                 <Label Content="Select Mouse Wheel Indent [ms]: " Style="{StaticResource OptionsTitleLabel}"/>
-                <TextBox Text="{Binding MouseWheelIndent, UpdateSourceTrigger=PropertyChanged}" TextWrapping="NoWrap"/>
+                <TextBox Text="{Binding MouseWheelIndent, UpdateSourceTrigger=Explicit}" TextWrapping="NoWrap" LostFocus="TextBox_LostFocus" KeyUp="TextBox_KeyUp"/>
             </StackPanel>
 
         </Grid>
