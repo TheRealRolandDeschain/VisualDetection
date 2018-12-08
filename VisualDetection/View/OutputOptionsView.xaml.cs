@@ -15,6 +15,12 @@ namespace VisualDetection.View
             InitializeComponent();
         }
 
+
+        /// <summary>
+        /// LostFocus
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void TextBox_LostFocus(object sender, RoutedEventArgs e)
         {
             TextboxValueUpdater.UpdateValue(sender);
